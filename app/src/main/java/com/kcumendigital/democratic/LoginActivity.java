@@ -7,12 +7,14 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 
 public class LoginActivity extends AppCompatActivity implements View.OnClickListener {
 
     TextInputLayout email, pass;
     Button btnRegistro;
     FloatingActionButton ingresar;
+    TextView fredy;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
