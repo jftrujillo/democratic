@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="180dp"
+    >
+
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:src="#ffffff"
+        />
+
+    <ImageView
+        android:id="@+id/img_user_nav"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:layout_marginLeft="@dimen/small_margin"
+        android:layout_centerInParent="true"
+        />
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        >
+
+    <TextView
+        android:id="@+id/txt_usr"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+
+        android:layout_marginLeft="@dimen/small_margin"
+        android:textColor="@color/color_title_foromuns"
+        android:textSize="@dimen/medium_Letter"
+        android:text="Nombre Usuario"
+        android:gravity="center"
+        />
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="4dp"
+        android:src="@drawable/shapes"
+        android:layout_alignParentBottom="true"
+        />
+
+    </LinearLayout>
+
+</RelativeLayout>

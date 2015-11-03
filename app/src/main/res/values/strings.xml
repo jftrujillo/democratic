@@ -1,0 +1,27 @@
+<resources>
+    <string name="app_name">DemocraTic</string>
+
+    <string name="hello_world">Hello world!</string>
+    <string name="action_settings">Settings</string>
+    <string name="title_activity_home">HomeActivity</string>
+
+<!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="drawer_open">menu lateral abierto</string>
+    <string name="drawer_close">menu lateral cerrado</string>
+    <string name="titulo">Titulo</string>
+    <string name="descripcion">Descripcion</string>
+    <string name="voice_state_1">ststeVoiceuno</string>
+    <string name="voice_state_0">stateVoiceDos</string>
+    <string name="con_intenert_fail">Sin conexión a Internet</string>
+    <string name="voted">Ya realizaste esta votación</string>
+    <string name="change_vote">Desea cambiar la votación?</string>
+    <string name="dialog_positive">Aceptar</string>
+    <string name="dialog_negative">Cancelar</string>
+
+    <string-array name="Categorias">
+        <item>Gobierno</item>
+        <item>Salud</item>
+        <item>Educación</item>
+    </string-array>
+</resources>

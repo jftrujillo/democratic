@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+
+    <RelativeLayout
+        android:id="@+id/relative_parent"
+        android:layout_width="match_parent"
+        android:layout_height="200dp">
+
+        <TextView
+            android:id="@+id/title_forum_list"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Titulo"
+            android:textSize="@dimen/title_forum_size"
+            android:textColor="@color/color_title_foromuns"
+            android:layout_margin="@dimen/small_margin"
+
+            />
+        <TextView
+            android:id="@+id/porcentaje"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="%"
+            android:textSize="@dimen/title_forum_size"
+            android:layout_alignParentRight="true"
+            android:layout_below="@id/title_forum_list"
+            android:textColor="@color/color_subititle_username"
+            android:layout_margin="@dimen/small_margin"
+            />
+        <TextView
+            android:id="@+id/percentage_value"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="50"
+            android:textColor="@color/color_subtitle_forums"
+            android:textSize="@dimen/title_forum_size"
+            android:layout_toLeftOf="@id/porcentaje"
+            android:layout_below="@id/title_forum_list"
+            android:layout_marginTop="@dimen/small_margin"
+
+            />
+        <TextView
+            android:id="@+id/Opcion"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="No"
+            android:textSize="@dimen/title_forum_size"
+            android:textColor="@color/color_subtitle_forums"
+            android:layout_toLeftOf="@id/percentage_value"
+            android:layout_below="@id/title_forum_list"
+            android:layout_marginTop="@dimen/small_margin"
+            android:layout_marginRight="4dp"
+            />
+
+
+    </RelativeLayout>
+
+</LinearLayout>

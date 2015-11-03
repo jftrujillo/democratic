@@ -1,0 +1,137 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="horizontal" android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginBottom="@dimen/medium_margin"
+    >
+    <ImageView
+        android:layout_width="30dp"
+        android:layout_height="match_parent"
+        android:background="#ff0000"
+        />
+
+    <RelativeLayout
+        android:id="@+id/relative_parent"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <ImageView
+            android:id="@+id/user_img"
+            android:layout_width="70dp"
+            android:layout_height="70dp"
+
+
+            />
+        <TextView
+            android:id="@+id/title_forum_list"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Titulo"
+            android:textSize="@dimen/title_forum_size"
+            android:textColor="@color/color_title_foromuns"
+            android:layout_margin="@dimen/small_margin"
+            android:layout_below="@id/user_img"
+            />
+        <TextView
+            android:id="@+id/count_coments_forums"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="10"
+            android:textSize="@dimen/size_count_coments_forums"
+            android:textColor="@color/color_count_coments_forums"
+            android:layout_margin="@dimen/really_small_margin"
+            android:layout_below="@id/title_forum_list"
+            />
+        <TextView
+            android:id="@+id/text_opcion_survey"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="opcion"
+            android:textSize="@dimen/text_coments_forums"
+            android:textColor="@color/color_text_coments_forums"
+            android:layout_toRightOf="@id/count_coments_forums"
+            android:layout_below="@id/title_forum_list"
+            android:layout_margin="@dimen/really_small_margin"
+
+            android:layout_marginBottom="@dimen/small_margin"
+            />
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_alignParentRight="true"
+            android:layout_below="@id/title_forum_list"
+            android:layout_margin="@dimen/really_small_margin"
+            >
+            <ImageView
+                android:layout_width="18dp"
+                android:layout_height="18dp"
+                android:src="@drawable/ic_thumb_up_black_24dp"
+                android:layout_margin="@dimen/really_small_margin"
+                />
+            <TextView
+                android:id="@+id/count_likes"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="0"
+                android:textSize="@dimen/size_count_coments_forums"
+                android:textColor="#000000"
+                android:layout_margin="@dimen/small_margin"
+                />
+
+            <ImageView
+                android:layout_width="18dp"
+                android:layout_height="18dp"
+                android:src="@drawable/ic_thumb_down_black_24dp"
+                android:layout_margin="@dimen/really_small_margin"
+
+                />
+            <TextView
+                android:id="@+id/count_dislikes"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="0"
+                android:textSize="@dimen/size_count_coments_forums"
+                android:textColor="#000000"
+                android:layout_margin="@dimen/small_margin"
+                />
+
+        </LinearLayout>
+
+
+
+        <TextView
+            android:id="@+id/user_name_forums"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="UserName"
+            android:textSize="@dimen/size_count_coments_forums"
+            android:textColor="@color/color_subtitle_forums"
+            android:layout_toRightOf="@id/user_img"
+            android:layout_marginLeft="@dimen/medium_margin"
+            android:layout_marginTop="@dimen/big_margin"
+            />
+        <TextView
+            android:id="@+id/categorias_list"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="categoria"
+            android:textSize="@dimen/size_count_coments_forums"
+            android:layout_alignParentRight="true"
+            android:layout_margin="14dp"
+            />
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="2dp" />
+
+
+
+
+
+
+
+    </RelativeLayout>
+
+</LinearLayout>

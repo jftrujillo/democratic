@@ -1,0 +1,23 @@
+<resources>
+    <!-- Default screen margins, per the Android Design guidelines. -->
+    <dimen name="activity_horizontal_margin">16dp</dimen>
+    <dimen name="activity_vertical_margin">16dp</dimen>
+    <dimen name="fab_margin">16dp</dimen>
+    <dimen name="title_forum_size">20sp</dimen>
+    <dimen name="size_count_coments_forums">12sp</dimen>
+    <dimen name="small_margin">8dp</dimen>
+    <dimen name="text_coments_forums">14sp</dimen>
+    <dimen name="subtitle_forums_list">16sp</dimen>
+    <dimen name="medium_Letter">16sp</dimen>
+    <dimen name="small_letter">16sp</dimen>
+    <dimen name="really_small_margin">4dp</dimen>
+    <dimen name="medium_margin">8dp</dimen>
+    <dimen name="big_margin">14dp</dimen>
+    <dimen name="margin_botton_toolbar">18dp</dimen>
+    <dimen name="marginRightBottonToolbar">15dp</dimen>
+    <dimen name="marginRecyclerView">10dp</dimen>
+    <dimen name="small_padding">10dp</dimen>
+    <dimen name="medium_size">70dp</dimen>
+    <dimen name="mediun_size_height">50dp</dimen>
+    <dimen name="big_letter">24sp</dimen>
+</resources>

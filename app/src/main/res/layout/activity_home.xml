@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    android:orientation="vertical"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:fab="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent" android:fitsSystemWindows="true"
+    tools:context="com.kcumendigital.democratic.HomeActivity">
+
+    <android.support.v4.widget.DrawerLayout
+        android:id="@+id/drawer"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        >
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:background="?attr/colorPrimary"
+        android:elevation="6dp"
+        android:minHeight="?attr/actionBarSize"
+        android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
+        app:popupTheme="@style/ThemeOverlay.AppCompat.Light"/>
+
+    <android.support.design.widget.TabLayout
+        android:id="@+id/tab_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/toolbar"
+        android:background="?attr/colorPrimary"
+        android:elevation="6dp"
+        android:minHeight="?attr/actionBarSize"
+        android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"/>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+    <android.support.v4.view.ViewPager
+        android:id="@+id/pager"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"/>
+
+            <com.getbase.floatingactionbutton.FloatingActionsMenu
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_alignParentBottom="true"
+                android:layout_margin="@dimen/small_margin"
+                app:fab_addButtonColorNormal="#FFC11F"
+                app:fab_addButtonColorPressed="@color/primary_material_light"
+                app:fab_addButtonPlusIconColor="#000000"
+                fab:fab_labelStyle="@style/menu_labels_style"
+                >
+
+                <com.getbase.floatingactionbutton.FloatingActionButton
+                    android:id="@+id/new_encuesta"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    fab:fab_colorNormal="#ffffff"
+                    fab:fab_title="Encuesta"
+                    fab:fab_colorPressed="#FFC11F"
+                    app:fab_icon="@drawable/ic_assignment_black_24dp"
+
+                    />
+
+
+                <com.getbase.floatingactionbutton.FloatingActionButton
+                    android:id="@+id/new_forum"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    fab:fab_colorNormal="#ffffff"
+                    fab:fab_title="Discusion"
+                    fab:fab_colorPressed="#FFC11F"
+                    app:fab_icon="@drawable/ic_question_answer_black_24dp"
+                    />
+
+
+
+
+
+            </com.getbase.floatingactionbutton.FloatingActionsMenu>
+        </RelativeLayout>
+
+
+
+
+
+
+        </LinearLayout>
+        <android.support.design.widget.NavigationView
+            android:id="@+id/nav"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_gravity="start"
+            app:menu="@menu/manu_nav_home"
+            app:headerLayout="@layout/header_nav_home"
+            android:background="#ffffff"
+            />
+
+    </android.support.v4.widget.DrawerLayout>
+
+
+
+
+
+
+</RelativeLayout>

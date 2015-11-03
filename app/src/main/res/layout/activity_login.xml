@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.design.widget.CoordinatorLayout
+    android:padding="@dimen/small_padding"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.kcumendigital.democratic.LoginActivity"
+    android:background="@color/statusBarColor"
+    >
+
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/statusBarColor"
+        />
+<LinearLayout
+    android:layout_centerInParent="true"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    >
+
+        <LinearLayout
+
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:orientation="vertical"
+            android:gravity="center"
+            android:padding="@dimen/small_padding"
+            android:id="@+id/coordinator_padre"
+            android:background="#ffffff"
+            android:layout_marginBottom="50dp"
+            >
+            <ImageView
+                android:layout_width="80dp"
+                android:layout_height="80dp"
+                android:src="@drawable/chip_delete"
+
+                />
+
+            <android.support.design.widget.TextInputLayout
+                android:id="@+id/email_login"
+                android:layout_height="wrap_content"
+                android:layout_width="match_parent">
+                <EditText
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="E-mail Adrress"
+                    />
+
+            </android.support.design.widget.TextInputLayout>
+            <android.support.design.widget.TextInputLayout
+                android:id="@+id/password"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <EditText
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="password"
+                    />
+
+
+
+
+
+            </android.support.design.widget.TextInputLayout>
+
+            <Button
+                android:id="@+id/register"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="¿No tienes una cuenta?"
+                style="@style/Widget.AppCompat.Button.Borderless"
+                android:textColor="@color/statusBarColor"
+                />
+
+        </LinearLayout>
+    <Button
+        android:id="@+id/login_twiter_btn"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Loogin with twiter"
+        android:layout_marginTop="@dimen/small_margin"
+        />
+
+    <Button
+        android:id="@+id/login_facebook_btn"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Loogin with facebook"
+        android:layout_marginTop="@dimen/small_margin"
+        android:layout_marginBottom="@dimen/small_margin"
+        />
+
+
+
+
+
+</LinearLayout>
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/ingresar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_anchor = "@id/coordinator_padre"
+        app:layout_anchorGravity= "bottom|center"
+        />
+
+</android.support.design.widget.CoordinatorLayout>

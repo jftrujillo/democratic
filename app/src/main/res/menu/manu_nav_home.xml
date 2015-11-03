@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+<item android:id="@+id/nav_home"
+    android:title="Inicio"
+    android:icon="@android:drawable/ic_btn_speak_now"/>
+   <group android:id="@+id/secciones_menu_nav"
+       android:checkableBehavior="single">
+
+    <item android:title="Secciones">
+        <menu>
+            <item android:id="@+id/nav_gobierno"
+                android:title="gobierno"
+                android:icon="@drawable/iconosslide17"
+                />
+            <item android:id="@+id/nav_educacion"
+                android:title="educacion"
+                android:icon="@drawable/iconosslide19"
+                />
+            <item android:id="@+id/nav_salud"
+                android:title="salud"
+                android:icon="@drawable/iconosslide21"
+                ></item>
+            <item android:id="@+id/nav_medio_ambiente"
+                android:title="Medio Ambiente"
+                android:icon="@drawable/iconosslide23"
+                ></item>
+        </menu>
+    </item>
+
+   </group>
+
+
+    <group android:id="@+id/persona_menu_nav">
+
+    <item android:title="personal">
+        <menu>
+           <item android:id="@+id/nav_favoritos"
+               android:title="favoritos"
+               android:icon="@drawable/iconosslide26"
+               />
+            <item android:id="@+id/nav_comentados"
+                android:title="comentarios"/>
+
+        </menu>
+    </item>
+    </group>
+
+</menu>
