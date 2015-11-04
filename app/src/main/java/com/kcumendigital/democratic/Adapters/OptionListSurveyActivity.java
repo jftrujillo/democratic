@@ -53,9 +53,14 @@ public class OptionListSurveyActivity extends BaseAdapter {
         v = View.inflate(context, R.layout.template_survey_opcions, null);
         TextView opcion = (TextView) v.findViewById(R.id.text_opcion_survey);
         TextView percentage = (TextView) v.findViewById(R.id.percentage_value);
+        float porcentaje;
+        if (sum != 0) {
 
-        float porcentaje = data.get(position).getVotes() * 100 / sum;
-
+             porcentaje = data.get(position).getVotes() * 100 / sum;
+        }
+        else {
+             porcentaje = 0;
+        }
         opcion.setText(data.get(position).getDescription());
         percentage.setText("" + porcentaje);
         ProgressBar progressBar = (ProgressBar) v.findViewById(R.id.progressBar);

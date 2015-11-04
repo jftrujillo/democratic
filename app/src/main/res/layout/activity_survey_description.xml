@@ -116,8 +116,19 @@
 
 </LinearLayout>
     </android.support.v7.widget.Toolbar>
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Seleccione una Opcion"
+        android:textSize="@dimen/medium_Letter"
+        android:gravity="center"
+        android:layout_margin="@dimen/small_margin"
+        android:textColor="#000000"
+        />
  <ListView
      android:id="@+id/listView"
      android:layout_width="match_parent"
-     android:layout_height="match_parent"></ListView>
+     android:layout_height="match_parent"
+     android:layout_marginTop="@dimen/small_margin"
+     ></ListView>
 </LinearLayout>

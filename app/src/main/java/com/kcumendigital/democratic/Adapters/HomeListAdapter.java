@@ -95,16 +95,34 @@ public class HomeListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
 
        if (holder instanceof HomeListspanViewHolder){
            HomeListspanViewHolder spanHolder = (HomeListspanViewHolder) holder;
-           spanHolder.title_forum_list.setText(data.get(position).getTitle());
-           spanHolder.user_name.setText(data.get(position).getUser().getUserName());
-           spanHolder.count_cometns_forums.setText(""+data.get(position).getComments());
-           spanHolder.likes.setText(""+data.get(position).getLikes());
-           spanHolder.likes.setText(""+data.get(position).getDislikes());
-           spanHolder.categoria.setText(data.get(position).getCategory());
+          if (position < data.size()-2) {
+              position = position + 2;
+              spanHolder.title_forum_list.setText(data.get(position).getTitle());
+              spanHolder.user_name.setText(data.get(position).getUser().getUserName());
+              spanHolder.count_cometns_forums.setText("" + data.get(position).getComments());
+              spanHolder.likes.setText("" + data.get(position).getLikes());
+              spanHolder.likes.setText("" + data.get(position).getDislikes());
+              spanHolder.categoria.setText(data.get(position).getCategory());
+              String categoria = data.get(position).getCategory();
+              Picasso.with(context).load(Uri.parse(data.get(position).getUser().getImg()))
 
-           Picasso.with(context).load(Uri.parse(data.get(position).getUser().getImg()))
+                      .transform(transformation).into(spanHolder.img);
+              if (categoria.equals("Gobierno")) {
+                  Picasso.with(context).load(R.drawable.ic_account_balance_white_18dp).into(spanHolder.leftIcon);
+                  spanHolder.leftColor.setBackgroundResource(R.color.gobierno);
 
-                   .transform(transformation).into(spanHolder.img);
+              }
+              if (categoria.equals("Salud")) {
+                  spanHolder.leftIcon.setBackgroundResource(R.drawable.ic_local_hospital_white_18dp);
+                  spanHolder.leftColor.setBackgroundResource(R.color.salud);
+
+              }
+              if (categoria.equals("Educación")) {
+                  spanHolder.leftIcon.setBackgroundResource(R.drawable.ic_school_white_18dp);
+                  spanHolder.leftColor.setBackgroundResource(R.color.educacion);
+
+              }
+          }
 
 
 
@@ -116,7 +134,7 @@ public class HomeListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
 
         else if (holder instanceof  HomeListPagerHolder){
            HomeListPagerHolder pagerHolder = (HomeListPagerHolder) holder;
-           pagerAdapter = new PagerAdpater(fm);
+           pagerAdapter = new PagerAdpater(fm,PagerAdpater.TYPE_DISCUSION);
            pagerHolder.pager.setAdapter(pagerAdapter);
            pagerHolder.pager.setClipToPadding(false);
            pagerHolder.pager.setPadding(40, 0, 40, 0);
@@ -125,7 +143,7 @@ public class HomeListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
 
     @Override
     public int getItemCount() {
-        return data.size();
+        return data.size()-2;
     }
 
     @Override
@@ -153,7 +171,7 @@ public class HomeListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
 //region ViewHolders
     public class HomeListspanViewHolder extends RecyclerView.ViewHolder{
         TextView title_forum_list,count_cometns_forums,user_name,likes,dislikes,categoria;
-        ImageView img;
+        ImageView img,leftColor,leftIcon;
 
         public HomeListspanViewHolder(View itemView) {
             super(itemView);
@@ -164,6 +182,9 @@ public class HomeListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
             dislikes = (TextView) itemView.findViewById(R.id.count_dislikes);
             categoria = (TextView) itemView.findViewById(R.id.categorias_list);
             img =   (ImageView) itemView.findViewById(R.id.user_img);
+            leftColor = (ImageView) itemView.findViewById(R.id.left_color_category);
+            leftIcon = (ImageView) itemView.findViewById(R.id.left_image_categori);
+
 
 
 

@@ -6,6 +6,7 @@ import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
+import com.kcumendigital.democratic.Adapters.OptionListSurveyActivity;
 import com.kcumendigital.democratic.Models.Survey;
 import com.kcumendigital.democratic.Models.SurveyOption;
 import com.kcumendigital.democratic.Util.ColletionsStatics;
@@ -21,6 +22,7 @@ public class SurveyDescriptionActivity extends AppCompatActivity {
     TextView mostVotedOpcionPercentage;
     ListView list;
     ProgressBar progressBar;
+    OptionListSurveyActivity adapter;
     int pos;
     long sum= 0;
     long biggerOpcionNumber = 0;
@@ -50,26 +52,12 @@ public class SurveyDescriptionActivity extends AppCompatActivity {
             sum = sum + data.get(i).getVotes();
         }
         percentage = biggerOpcionNumber*sum/100;
-
-        progressBar.setProgress((int) percentage);
-
-        /*
-        for (int i = 0; i<data.get(position).getOptions().size(); i++){
-                if (BiggerOpcionNumber < data.get(position).getOptions().get(i).getVotes()){
-                    BiggerOpcionNumber = data.get(position).getOptions().get(i).getVotes();
-                    BiggerOpcion = data.get(position).getOptions().get(i).getDescription();
-                }
-                suma = suma + data.get(position).getOptions().get(i).getVotes();
-            }
-         */
-
-
-
+        progressBar.setProgress(50);
         survey = ColletionsStatics.getDataSurvey().get(pos);
         data = survey.getOptions();
-
-
         titulo.setText(survey.getTitle());
+        adapter = new OptionListSurveyActivity(data,this,sum);
+        list.setAdapter(adapter);
 
 
 

@@ -20,4 +20,5 @@
     <dimen name="medium_size">70dp</dimen>
     <dimen name="mediun_size_height">50dp</dimen>
     <dimen name="big_letter">24sp</dimen>
+    <dimen name="left_bar_width">22dp</dimen>
 </resources>

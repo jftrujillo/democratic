@@ -5,11 +5,26 @@
     android:layout_height="wrap_content"
     android:layout_marginBottom="@dimen/medium_margin"
     >
+    <RelativeLayout
+        android:layout_width="@dimen/left_bar_width"
+        android:layout_height="match_parent">
     <ImageView
-        android:layout_width="30dp"
+        android:id="@+id/left_color_category"
+        android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="#ff0000"
+        android:background="#000000"
         />
+
+        <ImageView
+            android:id="@+id/left_image_categori"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_school_white_18dp"
+
+            android:layout_centerInParent="true"
+            />
+
+    </RelativeLayout>
 
     <RelativeLayout
         android:id="@+id/relative_parent"

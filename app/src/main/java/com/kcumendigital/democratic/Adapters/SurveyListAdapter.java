@@ -95,6 +95,22 @@ public class SurveyListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
 
             spanHolder.percentage_opcion.setText(""+porcentaje);
             spanHolder.opcion_name.setText(BiggerOpcion);
+            String categoria = data.get(position).getCategory();
+            if (categoria.equals("Gobierno")){
+                Picasso.with(context).load(R.drawable.ic_account_balance_white_18dp).into(spanHolder.leftIcon);
+                spanHolder.leftColor.setBackgroundResource(R.color.gobierno);
+
+            }
+            if (categoria.equals("Salud")){
+                spanHolder.leftIcon.setBackgroundResource(R.drawable.ic_local_hospital_white_18dp);
+                spanHolder.leftColor.setBackgroundResource(R.color.salud);
+
+            }
+            if (categoria.equals("Educación")){
+                spanHolder.leftIcon.setBackgroundResource(R.drawable.ic_school_white_18dp);
+                spanHolder.leftColor.setBackgroundResource(R.color.educacion);
+
+            }
 
             Picasso.with(context).load(Uri.parse(data.get(position).getUser().getImg()))
 
@@ -104,7 +120,7 @@ public class SurveyListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
 
         else if (holder instanceof HomeListPagerHolder){
             HomeListPagerHolder pagerHolder = (HomeListPagerHolder) holder;
-            pagerAdapter = new PagerAdpater(fm);
+            pagerAdapter = new PagerAdpater(fm,PagerAdpater.TYPE_SURVEY);
             pagerHolder.pager.setAdapter(pagerAdapter);
             pagerHolder.pager.setClipToPadding(false);
             pagerHolder.pager.setPadding(40, 0, 40, 0);
@@ -134,7 +150,7 @@ public class SurveyListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
     public  class SurveyListSpanViewHolder extends RecyclerView.ViewHolder{
 
         TextView title_survey_list,percentage_opcion,user_name,likes,dislikes,categoria,opcion_name;
-        ImageView img;
+        ImageView img,leftColor,leftIcon;
 
 
         public SurveyListSpanViewHolder(View itemView) {
@@ -147,6 +163,8 @@ public class SurveyListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
             categoria = (TextView) itemView.findViewById(R.id.categorias_list);
             img =   (ImageView) itemView.findViewById(R.id.user_img);
             opcion_name = (TextView) itemView.findViewById(R.id.text_opcion_survey);
+            leftColor = (ImageView) itemView.findViewById(R.id.left_color_category);
+            leftIcon = (ImageView) itemView.findViewById(R.id.left_image_categori);
 
         }
     }
