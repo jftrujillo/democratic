@@ -112,7 +112,7 @@ public class ForumsActivity extends AppCompatActivity implements SunshineParse.S
         btn_record.setOnTouchListener(this);
 
         imgCategory = (ImageView) findViewById(R.id.imgCategories);
-        fondo = (ImageView) findViewById(R.id.screenBackground);
+
 
 
         Bundle bundle = getIntent().getExtras();
@@ -153,19 +153,17 @@ public class ForumsActivity extends AppCompatActivity implements SunshineParse.S
 
         if(discussion.getCategory().equals("Gobierno")){
             Picasso.with(this).load(R.drawable.ic_account_balance_white_18dp).into(imgCategory);
-            Picasso.with(this).load(R.drawable.ic_democratic_ciudad).into(fondo);
 
         }else
         if(discussion.getCategory().equals("Educación")) {
             Picasso.with(this).load(R.drawable.ic_school_white_18dp).into(imgCategory);
-            Picasso.with(this).load(R.drawable.ic_democratic_educacion).into(fondo);
+
         }else{
             if (discussion.getCategory().equals("Salud")){
                 Picasso.with(this).load(R.drawable.ic_local_hospital_white_18dp).into(imgCategory);
-                Picasso.with(this).load(R.drawable.ic_democratic_salud).into(fondo);
             }
         }
-        
+
         transformation = new RoundedTransformationBuilder().oval(true).build();
         Picasso.with(this).load(Uri.parse(discussion.getUser().getImg())).transform(transformation).into(discussionUser);
 
@@ -248,6 +246,22 @@ public class ForumsActivity extends AppCompatActivity implements SunshineParse.S
         } else{}
     }
 
+    public void stopPlayer(){
+        if(!IS_STOP){
+            player.stop();
+            player.release();
+            player = null;
+            IS_STOP = true;
+        }
+    }
+
+    public void playPlayer(String url){
+        IS_STOP = true;
+        player = new MediaPlayer();
+        player.setOnCompletionListener(this);
+        url = archivo.getAbsolutePath();
+    }
+
     private void createNewVoiceComent(String absolutePath) {
         Comment comment = new Comment();
         comment.setRecord(true);
@@ -327,7 +341,6 @@ public class ForumsActivity extends AppCompatActivity implements SunshineParse.S
         if (data.size() > 0)
             date = data.get(0).getCreatedAt();
         parse.getRecentRecords(date, query, this, REQUEST_RECENT, Comment.class);
-
     }
 
     public void likeDiscussion(String id) {
@@ -451,6 +464,7 @@ public class ForumsActivity extends AppCompatActivity implements SunshineParse.S
 
     @Override
     public void onCompletion(MediaPlayer mediaPlayer) {
+        stopPlayer();
     }
 
     @Override
@@ -532,7 +546,7 @@ public class ForumsActivity extends AppCompatActivity implements SunshineParse.S
             Log.i("BOTONES", "Se presiono el play en pos "+position);
 
             if (!playPause) {
-                //imgPlay.setBackgroundResource(R.drawable.ic_thumb_up_black_18dp);
+
                 if (intialStage)
                     new Player()
                             .execute(data.get(position).getFile());
@@ -546,7 +560,6 @@ public class ForumsActivity extends AppCompatActivity implements SunshineParse.S
                 //imgPlay.setBackgroundResource(R.drawable.ic_thumb_up_black_18dp);
                 if (player.isPlaying()){
                     player.pause();
-
                 }
                 playPause = false;
             }
