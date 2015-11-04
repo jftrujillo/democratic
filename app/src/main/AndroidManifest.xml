@@ -27,9 +27,12 @@
             android:label="@string/title_activity_home"
             android:theme="@style/AppTheme.NoActionBar" >
         </activity>
-        <activity android:name=".CreateSurveyAcitivty" >
+        <activity android:name=".CreateSurveyAcitivty"
+            android:screenOrientation="landscape"
+            >
         </activity>
-        <activity android:name=".CreateBoardDiscussion_activity" />
+        <activity android:name=".CreateBoardDiscussion_activity"
+            />
         <activity android:name=".ForumsActivity" />
         <activity android:name=".LoginActivity" >
         </activity>
