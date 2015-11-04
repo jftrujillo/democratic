@@ -40,11 +40,12 @@
                 android:src="@drawable/ic_play_arrow_black_24dp" />
 
             <ProgressBar
+                style="?android:attr/progressBarStyleHorizontal"
                 android:id="@+id/progressVoice"
                 android:layout_width="150dp"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="13dp"
                 android:layout_below="@id/nombre_usuario"
-                android:layout_centerVertical="true"
                 android:layout_toRightOf="@id/playVoice" />
 
             <TextView
@@ -55,42 +56,63 @@
                 android:layout_toRightOf="@id/progressVoice"
                 android:text="00:50" />
 
-            <TextView
-                android:id="@+id/value_dislike"
+            <LinearLayout
+                android:id="@+id/btn_dislike"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="0"
-                android:layout_below="@id/progressVoice"
+                android:layout_alignParentBottom="true"
                 android:layout_alignParentRight="true"
-                android:layout_margin="10dp"/>
+                android:layout_marginBottom="9dp"
+                android:layout_marginRight="9dp"
+                android:background="@drawable/like_selector"
+                android:clickable="true"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                android:padding="9dp">
 
-            <ImageView
-                android:id="@+id/disLike"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:src="@drawable/ic_thumb_down_black_18dp"
-                android:layout_below="@id/progressVoice"
-                android:layout_toLeftOf="@id/value_dislike"
-                android:layout_margin="10dp"
-                />
+                <ImageView
+                    android:layout_width="17dp"
+                    android:layout_height="17dp"
+                    android:src="@drawable/ic_thumb_down_black_24dp" />
 
-            <TextView
-                android:id="@+id/value_like"
+                <TextView
+                    android:id="@+id/value_dislike"
+                    style="@style/Base.TextAppearance.AppCompat.Title"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/small_margin"
+                    android:text="0"
+                    android:textSize="15dp" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/btn_like"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="0"
-                android:layout_below="@id/progressVoice"
-                android:layout_toLeftOf="@id/disLike"
-                android:layout_margin="10dp"/>
-            <ImageView
-                android:id="@+id/like"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:src="@drawable/ic_thumb_up_black_18dp"
-                android:layout_below="@id/progressVoice"
-                android:layout_toLeftOf="@id/value_like"
-                android:layout_margin="10dp"
-                />
+                android:layout_alignParentBottom="true"
+                android:layout_marginBottom="9dp"
+                android:layout_marginRight="9dp"
+                android:layout_toLeftOf="@+id/btn_dislike"
+                android:background="@drawable/like_selector"
+                android:clickable="true"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                android:padding="9dp">
+
+                <ImageView
+                    android:layout_width="17dp"
+                    android:layout_height="17dp"
+                    android:src="@drawable/ic_thumb_up_black_24dp" />
+
+                <TextView
+                    android:id="@+id/value_like"
+                    style="@style/Base.TextAppearance.AppCompat.Title"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/small_margin"
+                    android:text="0"
+                    android:textSize="15dp" />
+            </LinearLayout>
         </RelativeLayout>
     </android.support.v7.widget.CardView>
 </LinearLayout>
