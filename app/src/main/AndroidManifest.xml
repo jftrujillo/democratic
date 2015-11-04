@@ -29,15 +29,6 @@
         </activity>
         <activity android:name=".CreateSurveyAcitivty" >
         </activity>
-        <activity android:name=".LookingForAcitivity" >
-            <intent-filter>
-                <action android:name="android.intent.action.SEARCH" />
-            </intent-filter>
-
-            <meta-data
-                android:name="android.app.searchable"
-                android:resource="@xml/searchableconfiguration" />
-        </activity>
         <activity android:name=".CreateBoardDiscussion_activity" />
         <activity android:name=".ForumsActivity" />
         <activity android:name=".LoginActivity" >

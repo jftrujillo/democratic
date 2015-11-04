@@ -137,7 +137,7 @@ public class HomeActivity extends AppCompatActivity implements DrawerLayout.Draw
             return true;
         }
         if (id == R.id.navigate) {
-            startActivity(new Intent(this, LookingForAcitivity.class));
+            //startActivity(new Intent(this, LookingForAcitivity.class));
 
         }
         return super.onOptionsItemSelected(item);
