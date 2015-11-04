@@ -14,7 +14,6 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     TextInputLayout email, pass;
     Button btnRegistro;
     FloatingActionButton ingresar;
-    TextView fredy;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

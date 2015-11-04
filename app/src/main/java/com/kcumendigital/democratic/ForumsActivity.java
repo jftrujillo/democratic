@@ -110,7 +110,7 @@ public class ForumsActivity extends AppCompatActivity implements SunshineParse.S
         player = new MediaPlayer();
         player.setAudioStreamType(AudioManager.STREAM_MUSIC);
         btn_record.setOnTouchListener(this);
-        seekbar = (SeekBar) findViewById(R.id.progressVoice);
+
         imgCategory = (ImageView) findViewById(R.id.imgCategories);
         fondo = (ImageView) findViewById(R.id.screenBackground);
 
@@ -158,14 +158,14 @@ public class ForumsActivity extends AppCompatActivity implements SunshineParse.S
         }else
         if(discussion.getCategory().equals("Educación")) {
             Picasso.with(this).load(R.drawable.ic_school_white_18dp).into(imgCategory);
-            Picasso.with(this).load(R.drawable.ic_democratic_salud).into(fondo);
+            Picasso.with(this).load(R.drawable.ic_democratic_educacion).into(fondo);
         }else{
             if (discussion.getCategory().equals("Salud")){
                 Picasso.with(this).load(R.drawable.ic_local_hospital_white_18dp).into(imgCategory);
+                Picasso.with(this).load(R.drawable.ic_democratic_salud).into(fondo);
             }
         }
-
-
+        
         transformation = new RoundedTransformationBuilder().oval(true).build();
         Picasso.with(this).load(Uri.parse(discussion.getUser().getImg())).transform(transformation).into(discussionUser);
 
