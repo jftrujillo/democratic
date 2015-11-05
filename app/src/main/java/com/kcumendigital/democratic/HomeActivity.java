@@ -40,7 +40,6 @@ import java.util.List;
 public class HomeActivity extends AppCompatActivity implements DrawerLayout.DrawerListener, NavigationView.OnNavigationItemSelectedListener, View.OnClickListener, SunshineParse.SunshineCallback, SurveyListAdapter.OnItemClickListenerSurvey {
 
 
-
     DiscussionHomeFragment fragment;
     DrawerLayout drawer;
     NavigationView nav;
@@ -83,14 +82,14 @@ public class HomeActivity extends AppCompatActivity implements DrawerLayout.Draw
         discussionFragment = new DiscussionHomeFragment();
 
 
-        surveyFragment= new SurveyHomeFragment();
+        surveyFragment = new SurveyHomeFragment();
 
 
         List<Fragment> fragments = new ArrayList<>();
         fragments.add(discussionFragment);
         fragments.add(surveyFragment);
 
-        CustomPagerAdapter adapter = new CustomPagerAdapter(fragments,getSupportFragmentManager());
+        CustomPagerAdapter adapter = new CustomPagerAdapter(fragments, getSupportFragmentManager());
 
         viewPager.setAdapter(adapter);
 
@@ -98,7 +97,7 @@ public class HomeActivity extends AppCompatActivity implements DrawerLayout.Draw
         tabLayout.setupWithViewPager(viewPager);
 
 
-        if(savedInstanceState==null) {
+        if (savedInstanceState == null) {
             SunshineParse parse = new SunshineParse();
             parse.getRecordsByPage(null, ColletionsStatics.LIMIT, null, this, null, Discussion.class);
             SunshineParse parseSurveys = new SunshineParse();
@@ -115,7 +114,7 @@ public class HomeActivity extends AppCompatActivity implements DrawerLayout.Draw
 
                 @Override
                 public void resultListRecords(boolean success, Integer requestCode, List<SunshineRecord> records, ParseException e) {
-                    for(int i = 0; i<records.size();i++){
+                    for (int i = 0; i < records.size(); i++) {
                         ColletionsStatics.getDataSurvey().add((Survey) records.get(i));
                     }
 
@@ -123,10 +122,9 @@ public class HomeActivity extends AppCompatActivity implements DrawerLayout.Draw
 
 
                 }
-                }
-            , null, Survey.class);
+            }
+                    , null, Survey.class);
         }
-
 
 
     }
@@ -225,9 +223,9 @@ public class HomeActivity extends AppCompatActivity implements DrawerLayout.Draw
     }
 
     @Override
-    public void resultListRecords(boolean success,Integer requestCode, List<SunshineRecord> records, ParseException e) {
+    public void resultListRecords(boolean success, Integer requestCode, List<SunshineRecord> records, ParseException e) {
 
-        for(int i = 0; i<records.size();i++){
+        for (int i = 0; i < records.size(); i++) {
             ColletionsStatics.getDataDiscusion().add((Discussion) records.get(i));
         }
 
@@ -238,7 +236,7 @@ public class HomeActivity extends AppCompatActivity implements DrawerLayout.Draw
 
     @Override
     public void onItemClick(int position) {
-        startActivity(new Intent(getApplicationContext(),SurveyDescriptionActivity.class).putExtra("pos",position));
+        startActivity(new Intent(getApplicationContext(), SurveyDescriptionActivity.class).putExtra("pos", position));
     }
     //endregion
 }

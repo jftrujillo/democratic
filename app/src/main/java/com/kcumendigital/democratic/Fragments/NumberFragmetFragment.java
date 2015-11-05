@@ -50,12 +50,13 @@ public class NumberFragmetFragment extends android.support.v4.app.Fragment {
             txt.setText(discussion.getTitle());
             ImageView img = (ImageView) v.findViewById(R.id.img);
             String categoria = discussion.getCategory();
+
             if (categoria.equals("Salud")){
                 Picasso.with(getActivity()).load(R.drawable.bg_salud).into(img_bacground);
             }
 
             if (categoria.equals("Gobierno")){
-                Picasso.with(getActivity()).load(R.drawable.bg_ciudad).into(img_bacground);
+                Picasso.with(getActivity()).load(R.drawable.imagenpager).into(img_bacground);
             }
 
             if (categoria.equals("Educación")){
