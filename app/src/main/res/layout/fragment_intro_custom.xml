@@ -1,0 +1,30 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.kcumendigital.democratic.Fragments.IntroFragment">
+<ImageView
+    android:layout_width="match_parent"
+    android:layout_height="30dp"
+    android:background="@color/morado_demo"
+
+    />
+    <ImageView
+        android:id="@+id/bacground_intro"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:scaleType="centerCrop"
+        />
+
+    <TextView
+        android:id="@+id/text_intro"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="@dimen/medium_Letter"
+        android:text="Contenido"
+        android:textColor="#000000"
+        android:gravity="center"
+        android:layout_marginTop="100dp"
+
+        />
+
+</RelativeLayout>
