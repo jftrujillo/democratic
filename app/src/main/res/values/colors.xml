@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <color name="color_title_foromuns">#000000</color>
-    <color name="color_count_coments_forums">#0f1681</color>
+    <color name="color_count_coments_forums">#dedcdc</color>
     <color name="color_text_coments_forums">#5d6fc7</color>
-    <color name="color_subtitle_forums">#860d0d</color>
+    <color name="color_subtitle_forums">#b7b7b7</color>
     <color name="color_subititle_username">#530303</color>
     <color name="primary_material_light">#673ab7</color>
     <color name="primary_dark_material_light">#303f9f</color>

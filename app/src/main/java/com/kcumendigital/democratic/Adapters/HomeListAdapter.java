@@ -105,8 +105,8 @@ public class HomeListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
               spanHolder.categoria.setText(data.get(position).getCategory());
               String categoria = data.get(position).getCategory();
               Picasso.with(context).load(Uri.parse(data.get(position).getUser().getImg()))
-
                       .transform(transformation).into(spanHolder.img);
+
               if (categoria.equals("Gobierno")) {
                   Picasso.with(context).load(R.drawable.ic_account_balance_white_18dp).into(spanHolder.leftIcon);
                   spanHolder.leftColor.setBackgroundResource(R.color.gobierno);
