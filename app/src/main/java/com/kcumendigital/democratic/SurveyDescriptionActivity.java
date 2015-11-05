@@ -1,7 +1,10 @@
 package com.kcumendigital.democratic;
 
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.Toolbar;
+import android.view.View;
 import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
@@ -16,6 +19,7 @@ import java.util.List;
 public class SurveyDescriptionActivity extends AppCompatActivity {
     List<SurveyOption> data;
     Survey survey;
+    Toolbar mToolbar;
     TextView titulo;
     TextView votes;
     TextView mostVotedOpcionText;
@@ -34,6 +38,15 @@ public class SurveyDescriptionActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_survey_description);
         Bundle bundle = getIntent().getExtras();
+        mToolbar = (Toolbar) findViewById(R.id.toolbar);
+        mToolbar.setNavigationIcon(ContextCompat.getDrawable(this, R.drawable.abc_ic_ab_back_mtrl_am_alpha));
+        mToolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                onBackPressed();
+            }
+        });
+
         pos = bundle.getInt("pos", 0);
         data = ColletionsStatics.getDataSurvey().get(pos).getOptions();
         titulo = (TextView) findViewById(R.id.TitleSurvey);

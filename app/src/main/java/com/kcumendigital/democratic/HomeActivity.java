@@ -12,6 +12,7 @@ import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.SearchView;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -45,7 +46,8 @@ public class HomeActivity extends AppCompatActivity implements DrawerLayout.Draw
     NavigationView nav;
     ActionBarDrawerToggle toggle;
     FloatingActionButton new_encuesta, new_forum;
-
+    String filtro;
+    Boolean isFiltred;
     DiscussionHomeFragment discussionFragment;
     SurveyHomeFragment surveyFragment;
 
@@ -166,7 +168,10 @@ public class HomeActivity extends AppCompatActivity implements DrawerLayout.Draw
 
     @Override
     public boolean onNavigationItemSelected(MenuItem menuItem) {
-
+        Log.i("Navigation menu", menuItem.getTitle().toString());
+        filtro = menuItem.getTitle().toString();
+        getSupportActionBar().setTitle(filtro);
+        isFiltred = true;
         drawer.closeDrawers();
         return false;
     }
