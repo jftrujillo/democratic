@@ -163,7 +163,7 @@ public class HomeListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
     public void onClick(View v) {
         Toast.makeText(context,"Click en un item de la lista",Toast.LENGTH_LONG).show();
         int position = recyclerView.getChildAdapterPosition(v);
-        onItemClickLister.onItemclick(position);
+        onItemClickLister.onItemclick(position+2);
 
 
 
@@ -212,10 +212,6 @@ public class HomeListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
             super(itemView);
 
             pager = (ViewPager) itemView.findViewById(R.id.pager);
-
-
-
-
         }
     }
 
