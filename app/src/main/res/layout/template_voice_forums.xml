@@ -19,7 +19,8 @@
                 android:id="@+id/imgPerfilvoice"
                 android:layout_width="70dp"
                 android:layout_height="70dp"
-                android:layout_margin="10dp" />
+                android:layout_margin="10dp"
+                android:scaleType="fitXY"/>
 
             <TextView
                 android:id="@+id/nombre_usuario"

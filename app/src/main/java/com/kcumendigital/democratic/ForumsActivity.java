@@ -76,7 +76,7 @@ public class ForumsActivity extends AppCompatActivity implements SunshineParse.S
     TextView tittle, likes, dislikes, categoria;
     LinearLayout btnLike, btnDislike;
     ImageView btn_record;
-    ImageView discussionUser, imgCategory,fondo;
+    ImageView discussionUser, imgCategory;
     ImageButton imgPlay;
 
     MediaRecorder recorder;
@@ -164,7 +164,7 @@ public class ForumsActivity extends AppCompatActivity implements SunshineParse.S
             }
         }
 
-        transformation = new RoundedTransformationBuilder().oval(true).build();
+        transformation = new RoundedTransformationBuilder().oval(false).build();
         Picasso.with(this).load(Uri.parse(discussion.getUser().getImg())).transform(transformation).into(discussionUser);
 
         recyclerView = (RecyclerView) findViewById(R.id.recyclerviewForumsComents);
@@ -181,14 +181,10 @@ public class ForumsActivity extends AppCompatActivity implements SunshineParse.S
 
         comentario.addTextChangedListener(new TextWatcher() {
             @Override
-            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-
-            }
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {}
 
             @Override
-            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-
-            }
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {}
 
             @Override
             public void afterTextChanged(Editable editable) {
@@ -200,7 +196,6 @@ public class ForumsActivity extends AppCompatActivity implements SunshineParse.S
 
                 else {
                     Picasso.with(getApplicationContext()).load(R.drawable.ic_send_white_24dp).transform(transformation).into(btn_record);
-
                 }
 
             }
@@ -259,7 +254,6 @@ public class ForumsActivity extends AppCompatActivity implements SunshineParse.S
         IS_STOP = true;
         player = new MediaPlayer();
         player.setOnCompletionListener(this);
-        url = archivo.getAbsolutePath();
     }
 
     private void createNewVoiceComent(String absolutePath) {
@@ -584,7 +578,6 @@ public class ForumsActivity extends AppCompatActivity implements SunshineParse.S
             playPause = false;
         }*/
     }
-
 
     class Player extends AsyncTask<String, Void, Boolean> {
         private ProgressDialog progress;
