@@ -67,7 +67,7 @@ public class SunshineParse implements DeleteCallback {
 
     public void insertEventually(SunshineRecord record, SunshineCallback callback){
         this.callback = callback;
-        insert(EVENTUALLY,record,callback);
+        insert(EVENTUALLY, record, callback);
     }
 
     private void insert(int type, SunshineRecord record,SunshineCallback saveCallback){
@@ -107,47 +107,44 @@ public class SunshineParse implements DeleteCallback {
     //endregion
 
     //region Update
-    public void update(SunshineRecord record, boolean updateFile, SunshineCallback callback){
+    public void update(SunshineRecord record, boolean updateFile,boolean updateReleations, SunshineCallback callback){
         this.callback = callback;
-        //update(NOW, record, updateFile,this);
+        update(NOW, record, updateFile,updateReleations,callback);
     }
 
-    public void update(SunshineRecord record, boolean updateFile){
-        update(NOW, record, updateFile,null);
+    public void update(SunshineRecord record, boolean updateFile,boolean updateReleations){
+        update(NOW, record, updateFile,updateReleations,null);
     }
 
-    public void updateEventually(SunshineRecord record, boolean updateFile){
-        //update(EVENTUALLY, record, updateFile,null);
+    public void updateEventually(SunshineRecord record, boolean updateFile,boolean updateReleations){
+        update(EVENTUALLY, record, updateFile,updateReleations,null);
     }
 
-    public void updateEventually(SunshineRecord record, boolean updateFile, SunshineCallback callback){
+    public void updateEventually(SunshineRecord record, boolean updateFile,boolean updateReleations, SunshineCallback callback){
         this.callback = callback;
-        //update(EVENTUALLY, record, updateFile,this);
+        update(EVENTUALLY, record, updateFile,updateReleations,callback);
     }
 
-    private void update(int type, SunshineRecord record, boolean updateFile,SaveCallback saveCallback){
+    private void update(int type, SunshineRecord record, boolean updateFile, boolean updateReleations,SunshineCallback sunshineCallback){
         HashMap<String,List<String>> fields = getFields(record.getClass());
-        ParseObject parseObject = getParseObjectFully(fields.get(ANNOTATION_NORMAL), record);
+        ParseObject parseObject = getParseObjectFully(fields.get(ANNOTATION_NORMAL),record);
+        if(updateReleations){
+            addRelations(parseObject,fields.get(ANNOTATION_RELATION), record);
+            addRelationsById(parseObject, fields.get(ANNOTATION_RELATION_ID), record);
+            addUsers(parseObject, fields.get(ANNOTATION_USER), record);
+        }
         if(fields.get(ANNOTATION_FILE_PATH).size()>0 && updateFile){
             String field = fields.get(ANNOTATION_FILE_PATH).get(0);
             String fieldU = fields.get(ANNOTATION_FILE_URL).get(0);
-            String path = getFilePath(field, record);
+            String path = getFilePath(field,record );
             if(path!=null) {
                 ParseFile file = getParseFile(field, record, path);
-                file.saveInBackground(new FileSaveCallback(field, fieldU, parseObject,record,  file, callback));
+                file.saveInBackground(new FileSaveCallback(field, fieldU, parseObject,record , file, sunshineCallback));
+            }else{
+                saveRecord(parseObject,record, type, sunshineCallback);
             }
         }else{
-            if(type==NOW) {
-                if(saveCallback ==null)
-                    parseObject.saveInBackground();
-                else
-                    parseObject.saveInBackground(saveCallback);
-            }else {
-                if(saveCallback==null)
-                    parseObject.saveEventually();
-                else
-                    parseObject.saveEventually(saveCallback);
-            }
+            saveRecord(parseObject,record, type, sunshineCallback);
         }
 
     }
