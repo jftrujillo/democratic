@@ -122,8 +122,7 @@ public class SurveyListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
             HomeListPagerHolder pagerHolder = (HomeListPagerHolder) holder;
             pagerAdapter = new PagerAdpater(fm,PagerAdpater.TYPE_SURVEY);
             pagerHolder.pager.setAdapter(pagerAdapter);
-            pagerHolder.pager.setClipToPadding(false);
-            pagerHolder.pager.setPadding(40, 0, 40, 0);
+            
 
         }
 
