@@ -165,8 +165,6 @@ public class HomeListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
         int position = recyclerView.getChildAdapterPosition(v);
         onItemClickLister.onItemclick(position+2);
 
-
-
     }
 //region ViewHolders
     public class HomeListspanViewHolder extends RecyclerView.ViewHolder{
@@ -184,11 +182,6 @@ public class HomeListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
             img =   (ImageView) itemView.findViewById(R.id.user_img);
             leftColor = (ImageView) itemView.findViewById(R.id.left_color_category);
             leftIcon = (ImageView) itemView.findViewById(R.id.left_image_categori);
-
-
-
-
-
         }
     }
 

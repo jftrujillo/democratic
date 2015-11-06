@@ -191,13 +191,11 @@ public class ForumsActivity extends AppCompatActivity implements SunshineParse.S
 
                 if (comentario.getText().toString().equals("")){
                     Picasso.with(getApplicationContext()).load(R.drawable.ic_mic_white_18dp).transform(transformation).into(btn_record);
-
                 }
 
                 else {
                     Picasso.with(getApplicationContext()).load(R.drawable.ic_send_white_24dp).transform(transformation).into(btn_record);
                 }
-
             }
         });
     }
