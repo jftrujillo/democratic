@@ -113,7 +113,7 @@ public class HomeListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
 
               }
               if (categoria.equals("Salud")) {
-                  spanHolder.leftIcon.setBackgroundResource(R.drawable.ic_local_hospital_white_36dp);
+                  spanHolder.leftIcon.setBackgroundResource(R.drawable.ic_local_hospital_white_18dp);
                   spanHolder.leftColor.setBackgroundResource(R.color.salud);
 
               }

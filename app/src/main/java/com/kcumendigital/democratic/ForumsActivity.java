@@ -160,7 +160,7 @@ public class ForumsActivity extends AppCompatActivity implements SunshineParse.S
 
         }else{
             if (discussion.getCategory().equals("Salud")){
-                Picasso.with(this).load(R.drawable.ic_local_hospital_white_36dp).into(imgCategory);
+                Picasso.with(this).load(R.drawable.ic_local_hospital_white_18dp).into(imgCategory);
             }
         }
 
