@@ -98,7 +98,7 @@ public class SurveyListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
             spanHolder.opcion_name.setText(BiggerOpcion);
             String categoria = data.get(position).getCategory();
             if (categoria.equals("Gobierno")){
-                Picasso.with(context).load(R.drawable.ic_account_balance_white_18dp).into(spanHolder.leftIcon);
+                Picasso.with(context).load(R.drawable.ic_account_balance_white_36dp).into(spanHolder.leftIcon);
                 spanHolder.leftColor.setBackgroundResource(R.color.gobierno);
 
             }

@@ -109,7 +109,7 @@ public class HomeListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
                       .transform(transformation).into(spanHolder.img);
 
               if (categoria.equals("Gobierno")) {
-                  Picasso.with(context).load(R.drawable.ic_account_balance_white_18dp).into(spanHolder.leftIcon);
+                  Picasso.with(context).load(R.drawable.ic_account_balance_white_36dp).into(spanHolder.leftIcon);
                   spanHolder.leftColor.setBackgroundResource(R.color.gobierno);
 
               }
