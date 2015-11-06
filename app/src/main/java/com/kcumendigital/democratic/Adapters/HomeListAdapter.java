@@ -136,8 +136,7 @@ public class HomeListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
            HomeListPagerHolder pagerHolder = (HomeListPagerHolder) holder;
            pagerAdapter = new PagerAdpater(fm,PagerAdpater.TYPE_DISCUSION);
            pagerHolder.pager.setAdapter(pagerAdapter);
-           pagerHolder.pager.setClipToPadding(false);
-           pagerHolder.pager.setPadding(40, 0, 40, 0);
+
     }
     }
 
