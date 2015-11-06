@@ -23,4 +23,6 @@
     <dimen name="left_bar_width">30dp</dimen>
     <dimen name="min_margin_left">12dp</dimen>
     <dimen name="margin_top_intro">100dp</dimen>
+    <dimen name="img_mark_1">10dp</dimen>
+    <dimen name="img_margin_right">8dp</dimen>
 </resources>
