@@ -30,8 +30,10 @@ public class DiscussionHomeFragment extends Fragment implements HomeListAdapter.
 
     public void notifyDataChagued(){
 
-
-           homeListAdapter.notifyDataSetChanged();
+           if (homeListAdapter != null) {
+               homeListAdapter.notifyDataSetChanged();
+           }
+        
 
     }
 

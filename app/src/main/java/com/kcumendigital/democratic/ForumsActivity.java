@@ -420,10 +420,12 @@ public class ForumsActivity extends AppCompatActivity implements SunshineParse.S
             parse.insert(discussionScore);
             if (like.equals(DiscussionScore.LIKE)) {
                 parse.incrementField(discussion.getObjectId(), "likes", Discussion.class);
+               ColletionsStatics.getDataDiscusion().get(pos).setLikes(ColletionsStatics.getDataDiscusion().get(pos).getLikes() + 1);
                 likes.setText("" + (Integer.valueOf("" + likes.getText()) + 1));
             } else {
                 parse.incrementField(discussion.getObjectId(), "dislikes", Discussion.class);
-                dislikes.setText("" + (Integer.valueOf("" + dislikes.getText()) + 1));
+                ColletionsStatics.getDataDiscusion().get(pos).setDislikes(ColletionsStatics.getDataDiscusion().get(pos).getDislikes() + 1);
+                data.get(pos).setLikes(data.get(pos).getDislikes()+1);
             }
         }
     }

@@ -54,6 +54,7 @@ public class HomeActivity extends AppCompatActivity implements DrawerLayout.Draw
     protected void onRestart() {
         super.onRestart();
         discussionFragment.notifyDataChagued();
+        surveyFragment.notidyDataChangued();
     }
 
     @Override

@@ -27,6 +27,12 @@ public class SurveyHomeFragment extends Fragment implements SurveyListAdapter.On
     PagerAdpater pagerAdpater;
     SurveyListAdapter surveyListAdapter;
 
+    public void notidyDataChangued (){
+        if (surveyListAdapter != null){
+            surveyListAdapter.notifyDataSetChanged();
+        }
+    }
+
     public SurveyHomeFragment(){
 
 
