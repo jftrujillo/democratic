@@ -108,12 +108,12 @@ public class HomeListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
                       .transform(transformation).into(spanHolder.img);
 
               if (categoria.equals("Gobierno")) {
-                  Picasso.with(context).load(R.drawable.ic_account_balance_white_18dp).into(spanHolder.leftIcon);
+                  Picasso.with(context).load(R.drawable.ic_account_balance_white_36dp).into(spanHolder.leftIcon);
                   spanHolder.leftColor.setBackgroundResource(R.color.gobierno);
 
               }
               if (categoria.equals("Salud")) {
-                  spanHolder.leftIcon.setBackgroundResource(R.drawable.ic_local_hospital_white_18dp);
+                  spanHolder.leftIcon.setBackgroundResource(R.drawable.ic_local_hospital_white_36dp);
                   spanHolder.leftColor.setBackgroundResource(R.color.salud);
 
               }

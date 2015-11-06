@@ -152,7 +152,7 @@ public class ForumsActivity extends AppCompatActivity implements SunshineParse.S
         categoria.setText(discussion.getCategory());
 
         if(discussion.getCategory().equals("Gobierno")){
-            Picasso.with(this).load(R.drawable.ic_account_balance_white_18dp).into(imgCategory);
+            Picasso.with(this).load(R.drawable.ic_account_balance_white_36dp).into(imgCategory);
 
         }else
         if(discussion.getCategory().equals("Educación")) {
@@ -160,7 +160,7 @@ public class ForumsActivity extends AppCompatActivity implements SunshineParse.S
 
         }else{
             if (discussion.getCategory().equals("Salud")){
-                Picasso.with(this).load(R.drawable.ic_local_hospital_white_18dp).into(imgCategory);
+                Picasso.with(this).load(R.drawable.ic_local_hospital_white_36dp).into(imgCategory);
             }
         }
 
