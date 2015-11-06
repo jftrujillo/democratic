@@ -48,7 +48,6 @@ public class NumberFragmetFragment extends android.support.v4.app.Fragment {
         if (TYPE_lIST == PagerAdpater.TYPE_DISCUSION) {
             discussion = ColletionsStatics.getDataDiscusion().get(position);
             txt.setText(discussion.getTitle());
-            ImageView img = (ImageView) v.findViewById(R.id.img);
             String categoria = discussion.getCategory();
 
             if (categoria.equals("Salud")){
@@ -64,19 +63,11 @@ public class NumberFragmetFragment extends android.support.v4.app.Fragment {
 
             }
 
-            if (position == 0) {
-                Picasso.with(getActivity()).load(R.drawable.dots).into(img);
-            }
-
-            if (position == 1) {
-                Picasso.with(getActivity()).load(R.drawable.dots2).into(img);
-            }
         }
 
         if (TYPE_lIST == PagerAdpater.TYPE_SURVEY){
             survey = ColletionsStatics.getDataSurvey().get(position);
             txt.setText(survey.getTitle());
-            ImageView img = (ImageView) v.findViewById(R.id.img);
             String categoria = survey.getCategory();
             if (categoria.equals("Salud")){
                 Picasso.with(getActivity()).load(R.drawable.bg_salud).into(img_bacground);
@@ -91,13 +82,6 @@ public class NumberFragmetFragment extends android.support.v4.app.Fragment {
 
             }
 
-            if (position == 0) {
-                Picasso.with(getActivity()).load(R.drawable.dots).into(img);
-            }
-
-            if (position == 1) {
-                Picasso.with(getActivity()).load(R.drawable.dots2).into(img);
-            }
         }
         return v;
     }
