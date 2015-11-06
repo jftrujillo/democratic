@@ -8,6 +8,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.kcumendigital.democratic.Models.Survey;
@@ -120,10 +121,8 @@ public class SurveyListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
 
         else if (holder instanceof HomeListPagerHolder){
             HomeListPagerHolder pagerHolder = (HomeListPagerHolder) holder;
-            pagerAdapter = new PagerAdpater(fm,PagerAdpater.TYPE_SURVEY);
+            pagerAdapter = new PagerAdpater(fm,pagerHolder.pager,pagerHolder.marksLayout,PagerAdpater.TYPE_SURVEY);
             pagerHolder.pager.setAdapter(pagerAdapter);
-            
-
         }
 
     }
@@ -170,10 +169,11 @@ public class SurveyListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
     public class  HomeListPagerHolder extends RecyclerView.ViewHolder {
 
         ViewPager pager;
-
+        LinearLayout marksLayout;
         public HomeListPagerHolder(View itemView) {
             super(itemView);
             pager = (ViewPager) itemView.findViewById(R.id.pager);
+            marksLayout = (LinearLayout) itemView.findViewById(R.id.marks);
         }
     }
 
