@@ -2,13 +2,50 @@
 <FrameLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="200dp"
-    >
+    android:layout_height="200dp">
 
     <android.support.v4.view.ViewPager
         android:id="@+id/pager"
         android:layout_width="match_parent"
         android:layout_height="200dp"
+        android:background="#d10d0d"
         />
+    <LinearLayout
+        android:id="@+id/marks"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:padding="@dimen/small_margin"
+        android:gravity="center"
+        android:layout_gravity="bottom"
 
+        >
+
+        <ImageView
+            android:id="@+id/img_mark_1"
+            android:layout_width="@dimen/img_mark_1"
+            android:layout_height="@dimen/img_mark_1"
+            android:layout_marginRight="@dimen/img_margin_right"
+            android:background="@drawable/mark_unselected"
+            />
+
+        <ImageView
+            android:id="@+id/img_mark_2"
+            android:layout_width="@dimen/img_mark_1"
+            android:layout_height="@dimen/img_mark_1"
+            android:layout_marginRight="@dimen/img_margin_right"
+            android:background="@drawable/mark_unselected"
+            />
+
+        <ImageView
+            android:id="@+id/img_mark_3"
+            android:layout_width="@dimen/img_mark_1"
+            android:layout_height="@dimen/img_mark_1"
+            android:layout_marginRight="@dimen/img_margin_right"
+            android:background="@drawable/mark_unselected"
+            />
+
+
+
+    </LinearLayout>
 </FrameLayout>

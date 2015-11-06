@@ -12,6 +12,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -134,10 +135,9 @@ public class HomeListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
 
         else if (holder instanceof  HomeListPagerHolder){
            HomeListPagerHolder pagerHolder = (HomeListPagerHolder) holder;
-           pagerAdapter = new PagerAdpater(fm,PagerAdpater.TYPE_DISCUSION);
+           pagerAdapter = new PagerAdpater(fm,pagerHolder.pager,pagerHolder.marksLayout,PagerAdpater.TYPE_DISCUSION);
            pagerHolder.pager.setAdapter(pagerAdapter);
-           pagerHolder.pager.setClipToPadding(false);
-           pagerHolder.pager.setPadding(40, 0, 40, 0);
+
     }
     }
 
@@ -165,8 +165,6 @@ public class HomeListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
         int position = recyclerView.getChildAdapterPosition(v);
         onItemClickLister.onItemclick(position+2);
 
-
-
     }
 //region ViewHolders
     public class HomeListspanViewHolder extends RecyclerView.ViewHolder{
@@ -184,11 +182,6 @@ public class HomeListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
             img =   (ImageView) itemView.findViewById(R.id.user_img);
             leftColor = (ImageView) itemView.findViewById(R.id.left_color_category);
             leftIcon = (ImageView) itemView.findViewById(R.id.left_image_categori);
-
-
-
-
-
         }
     }
 
@@ -207,15 +200,13 @@ public class HomeListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
     public class  HomeListPagerHolder extends RecyclerView.ViewHolder {
 
         ViewPager pager;
+        LinearLayout marksLayout;
 
         public HomeListPagerHolder(View itemView) {
             super(itemView);
 
             pager = (ViewPager) itemView.findViewById(R.id.pager);
-
-
-
-
+            marksLayout = (LinearLayout) itemView.findViewById(R.id.marks);
         }
     }
 

@@ -191,13 +191,11 @@ public class ForumsActivity extends AppCompatActivity implements SunshineParse.S
 
                 if (comentario.getText().toString().equals("")){
                     Picasso.with(getApplicationContext()).load(R.drawable.ic_mic_white_18dp).transform(transformation).into(btn_record);
-
                 }
 
                 else {
                     Picasso.with(getApplicationContext()).load(R.drawable.ic_send_white_24dp).transform(transformation).into(btn_record);
                 }
-
             }
         });
     }
@@ -438,7 +436,7 @@ public class ForumsActivity extends AppCompatActivity implements SunshineParse.S
     public void onClick(DialogInterface dialog, int which) {
         if (which == DialogInterface.BUTTON_POSITIVE) {
             score.setType(scoreD);
-            parse.update(score, false, this);
+            parse.update(score, false,false, this);
             if (scoreD.equals(DiscussionScore.LIKE)) {
                 parse.decrementField(discussion.getObjectId(), "dislikes", Discussion.class);
                 parse.incrementField(discussion.getObjectId(), "likes", Discussion.class);
