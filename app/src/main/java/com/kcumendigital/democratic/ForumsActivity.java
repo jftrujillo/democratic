@@ -257,14 +257,14 @@ public class ForumsActivity extends AppCompatActivity implements SunshineParse.S
     }
 
     private void createNewVoiceComent(String absolutePath) {
-        Comment comment = new Comment();
+        final Comment comment = new Comment();
         comment.setRecord(true);
         comment.setDiscussion(ColletionsStatics.getDataDiscusion().get(pos).getObjectId());
         User user =  new User();
         user.setObjectId(this.USER_ID);
         comment.setUser(user);
         comment.setFilePath(absolutePath);
-        SunshineParse parseVoice = new SunshineParse();
+        final SunshineParse parseVoice = new SunshineParse();
         parseVoice.insert(comment, new SunshineParse.SunshineCallback() {
             @Override
             public void done(boolean success, ParseException e) {
@@ -272,6 +272,8 @@ public class ForumsActivity extends AppCompatActivity implements SunshineParse.S
                     Toast.makeText(getApplicationContext(), "Nota de Voz Creada", Toast.LENGTH_SHORT).show();
                     getNewComments();
                     adapter.notifyDataSetChanged();
+                    parseVoice.incrementField(discussion.getObjectId(), "comments", Discussion.class);
+                    ColletionsStatics.getDataDiscusion().get(pos).setComments(ColletionsStatics.getDataDiscusion().get(pos).getComments() + 1);
                 } else {
                     Toast.makeText(getApplicationContext(), "Nota de Voz no Creada", Toast.LENGTH_SHORT).show();
                 }
@@ -488,7 +490,7 @@ public class ForumsActivity extends AppCompatActivity implements SunshineParse.S
             comment.setUser(user);
             comment.setDiscussion(ColletionsStatics.getDataDiscusion().get(pos).getObjectId());
             comment.setRecord(false);
-            SunshineParse parse = new SunshineParse();
+            final SunshineParse parse = new SunshineParse();
             parse.insert(comment, new SunshineParse.SunshineCallback() {
                 @Override
                 public void done(boolean success, ParseException e) {
@@ -497,13 +499,9 @@ public class ForumsActivity extends AppCompatActivity implements SunshineParse.S
                         query.addPointerValue("discussion", discussion.getObjectId());
                         comentario.setText("");
                         Date date = null;
-                       /* if (data.size() > 0)
-                            date = data.get(data.size() - 1).getCreatedAt();
-                        SunshineParse parse2= new SunshineParse();
-                        parse2.getRecordsByPage(date, ColletionsStatics.LIMIT, query, this, REQUEST_PAGE, Comment.class);
                         getNewComments();
-                        adapter.notifyDataSetChanged();*/
-                        getNewComments();
+                        parse.incrementField(discussion.getObjectId(), "comments", Discussion.class);
+                        ColletionsStatics.getDataDiscusion().get(pos).setComments(ColletionsStatics.getDataDiscusion().get(pos).getComments() + 1);
                         adapter.notifyDataSetChanged();
                     }
 

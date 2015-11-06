@@ -1,5 +1,6 @@
 package com.kcumendigital.democratic;
 
+import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.os.PersistableBundle;
 import android.support.design.widget.FloatingActionButton;
@@ -31,7 +32,7 @@ import com.parse.ParseException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class CreateSurveyAcitivty extends AppCompatActivity implements View.OnClickListener, SunshineParse.SunshineCallback {
+public class CreateSurveyAcitivty extends AppCompatActivity implements View.OnClickListener{
     Toolbar toolbar;
     TextInputLayout titulo,description;
     FloatingActionButton button;
@@ -41,6 +42,7 @@ public class CreateSurveyAcitivty extends AppCompatActivity implements View.OnCl
     ListView list;
     Spinner spinner;
     OptionListAdapter adapter;
+    ProgressDialog dialgog;
     public static String DATA = "data";
 
     @Override
@@ -100,6 +102,8 @@ public class CreateSurveyAcitivty extends AppCompatActivity implements View.OnCl
             Toast.makeText(getApplicationContext(),"Ingrese por lo menos dos opciones",Toast.LENGTH_SHORT).show();
         }
         else {
+            dialgog = ProgressDialog.show(this, "Creando Encuesta",
+                    "dialog message", true);
             Survey survey = new Survey();
             survey.setTitle(titulo.getEditText().getText().toString());
             survey.setDescription(description.getEditText().getText().toString());
@@ -109,7 +113,32 @@ public class CreateSurveyAcitivty extends AppCompatActivity implements View.OnCl
             user.setObjectId("9zq30KL7Gu");
             survey.setUser(user);
             SunshineParse parse = new SunshineParse();
-            parse.insert(survey, this);
+            parse.insert(survey, new SunshineParse.SunshineCallback() {
+                @Override
+                public void done(boolean success, ParseException e) {
+                    if (success == true){
+                        dialgog.dismiss();
+                        Toast.makeText(getApplicationContext(),"Encuesta Creada",Toast.LENGTH_SHORT).show();
+                        finish();
+                    }
+                    else {
+
+                        dialgog.dismiss();
+                        Toast.makeText(getApplicationContext(),"Encuesta no Creada",Toast.LENGTH_SHORT).show();
+
+                    }
+                }
+
+                @Override
+                public void resultRecord(boolean success, SunshineRecord record, ParseException e) {
+
+                }
+
+                @Override
+                public void resultListRecords(boolean success, Integer requestCode, List<SunshineRecord> records, ParseException e) {
+
+                }
+            });
 
         }
     }
@@ -147,7 +176,7 @@ public class CreateSurveyAcitivty extends AppCompatActivity implements View.OnCl
     public void onSaveInstanceState(Bundle outState, PersistableBundle outPersistentState) {
 
     }
-
+/*
     @Override
     public void done(boolean success, ParseException e) {
         if (success == true){
@@ -166,5 +195,6 @@ public class CreateSurveyAcitivty extends AppCompatActivity implements View.OnCl
     @Override
     public void resultListRecords(boolean success, Integer requestCode, List<SunshineRecord> records, ParseException e) {
 
-    }
+    }*/
+
 }

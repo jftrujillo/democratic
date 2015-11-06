@@ -51,6 +51,11 @@ public class HomeActivity extends AppCompatActivity implements DrawerLayout.Draw
     DiscussionHomeFragment discussionFragment;
     SurveyHomeFragment surveyFragment;
 
+    @Override
+    protected void onRestart() {
+        super.onRestart();
+        discussionFragment.notifyDataChagued();
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
