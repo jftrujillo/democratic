@@ -33,7 +33,7 @@ public class DiscussionHomeFragment extends Fragment implements HomeListAdapter.
            if (homeListAdapter != null) {
                homeListAdapter.notifyDataSetChanged();
            }
-        
+
 
     }
 

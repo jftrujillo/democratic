@@ -51,6 +51,7 @@ public class OptionListSurveyActivity extends BaseAdapter {
             v = convertView;
         }
 
+
         v = View.inflate(context, R.layout.template_survey_opcions, null);
         TextView opcion = (TextView) v.findViewById(R.id.text_opcion_survey);
         TextView percentage = (TextView) v.findViewById(R.id.percentage_value);

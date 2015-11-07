@@ -13,6 +13,7 @@ import android.widget.Toast;
 import com.kcumendigital.democratic.Fragments.CreateForumFragment;
 import com.kcumendigital.democratic.Models.Discussion;
 import com.kcumendigital.democratic.Models.User;
+import com.kcumendigital.democratic.Util.AppUtil;
 import com.kcumendigital.democratic.parse.SunshineParse;
 import com.kcumendigital.democratic.parse.SunshineRecord;
 import com.parse.ParseException;
@@ -21,15 +22,22 @@ import java.util.List;
 
 public class CreateBoardDiscussion_activity extends AppCompatActivity implements CreateForumFragment.OnButton {
 
-    public static String USER_ID = "9zq30KL7Gu";
+    //public static String USER_ID = "9zq30KL7Gu";
     CreateForumFragment forum;
     Toolbar mToolbar;
     TextInputLayout title;
+    User user;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_create_board_discussion);
+        user = new User();
+        AppUtil.initStaticUser();//Borrar
+
+        user = AppUtil.getUserStatic();
+
 
         mToolbar = (Toolbar) findViewById(R.id.toolbarforo);
         setSupportActionBar(mToolbar);
@@ -58,8 +66,6 @@ public class CreateBoardDiscussion_activity extends AppCompatActivity implements
     public void OnButtonClick() {
         Discussion discussion =  forum.getNewDisucion();
         discussion.setTitle(title.getEditText().getText().toString());
-        User user = new User();
-        user.setObjectId(this.USER_ID);
         discussion.setUser(user);
         SunshineParse parse = new SunshineParse();
         parse.insert(discussion, new SunshineParse.SunshineCallback() {
