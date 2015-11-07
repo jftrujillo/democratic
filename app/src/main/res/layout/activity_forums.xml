@@ -103,7 +103,7 @@
                         <ImageView
                             android:layout_width="17dp"
                             android:layout_height="17dp"
-                            android:src="@drawable/ic_thumb_down_white_18dp" />
+                            android:src="@drawable/ic_thumb_down_white_24dp" />
 
                         <TextView
                             android:id="@+id/value_dislike"
@@ -133,7 +133,7 @@
                         <ImageView
                             android:layout_width="17dp"
                             android:layout_height="17dp"
-                            android:src="@drawable/ic_thumb_up_white_18dp" />
+                            android:src="@drawable/ic_thumb_up_white_24dp" />
 
                         <TextView
                             android:id="@+id/value_like"
@@ -168,10 +168,9 @@
             android:id="@+id/btnRecord"
             android:layout_width="@dimen/medium_size"
             android:layout_height="@dimen/mediun_size_height"
-            android:layout_gravity="end"
             android:background="?attr/colorPrimary"
             android:scaleType="center"
-            android:src="@drawable/ic_mic_white_18dp" />
+            android:src="@drawable/ic_mic_white_24dp" />
     </LinearLayout>
 </LinearLayout>
 
