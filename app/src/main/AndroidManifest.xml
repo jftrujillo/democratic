@@ -16,7 +16,7 @@
         <activity
             android:name=".AppIntroActivity"
             android:label="@string/app_name"
-            android:screenOrientation="portrait">
+            android:screenOrientation="portrait" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -39,6 +39,8 @@
         <activity android:name=".SurveyDescriptionActivity" >
         </activity>
         <activity android:name=".HomeActivity" >
+        </activity>
+        <activity android:name=".SignInAcitivity" >
         </activity>
     </application>
 
