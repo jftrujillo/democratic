@@ -2,7 +2,9 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="200dp"
-    tools:context="com.kcumendigital.democratic.Fragments.NumberFragmetFragment">
+    tools:context="com.kcumendigital.democratic.Fragments.NumberFragmetFragment"
+
+    >
 
     <ImageView
         android:id="@+id/bacground_pager"
@@ -20,6 +22,7 @@
         android:layout_marginRight="5dp"
         android:text="1"
         android:textColor="#ffffff"
-        android:textSize="20sp"
+        android:textSize="30sp"
+        android:padding="@dimen/big_padding"
         />
 </RelativeLayout>
