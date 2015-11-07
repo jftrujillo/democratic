@@ -30,6 +30,7 @@ import com.kcumendigital.democratic.Models.Comment;
 import com.kcumendigital.democratic.Models.Discussion;
 import com.kcumendigital.democratic.Models.DiscussionScore;
 import com.kcumendigital.democratic.Models.User;
+import com.kcumendigital.democratic.Util.AppUtil;
 import com.kcumendigital.democratic.Util.ColletionsStatics;
 import com.kcumendigital.democratic.parse.SunshineParse;
 import com.kcumendigital.democratic.parse.SunshineQuery;
@@ -47,7 +48,7 @@ import java.util.List;
 
 public class ForumsActivity extends AppCompatActivity implements SunshineParse.SunshineCallback, View.OnClickListener, DialogInterface.OnClickListener, View.OnTouchListener,CommentAdapter.OnItemClickListener {
 
-    static final String USER_ID = "Jgb5AcAcBp"; // BORRAR
+   // static final String USER_ID = "Jgb5AcAcBp"; // BORRAR
 
     static final int REQUEST_PAGE = 0;
     static final int REQUEST_RECENT = 1;
@@ -73,7 +74,7 @@ public class ForumsActivity extends AppCompatActivity implements SunshineParse.S
     ImageView btn_record;
     ImageView discussionUser, imgCategory;
     ImageButton imgPlay;
-
+    User user;
     MediaRecorder recorder;
     File archivo;
 
@@ -97,7 +98,8 @@ public class ForumsActivity extends AppCompatActivity implements SunshineParse.S
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_forums);
-
+        AppUtil.initStaticUser();
+        user = AppUtil.getUserStatic();
         comentario = (EditText) findViewById(R.id.comentario);
 
         imgPlay = (ImageButton) findViewById(R.id.playVoice);
@@ -230,8 +232,6 @@ public class ForumsActivity extends AppCompatActivity implements SunshineParse.S
         final Comment comment = new Comment();
         comment.setRecord(true);
         comment.setDiscussion(ColletionsStatics.getDataDiscusion().get(pos).getObjectId());
-        User user =  new User();
-        user.setObjectId(this.USER_ID);
         comment.setUser(user);
         comment.setFilePath(absolutePath);
         final SunshineParse parseVoice = new SunshineParse();
@@ -279,10 +279,10 @@ public class ForumsActivity extends AppCompatActivity implements SunshineParse.S
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.btn_like:
-                likeDiscussion(USER_ID);
+                likeDiscussion(user.getObjectId());
                 break;
             case R.id.btn_dislike:
-                dislikeDiscussion(USER_ID);
+                dislikeDiscussion(user.getObjectId());
                 break;
         }
     }
@@ -383,7 +383,7 @@ public class ForumsActivity extends AppCompatActivity implements SunshineParse.S
         } else {
             DiscussionScore discussionScore = new DiscussionScore();
             discussionScore.setDiscussion(discussion.getObjectId());
-            discussionScore.setUser(USER_ID);
+            discussionScore.setUser(user.getObjectId());
             discussionScore.setType(like);
             parse.insert(discussionScore);
             if (like.equals(DiscussionScore.LIKE)) {

@@ -2,29 +2,27 @@ package com.kcumendigital.democratic;
 
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
+import android.os.Bundle;
 import android.os.PersistableBundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.TextInputLayout;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.kcumendigital.democratic.Adapters.OptionListAdapter;
-import com.kcumendigital.democratic.Models.Comment;
 import com.kcumendigital.democratic.Models.Survey;
 import com.kcumendigital.democratic.Models.SurveyOption;
 import com.kcumendigital.democratic.Models.User;
+import com.kcumendigital.democratic.Util.AppUtil;
 import com.kcumendigital.democratic.parse.SunshineParse;
 import com.kcumendigital.democratic.parse.SunshineRecord;
 import com.parse.ParseException;
@@ -43,12 +41,19 @@ public class CreateSurveyAcitivty extends AppCompatActivity implements View.OnCl
     Spinner spinner;
     OptionListAdapter adapter;
     ProgressDialog dialgog;
+    User user;
     public static String DATA = "data";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_create_survey_acitivty);
+        user = new User();
+
+        AppUtil.initStaticUser();//Borrar
+
+
+        user = AppUtil.getUserStatic();
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
@@ -109,8 +114,6 @@ public class CreateSurveyAcitivty extends AppCompatActivity implements View.OnCl
             survey.setDescription(description.getEditText().getText().toString());
             survey.setCategory(spinner.getSelectedItem().toString());
             survey.setOptions(opciones);
-            User user = new User();
-            user.setObjectId("9zq30KL7Gu");
             survey.setUser(user);
             SunshineParse parse = new SunshineParse();
             parse.insert(survey, new SunshineParse.SunshineCallback() {
@@ -176,25 +179,4 @@ public class CreateSurveyAcitivty extends AppCompatActivity implements View.OnCl
     public void onSaveInstanceState(Bundle outState, PersistableBundle outPersistentState) {
 
     }
-/*
-    @Override
-    public void done(boolean success, ParseException e) {
-        if (success == true){
-            finish();
-            Toast.makeText(this,"so mucho android",Toast.LENGTH_SHORT).show();
-        }
-        else
-            Toast.makeText(this,"fallo la creacion,chucha",Toast.LENGTH_SHORT).show();
-    }
-
-    @Override
-    public void resultRecord(boolean success, SunshineRecord record, ParseException e) {
-
-    }
-
-    @Override
-    public void resultListRecords(boolean success, Integer requestCode, List<SunshineRecord> records, ParseException e) {
-
-    }*/
-
 }
