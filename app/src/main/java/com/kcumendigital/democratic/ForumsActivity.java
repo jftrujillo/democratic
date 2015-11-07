@@ -497,12 +497,7 @@ public class ForumsActivity extends AppCompatActivity implements SunshineParse.S
         if(type == CommentAdapter.BTN_DISLIKE){
             Log.i("BOTONES", "Se presiono el dislike");
         }
-        if(type == CommentAdapter.BTN_PLAY){
-            Log.i("BOTONES", "Se presiono el play en pos "+position);
 
-
-
-        }
     }
 
 

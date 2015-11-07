@@ -21,6 +21,7 @@ import com.squareup.picasso.Picasso;
 import com.squareup.picasso.Transformation;
 
 import java.io.IOException;
+import java.util.HashMap;
 import java.util.List;
 
 /**
@@ -30,9 +31,12 @@ public class CommentAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
     public static final int TYPE_TEXT = 0;
     public static final int TYPE_VOICE = 1;
 
-    public static final int BTN_PLAY = 0;
     public static final int BTN_LIKE = 1;
     public static final int BTN_DISLIKE = 2;
+
+    public static final int STATE_PAUSED=0;
+    public static final int STATE_PLAYING=1;
+    public static final int STATE_DOWNLOADING=2;
 
     Context context;
     List<Comment> data;
@@ -41,9 +45,10 @@ public class CommentAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
     Transformation transformation;
 
     MediaPlayer player;
-
-    ProgressBar currentBar;
+    HashMap<Integer, ProgressBar> bars;
     boolean paused;
+    int pos;
+    ProgressHandler progressHandler;
 
     public interface OnItemClickListener {
         void onItemClick(int position, int button);
@@ -57,6 +62,8 @@ public class CommentAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
         this.data = data;
         this.recyclerView = recyclerView;
         this.onItemClick = onItemClick;
+        pos = -1;
+        bars = new HashMap<>();
     }
 
     @Override
@@ -95,6 +102,20 @@ public class CommentAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
         if (holder instanceof VoiceViewHolder) {
             ((VoiceViewHolder) holder).btn_play.setOnClickListener(this);
             ((VoiceViewHolder) holder).btn_play.setTag(position);
+            if(data.get(position).getState()==STATE_PAUSED){
+                ((VoiceViewHolder) holder).btn_play.setVisibility(ImageView.VISIBLE);
+                ((VoiceViewHolder) holder).downloading.setVisibility(ImageView.GONE);
+                ((VoiceViewHolder) holder).btn_play.setImageResource(R.drawable.ic_play_arrow_black_24dp);
+            }else if(data.get(position).getState()==STATE_PLAYING){
+                ((VoiceViewHolder) holder).btn_play.setVisibility(ImageView.VISIBLE);
+                ((VoiceViewHolder) holder).downloading.setVisibility(ImageView.GONE);
+                ((VoiceViewHolder) holder).btn_play.setImageResource(R.drawable.ic_pause_black_24dp);
+            }else{
+                ((VoiceViewHolder) holder).btn_play.setVisibility(ImageView.GONE);
+                ((VoiceViewHolder) holder).downloading.setVisibility(ImageView.VISIBLE);
+            }
+
+            bars.put(position, ((VoiceViewHolder) holder).progress);
 
         }
     }
@@ -138,6 +159,8 @@ public class CommentAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
     public class VoiceViewHolder extends RecyclerView.ViewHolder {
         ImageView perfil;
         ImageButton btn_play;
+        ProgressBar downloading;
+        ProgressBar progress;
 
         public VoiceViewHolder(View itemView) {
             super(itemView);
@@ -146,6 +169,8 @@ public class CommentAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
             com.squareup.picasso.Transformation transformation = (com.squareup.picasso.Transformation) new RoundedTransformationBuilder().oval(true).build();
             Picasso.with(context).load("http://k10.kn3.net/taringa/6/6/8/7/9/1/4/takehikoinoue/FA7.jpg").transform(transformation).into(perfil);
             btn_play = (ImageButton) itemView.findViewById(R.id.playVoice);
+            downloading = (ProgressBar) itemView.findViewById(R.id.downloadingVoice);
+            progress = (ProgressBar) itemView.findViewById(R.id.progressVoice);
         }
 
     }
@@ -155,8 +180,8 @@ public class CommentAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
 
         switch (view.getId()) {
             case R.id.playVoice:
-
-                onItemClick.onItemClick((Integer) view.getTag(), BTN_PLAY);
+                int posC = (Integer) view.getTag();
+                handlePlayer(data.get(posC).getFile(), posC);
                 break;
             case R.id.like:
                 onItemClick.onItemClick(0, BTN_LIKE);
@@ -168,44 +193,135 @@ public class CommentAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
 
     }
 
+    public void handlePlayer(String url, int posC){
+        if(pos==-1 || pos == posC)
+            playPlayer(data.get(posC).getFile(), posC);
+        else{
+            stopPlayer();
+            playPlayer(data.get(posC).getFile(), posC);
+        }
 
-    public void playPlayer(String url){
+    }
 
-        if(paused){
+
+    public void playPlayer(String url, int posC){
+        if(this.paused){
+            data.get(posC).setState(STATE_PLAYING);
+            notifyDataSetChanged();
             player.start();
+            paused = false;
+            progressHandler.setPaused(false);
         }else {
-
-            player = new MediaPlayer();
-            try {
-                player.setDataSource(url);
-                player.setOnPreparedListener(this);
-                player.setOnCompletionListener(this);
-                player.prepareAsync();
-            } catch (IOException e) {
-                e.printStackTrace();
+            if(player!=null && player.isPlaying()){
+                pausePlayer();
+            }else {
+                data.get(posC).setState(STATE_DOWNLOADING);
+                notifyDataSetChanged();
+                player = new MediaPlayer();
+                try {
+                    player.setDataSource(url);
+                    player.setOnPreparedListener(this);
+                    player.setOnCompletionListener(this);
+                    player.prepareAsync();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
             }
         }
-        paused = false;
+
+        pos = posC;
+
     }
 
 
 
     public void stopPlayer(){
         if(player!=null){
+            paused = false;
+            data.get(pos).setState(STATE_PAUSED);
+            notifyDataSetChanged();
             player.stop();
             player.release();
             player=null;
+            progressHandler.stopProgress();
+            pos=-1;
         }
+    }
+
+    public void pausePlayer(){
+        data.get(pos).setState(STATE_PAUSED);
+        notifyDataSetChanged();
+        progressHandler.setPaused(true);
+        this.paused = true;
+        player.pause();
+
     }
 
     @Override
     public void onPrepared(MediaPlayer mp) {
         player.start();
+        progressHandler = new ProgressHandler(pos);
+        progressHandler.execute();
+        paused = false;
+        data.get(pos).setState(STATE_PLAYING);
+        notifyDataSetChanged();
+
     }
 
     @Override
     public void onCompletion(MediaPlayer mp) {
         stopPlayer();
+    }
+
+    public class ProgressHandler extends AsyncTask<Integer,Integer, Integer>{
+
+        boolean running;
+        boolean pausedProgress;
+        int posBar;
+
+        public ProgressHandler(int posBar) {
+            this.posBar = posBar;
+            int duration = player.getDuration();
+            bars.get(posBar).setMax(player.getDuration());
+        }
+
+        @Override
+        protected Integer doInBackground(Integer... params) {
+
+            running = true;
+            pausedProgress = false;
+            while(running){
+                try {
+                    Thread.sleep(200);
+                    if(!pausedProgress)
+                        publishProgress();
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+            }
+
+            return null;
+        }
+
+        @Override
+        protected void onProgressUpdate(Integer... values) {
+            if(player==null){
+                running = false;
+                bars.get(posBar).setProgress(0);
+            }else {
+                int posssss = player.getCurrentPosition();
+                bars.get(posBar).setProgress(player.getCurrentPosition());
+            }
+        }
+
+        public void stopProgress(){
+            running = false;
+            bars.get(posBar).setProgress(0);
+        }
+
+        public void setPaused(boolean paused){
+            pausedProgress = paused;
+        }
     }
 
 }

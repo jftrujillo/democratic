@@ -7,6 +7,10 @@ import com.kcumendigital.democratic.parse.SunshineRecord;
  * Created by Dario Chamorro on 19/10/2015.
  */
 public class Comment extends SunshineRecord{
+
+    @ignore
+    int state;
+
     boolean record;
     String description;
     long likes,dislikes;
@@ -83,5 +87,16 @@ public class Comment extends SunshineRecord{
     public void setDiscussion(String discussion) {
         this.discussion = discussion;
     }
+
+    public int getState() {
+        return state;
+    }
+
+    public void setState(int state) {
+        this.state = state;
+    }
+
     //endregion
+
+
 }

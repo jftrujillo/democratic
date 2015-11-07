@@ -16,7 +16,7 @@ public class AppUtil {
         if (userStatic == null){
             userStatic = new User();
         }
-        return getUserStatic();
+        return userStatic;
     }
 
     public static void initStaticUser(){
