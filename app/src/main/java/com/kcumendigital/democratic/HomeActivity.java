@@ -67,8 +67,8 @@ public class HomeActivity extends AppCompatActivity implements DrawerLayout.Draw
         nav = (NavigationView) findViewById(R.id.nav);
         ImageView imm_nav = (ImageView) nav.findViewById(R.id.img_user_nav);
         Transformation transformation = new RoundedTransformationBuilder()
-                .cornerRadiusDp(0)
-                .oval(false)
+                .scaleType(ImageView.ScaleType.CENTER_CROP)
+                .oval(true)
                 .build();
         Picasso.with(this).load("https://goo.gl/TF0Cwd").transform(transformation).into(imm_nav);
         drawer.setDrawerListener(this);

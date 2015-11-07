@@ -1,6 +1,5 @@
 package com.kcumendigital.democratic.Adapters;
 
-import android.media.Image;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
@@ -11,9 +10,6 @@ import android.widget.LinearLayout;
 
 import com.kcumendigital.democratic.Fragments.NumberFragmetFragment;
 import com.kcumendigital.democratic.R;
-
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * Created by asus on 07/10/2015.

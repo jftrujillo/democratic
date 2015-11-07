@@ -1,11 +1,7 @@
 package com.kcumendigital.democratic.Adapters;
 
-import android.app.Activity;
 import android.content.Context;
-import android.graphics.Color;
-import android.media.Image;
 import android.net.Uri;
-import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.view.ViewPager;
 import android.support.v7.widget.RecyclerView;
