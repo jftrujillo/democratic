@@ -171,8 +171,8 @@ public class ForumsActivity extends AppCompatActivity implements SunshineParse.S
         recyclerView.setLayoutManager(new commentsLayoutManager(this));
 
         parse = new SunshineParse();
-
-        getComments();
+        if(savedInstanceState==null)
+            getComments();
 
         comentario.addTextChangedListener(new TextWatcher() {
             @Override

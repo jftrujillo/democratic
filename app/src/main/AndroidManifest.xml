@@ -34,13 +34,19 @@
         </activity>
         <activity android:name=".CreateBoardDiscussion_activity" />
         <activity android:name=".ForumsActivity" />
-        <activity android:name=".LoginActivity" >
+        <activity android:name=".LoginActivity"
+
+            >
         </activity>
         <activity android:name=".SurveyDescriptionActivity" >
         </activity>
-        <activity android:name=".HomeActivity" >
+        <activity android:name=".HomeActivity"
+
+            >
         </activity>
-        <activity android:name=".SignInAcitivity" >
+        <activity android:name=".SignInAcitivity"
+            android:screenOrientation="portrait"
+            >
         </activity>
     </application>
 

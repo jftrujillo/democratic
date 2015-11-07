@@ -11,6 +11,9 @@ import android.widget.TextView;
 
 public class LoginActivity extends AppCompatActivity implements View.OnClickListener {
 
+    static final String SAVED_EMAIL="email";
+    static final String SAVED_PASS="pass";
+
     TextInputLayout email, pass;
     Button btnRegistro;
     FloatingActionButton ingresar;
@@ -27,6 +30,19 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         btnRegistro.setOnClickListener(this);
         ingresar.setOnClickListener(this);
 
+        if(savedInstanceState!=null){
+            email.getEditText().setText(savedInstanceState.getString(SAVED_EMAIL));
+            pass.getEditText().setText(savedInstanceState.getString(SAVED_PASS));
+        }
+
+    }
+
+
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        outState.putString(SAVED_EMAIL,email.getEditText().getText().toString());
+        outState.putString(SAVED_PASS,pass.getEditText().getText().toString());
+        super.onSaveInstanceState(outState);
     }
 
     @Override
