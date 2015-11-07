@@ -13,6 +13,7 @@ import com.kcumendigital.democratic.Models.Comment;
 import com.kcumendigital.democratic.R;
 import com.makeramen.roundedimageview.RoundedTransformationBuilder;
 import com.squareup.picasso.Picasso;
+import com.squareup.picasso.Transformation;
 
 import java.util.List;
 
@@ -31,6 +32,7 @@ public class CommentAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
     List<Comment> data;
     RecyclerView recyclerView;
     OnItemClickListener onItemClick;
+    Transformation transformation;
 
     public interface OnItemClickListener {
         void onItemClick(int position, int button);
@@ -117,8 +119,8 @@ public class CommentAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
             nombreUsuario = (TextView) itemView.findViewById(R.id.nombreUsuario);
             imgPerfil = (ImageView) itemView.findViewById(R.id.imgPerfil);
 
-            com.squareup.picasso.Transformation transformation = (com.squareup.picasso.Transformation) new RoundedTransformationBuilder().cornerRadius(80).oval(false).build();
-            Picasso.with(context).load("https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQMa9pBJ5VaAIuu6XTFp8h5jzQlJJ8sSa44huSp58x3ksdJtJTF").transform(transformation).into(imgPerfil);
+            transformation = new RoundedTransformationBuilder().oval(true).build();
+            Picasso.with(context).load("https://fbcdn-sphotos-b-a.akamaihd.net/hphotos-ak-frc3/v/t1.0-9/1970810_10151892227450771_595738950_n.jpg?oh=882c88204af7abd222bc73a21a3edc62&oe=56C9C868&__gda__=1459270949_613753f7ed5e1b07391330a1d893d390").transform(transformation).into(imgPerfil);
         }
     }
 
@@ -130,7 +132,7 @@ public class CommentAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
             super(itemView);
 
             perfil = (ImageView) itemView.findViewById(R.id.imgPerfilvoice);
-            com.squareup.picasso.Transformation transformation = (com.squareup.picasso.Transformation) new RoundedTransformationBuilder().cornerRadius(80).oval(false).build();
+            com.squareup.picasso.Transformation transformation = (com.squareup.picasso.Transformation) new RoundedTransformationBuilder().oval(true).build();
             Picasso.with(context).load("http://k10.kn3.net/taringa/6/6/8/7/9/1/4/takehikoinoue/FA7.jpg").transform(transformation).into(perfil);
             btn_play = (ImageButton) itemView.findViewById(R.id.playVoice);
         }
