@@ -56,7 +56,8 @@
                         android:layout_width="50dp"
                         android:layout_height="50dp"
                         android:layout_centerVertical="true"
-                        android:layout_margin="10dp" />
+                        android:layout_margin="10dp"
+                        android:scaleType="fitXY"/>
 
                     <TextView
                         android:id="@+id/txttittle"
