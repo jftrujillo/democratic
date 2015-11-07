@@ -2,15 +2,10 @@ package com.kcumendigital.democratic;
 
 import android.content.Intent;
 import android.graphics.Color;
-import android.support.v4.app.Fragment;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-
 import com.github.paolorotolo.appintro.AppIntro;
 import com.kcumendigital.democratic.Fragments.IntroFragment;
 import com.kcumendigital.democratic.Fragments.WelcomeFragment;
-
-import java.util.List;
 
 public class AppIntroActivity extends AppIntro {
 

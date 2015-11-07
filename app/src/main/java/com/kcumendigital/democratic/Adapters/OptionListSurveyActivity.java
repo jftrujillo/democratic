@@ -11,6 +11,7 @@ import android.widget.TextView;
 import com.kcumendigital.democratic.Models.SurveyOption;
 import com.kcumendigital.democratic.R;
 
+import java.text.DecimalFormat;
 import java.util.List;
 
 /**
@@ -56,16 +57,22 @@ public class OptionListSurveyActivity extends BaseAdapter {
         float porcentaje;
         if (sum != 0) {
 
-             porcentaje = data.get(position).getVotes() * 100 / sum;
+             porcentaje = data.get(position).getVotes() * 100f/sum;
         }
         else {
              porcentaje = 0;
         }
         opcion.setText(data.get(position).getDescription());
-        percentage.setText("" + porcentaje);
+        DecimalFormat df = new DecimalFormat();
+        df.setMaximumFractionDigits(2);
+        percentage.setText("" + df.format(porcentaje));
         ProgressBar progressBar = (ProgressBar) v.findViewById(R.id.progressBar);
         progressBar.setProgress((int) porcentaje);
         return v;
 
+    }
+
+    public void updateSum(long sum){
+        this.sum = sum;
     }
 }

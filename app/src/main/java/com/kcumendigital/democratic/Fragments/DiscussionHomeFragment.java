@@ -28,6 +28,15 @@ public class DiscussionHomeFragment extends Fragment implements HomeListAdapter.
     PagerAdapter pagerAdapter;
     HomeListAdapter homeListAdapter;
 
+    public void notifyDataChagued(){
+
+           if (homeListAdapter != null) {
+               homeListAdapter.notifyDataSetChanged();
+           }
+        
+
+    }
+
     public DiscussionHomeFragment() {
     }
 
