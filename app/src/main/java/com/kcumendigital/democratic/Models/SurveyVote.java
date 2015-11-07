@@ -10,9 +10,12 @@ public class SurveyVote extends SunshineRecord {
 
     @relation
     SurveyOption option;
+    //pbejto de la opcion votada
 
     @relationId(type = ID_USER)
     String user;
+
+    //id del usuario 
 
     public SurveyOption getOption() {
         return option;
