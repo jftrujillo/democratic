@@ -192,7 +192,7 @@ public class ForumsActivity extends AppCompatActivity implements SunshineParse.S
             public void afterTextChanged(Editable editable) {
 
                 if (comentario.getText().toString().equals("")){
-                    Picasso.with(getApplicationContext()).load(R.drawable.ic_mic_white_18dp).transform(transformation).into(btn_record);
+                    Picasso.with(getApplicationContext()).load(R.drawable.ic_mic_white_24dp).transform(transformation).into(btn_record);
                 }
 
                 else {

@@ -51,6 +51,7 @@ public class NumberFragmetFragment extends android.support.v4.app.Fragment {
             String categoria = discussion.getCategory();
 
             if (categoria.equals("Salud")){
+                Picasso.with(getActivity()).load(R.drawable.img_sombra).into(img_bacground);
                 Picasso.with(getActivity()).load(R.drawable.bg_salud).into(img_bacground);
             }
 
@@ -60,7 +61,6 @@ public class NumberFragmetFragment extends android.support.v4.app.Fragment {
 
             if (categoria.equals("Educación")){
                 Picasso.with(getActivity()).load(R.drawable.ic_democratic_educacion).into(img_bacground);
-
             }
 
         }
@@ -79,7 +79,6 @@ public class NumberFragmetFragment extends android.support.v4.app.Fragment {
 
             if (categoria.equals("Educación")){
                 Picasso.with(getActivity()).load(R.drawable.ic_democratic_educacion).into(img_bacground);
-
             }
 
         }

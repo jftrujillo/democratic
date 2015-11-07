@@ -168,10 +168,9 @@
             android:id="@+id/btnRecord"
             android:layout_width="@dimen/medium_size"
             android:layout_height="@dimen/mediun_size_height"
-            android:layout_gravity="end"
             android:background="?attr/colorPrimary"
             android:scaleType="center"
-            android:src="@drawable/ic_mic_white_18dp" />
+            android:src="@drawable/ic_mic_white_24dp" />
     </LinearLayout>
 </LinearLayout>
 
