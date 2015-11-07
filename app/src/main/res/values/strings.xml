@@ -18,6 +18,10 @@
     <string name="change_vote">Desea cambiar la votación?</string>
     <string name="dialog_positive">Aceptar</string>
     <string name="dialog_negative">Cancelar</string>
+    <string name="confirm_pass">Confirmar Contraseña</string>
+    <string name="password">Contraseña</string>
+    <string name="email">Correo Electronico</string>
+    <string name="already_have_acount">¿Ya tienes una cuenta?</string>
 
     <string-array name="Categorias">
         <item>Gobierno</item>

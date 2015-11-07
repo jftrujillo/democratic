@@ -13,6 +13,7 @@ import com.kcumendigital.democratic.Models.User;
 public class AppUtil {
     public static User userStatic;
     public static User getUserStatic(){
+
         if (userStatic == null){
             userStatic = new User();
         }
