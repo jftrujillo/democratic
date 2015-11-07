@@ -1,12 +1,9 @@
 package com.kcumendigital.democratic;
+
 import android.app.AlertDialog;
-import android.app.ProgressDialog;
 import android.content.DialogInterface;
-import android.media.AudioManager;
-import android.media.MediaPlayer;
 import android.media.MediaRecorder;
 import android.net.Uri;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.os.Environment;
@@ -20,14 +17,13 @@ import android.text.TextWatcher;
 import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.SeekBar;
 import android.widget.TextView;
 import android.widget.Toast;
+
 import com.kcumendigital.democratic.Adapters.CommentAdapter;
 import com.kcumendigital.democratic.LayoutManagers.commentsLayoutManager;
 import com.kcumendigital.democratic.Models.Comment;
@@ -49,7 +45,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-public class ForumsActivity extends AppCompatActivity implements SunshineParse.SunshineCallback, View.OnClickListener, DialogInterface.OnClickListener, MediaPlayer.OnCompletionListener,View.OnTouchListener,CommentAdapter.OnItemClickListener {
+public class ForumsActivity extends AppCompatActivity implements SunshineParse.SunshineCallback, View.OnClickListener, DialogInterface.OnClickListener, View.OnTouchListener,CommentAdapter.OnItemClickListener {
 
     static final String USER_ID = "Jgb5AcAcBp"; // BORRAR
 
@@ -60,9 +56,8 @@ public class ForumsActivity extends AppCompatActivity implements SunshineParse.S
     static final int REQUEST_COMMENT_SCORE = 4;
     static boolean IS_STOP = false;
     private Toolbar mToolbar;
-    public static String ID_DISUCION = "";
-    private boolean intialStage = true;
-    private boolean playPause;
+
+
 
     CollapsingToolbarLayout collapsingToolbarLayout;
     Transformation transformation;
@@ -81,8 +76,8 @@ public class ForumsActivity extends AppCompatActivity implements SunshineParse.S
 
     MediaRecorder recorder;
     File archivo;
-    MediaPlayer player;
-    SeekBar seekbar;
+
+
 
 
     SunshineParse parse;
@@ -107,8 +102,6 @@ public class ForumsActivity extends AppCompatActivity implements SunshineParse.S
 
         imgPlay = (ImageButton) findViewById(R.id.playVoice);
         btn_record = (ImageView) findViewById(R.id.btnRecord);
-        player = new MediaPlayer();
-        player.setAudioStreamType(AudioManager.STREAM_MUSIC);
         btn_record.setOnTouchListener(this);
 
         imgCategory = (ImageView) findViewById(R.id.imgCategories);
@@ -223,36 +216,15 @@ public class ForumsActivity extends AppCompatActivity implements SunshineParse.S
         if (IS_STOP == false) {
             recorder.stop();
             recorder.release();
-            player = new MediaPlayer();
-            player.setOnCompletionListener(this);
-            try {
-                player.setDataSource(archivo.getAbsolutePath());
-            } catch (IOException e) {
-            }
-            try {
-                player.prepare();
-            } catch (IOException e) {
-            }
             createNewVoiceComent(archivo.getPath());
             btn_record.setEnabled(true);
             IS_STOP = true;
         } else{}
     }
 
-    public void stopPlayer(){
-        if(!IS_STOP){
-            player.stop();
-            player.release();
-            player = null;
-            IS_STOP = true;
-        }
-    }
 
-    public void playPlayer(String url){
-        IS_STOP = true;
-        player = new MediaPlayer();
-        player.setOnCompletionListener(this);
-    }
+
+
 
     private void createNewVoiceComent(String absolutePath) {
         final Comment comment = new Comment();
@@ -287,10 +259,6 @@ public class ForumsActivity extends AppCompatActivity implements SunshineParse.S
 
             }
         });
-    }
-
-    public void reproducir() {
-        player.start();
     }
 
     public void tiempoGrabacion() {
@@ -459,11 +427,6 @@ public class ForumsActivity extends AppCompatActivity implements SunshineParse.S
     }
 
     @Override
-    public void onCompletion(MediaPlayer mediaPlayer) {
-        stopPlayer();
-    }
-
-    @Override
     public boolean onTouch(View v, MotionEvent event) {
         if (comentario.getText().toString().equals("")) {
             switch (event.getAction()) {
@@ -537,114 +500,11 @@ public class ForumsActivity extends AppCompatActivity implements SunshineParse.S
         if(type == CommentAdapter.BTN_PLAY){
             Log.i("BOTONES", "Se presiono el play en pos "+position);
 
-            if (!playPause) {
 
-                if (intialStage)
-                    new Player()
-                            .execute(data.get(position).getFile());
-                else {
-                    if (!player.isPlaying()) {
-                        player.start();
-                    }
-                }
-                playPause = true;
-            } else {
-                //imgPlay.setBackgroundResource(R.drawable.ic_thumb_up_black_18dp);
-                if (player.isPlaying()){
-                    player.pause();
-                }
-                playPause = false;
-            }
-
-
-        }
-/*
-        if (!playPause) {
-            //btn.setBackgroundResource(R.drawable.button_pause);
-            if (intialStage)
-                new Player()
-                        .execute(data.get(position).getFile());
-            else {
-                if (!player.isPlaying())
-                    player.start();
-            }
-            playPause = true;
-        } else {
-            // btn.setBackgroundResource(R.drawable.button_play);
-            if (player.isPlaying())
-                player.pause();
-            playPause = false;
-        }*/
-    }
-
-    class Player extends AsyncTask<String, Void, Boolean> {
-        private ProgressDialog progress;
-
-        @Override
-        protected Boolean doInBackground(String... params) {
-            // TODO Auto-generated method stub
-            Boolean prepared;
-            try {
-                player.setDataSource(params[0]);
-                player.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
-
-                    @Override
-                    public void onCompletion(MediaPlayer mp) {
-                        // TODO Auto-generated method stub
-                        intialStage = true;
-                        playPause=false;
-                        player.stop();
-                        player.reset();
-                    }
-                });
-                player.prepare();
-                prepared = true;
-            } catch (IllegalArgumentException e) {
-                // TODO Auto-generated catch block
-                Log.d("IllegarArgument", e.getMessage());
-                prepared = false;
-                e.printStackTrace();
-            } catch (SecurityException e) {
-                // TODO Auto-generated catch block
-                prepared = false;
-                e.printStackTrace();
-            } catch (IllegalStateException e) {
-                // TODO Auto-generated catch block
-                prepared = false;
-                e.printStackTrace();
-            } catch (IOException e) {
-                // TODO Auto-generated catch block
-                prepared = false;
-                e.printStackTrace();
-            }
-            return prepared;
-        }
-
-        @Override
-        protected void onPostExecute(Boolean result) {
-            // TODO Auto-generated method stub
-            super.onPostExecute(result);
-            if (progress.isShowing()) {
-                progress.cancel();
-            }
-            Log.d("Prepared", "//" + result);
-            player.start();
-
-            intialStage = false;
-        }
-
-        public Player() {
-            progress = new ProgressDialog(ForumsActivity.this);
-        }
-
-        @Override
-        protected void onPreExecute() {
-            // TODO Auto-generated method stub
-            super.onPreExecute();
-            this.progress.setMessage("Buffering...");
-            this.progress.show();
 
         }
     }
+
+
 
 }

@@ -1,11 +1,16 @@
 package com.kcumendigital.democratic.Adapters;
 
+import android.app.ProgressDialog;
 import android.content.Context;
+import android.media.MediaPlayer;
+import android.os.AsyncTask;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -15,12 +20,13 @@ import com.makeramen.roundedimageview.RoundedTransformationBuilder;
 import com.squareup.picasso.Picasso;
 import com.squareup.picasso.Transformation;
 
+import java.io.IOException;
 import java.util.List;
 
 /**
  * Created by manuelfernando on 16/10/2015.
  */
-public class CommentAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> implements View.OnClickListener {
+public class CommentAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> implements View.OnClickListener, MediaPlayer.OnPreparedListener, MediaPlayer.OnCompletionListener {
     public static final int TYPE_TEXT = 0;
     public static final int TYPE_VOICE = 1;
 
@@ -33,6 +39,11 @@ public class CommentAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
     RecyclerView recyclerView;
     OnItemClickListener onItemClick;
     Transformation transformation;
+
+    MediaPlayer player;
+
+    ProgressBar currentBar;
+    boolean paused;
 
     public interface OnItemClickListener {
         void onItemClick(int position, int button);
@@ -144,6 +155,7 @@ public class CommentAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
 
         switch (view.getId()) {
             case R.id.playVoice:
+
                 onItemClick.onItemClick((Integer) view.getTag(), BTN_PLAY);
                 break;
             case R.id.like:
@@ -154,6 +166,46 @@ public class CommentAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
                 break;
         }
 
+    }
+
+
+    public void playPlayer(String url){
+
+        if(paused){
+            player.start();
+        }else {
+
+            player = new MediaPlayer();
+            try {
+                player.setDataSource(url);
+                player.setOnPreparedListener(this);
+                player.setOnCompletionListener(this);
+                player.prepareAsync();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+        paused = false;
+    }
+
+
+
+    public void stopPlayer(){
+        if(player!=null){
+            player.stop();
+            player.release();
+            player=null;
+        }
+    }
+
+    @Override
+    public void onPrepared(MediaPlayer mp) {
+        player.start();
+    }
+
+    @Override
+    public void onCompletion(MediaPlayer mp) {
+        stopPlayer();
     }
 
 }

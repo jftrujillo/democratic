@@ -333,6 +333,7 @@ public class SunshineParse implements DeleteCallback {
                                     c.getMethod(md, f.getType()).invoke(record, obj);
                             }else if(annotation.equals(ANNOTATION_FILE_URL)) {
                                 ParseFile parseFile = parseObject.getParseFile(fN);
+
                                 if(parseFile!=null)
                                     c.getMethod(md, f.getType()).invoke(record, parseFile.getUrl());
                             }else if(annotation.equals(ANNOTATION_RELATION_ID)) {
