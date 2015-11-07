@@ -102,7 +102,7 @@ public class HomeListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
               spanHolder.user_name.setText(data.get(position).getUser().getUserName());
               spanHolder.count_cometns_forums.setText("" + data.get(position).getComments());
               spanHolder.likes.setText("" + data.get(position).getLikes());
-              spanHolder.likes.setText("" + data.get(position).getDislikes());
+              spanHolder.dislikes.setText("" + data.get(position).getDislikes());
               spanHolder.categoria.setText(data.get(position).getCategory());
               String categoria = data.get(position).getCategory();
               Picasso.with(context).load(Uri.parse(data.get(position).getUser().getImg()))

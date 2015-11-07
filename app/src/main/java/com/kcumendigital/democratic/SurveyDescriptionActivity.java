@@ -111,8 +111,8 @@ public class SurveyDescriptionActivity extends AppCompatActivity implements Adap
         progressBar.setProgress((int) percentage);
         DecimalFormat df = new DecimalFormat();
         df.setMaximumFractionDigits(2);
-        mostVotedOpcionText.setText(df.format(mostVotedOpcionString));
-        mostVotedOpcionPercentage.setText(""+percentage);
+        mostVotedOpcionText.setText(mostVotedOpcionString);
+        mostVotedOpcionPercentage.setText(""+df.format(percentage));
         votes.setText(""+sum);
     }
 }

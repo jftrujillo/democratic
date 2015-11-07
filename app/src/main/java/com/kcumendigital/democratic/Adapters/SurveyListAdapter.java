@@ -91,9 +91,13 @@ public class SurveyListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
                 }
                 suma = suma + data.get(position).getOptions().get(i).getVotes();
             }
+            float porcentaje = 0;
+            if (suma != 0) {
 
-            float porcentaje = BiggerOpcionNumber * suma/100;
-
+                porcentaje = BiggerOpcionNumber * 100 / suma;
+            }
+            else
+            porcentaje = 0;
             spanHolder.percentage_opcion.setText(""+porcentaje);
             spanHolder.opcion_name.setText(BiggerOpcion);
             String categoria = data.get(position).getCategory();
