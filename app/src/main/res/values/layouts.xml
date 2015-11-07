@@ -2,6 +2,6 @@
 <resources>
     <bool name="port">true</bool>
     <bool name="phone">true</bool>
-    
+
 
 </resources>

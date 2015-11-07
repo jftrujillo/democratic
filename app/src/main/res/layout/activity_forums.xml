@@ -7,17 +7,28 @@
     android:orientation="vertical"
     tools:context="com.kcumendigital.democratic.ForumsActivity">
 
+
     <android.support.design.widget.CoordinatorLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1">
-
-        <android.support.v7.widget.RecyclerView
-            android:id="@+id/recyclerviewForumsComents"
+        <android.support.v4.widget.SwipeRefreshLayout
+            android:id="@+id/refresh"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="@dimen/marginRecyclerView"
-            app:layout_behavior="@string/appbar_scrolling_view_behavior" />
+            android:layout_height="match_parent"
+            app:layout_behavior="@string/appbar_scrolling_view_behavior"
+            app:layout_scrollFlags="enterAlwaysCollapsed">
+
+            >
+
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/recyclerviewForumsComents"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/marginRecyclerView"
+
+                 />
+        </android.support.v4.widget.SwipeRefreshLayout>
 
         <android.support.design.widget.AppBarLayout
             android:id="@+id/appBarLayout"
@@ -30,7 +41,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 app:contentScrim="?attr/colorPrimary"
-                app:layout_scrollFlags="scroll|enterAlwaysCollapsed|enterAlways">
+                app:layout_scrollFlags="scroll|enterAlways">
 
                 <ImageView
                     android:id="@+id/screenBackground"
@@ -148,6 +159,7 @@
                 </RelativeLayout>
             </android.support.design.widget.CollapsingToolbarLayout>
         </android.support.design.widget.AppBarLayout>
+
     </android.support.design.widget.CoordinatorLayout>
 
     <LinearLayout
