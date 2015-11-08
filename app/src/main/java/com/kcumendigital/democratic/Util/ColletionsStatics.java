@@ -12,8 +12,10 @@ import java.util.ArrayList;
 public class ColletionsStatics {
 
     public static final int LIMIT=10;
+    public static final int RECENTS=0;
+    public static final int PAGE=1;
 
-    public static ArrayList<Discussion> dataDiscusion;
+    private static ArrayList<Discussion> dataDiscusion;
     public static ArrayList<Discussion> getDataDiscusion(){
         if (dataDiscusion == null){
             dataDiscusion = new ArrayList<>();
@@ -21,15 +23,15 @@ public class ColletionsStatics {
         return dataDiscusion;
     }
 
-    public static ArrayList<Comment> dataComeents;
-    public static ArrayList<Discussion> getDataComeents(){
-        if (dataComeents == null){
-            dataComeents = new ArrayList<>();
+    private static ArrayList<Comment> dataComments;
+    public static ArrayList<Comment> getDataComments(){
+        if (dataComments == null){
+            dataComments = new ArrayList<>();
         }
-        return dataDiscusion;
+        return dataComments;
     }
 
-    public static ArrayList<Survey> dataSurvey;
+    private static ArrayList<Survey> dataSurvey;
     public static ArrayList<Survey> getDataSurvey(){
         if (dataSurvey == null){
             dataSurvey = new ArrayList<>();

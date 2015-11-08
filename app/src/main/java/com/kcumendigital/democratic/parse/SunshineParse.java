@@ -203,7 +203,7 @@ public class SunshineParse implements DeleteCallback {
         prepareRelations(parseQuery, c);
         if(query!=null)
             prepareQuery(parseQuery, query);
-        parseQuery.findInBackground(new RecordListCallback(requestCode,c));
+        parseQuery.findInBackground(new RecordListCallback(requestCode, c));
     }
 
     public void getRecentRecords(Date lastDate,SunshineQuery query,SunshineCallback callback,Integer requestCode, Class<? extends SunshineRecord> c){
@@ -224,6 +224,21 @@ public class SunshineParse implements DeleteCallback {
             parseQuery.whereLessThan(CREATED_AT, lastDate);
 
         parseQuery.orderByDescending(CREATED_AT);
+        parseQuery.setLimit(limit);
+
+        prepareRelations(parseQuery, c);
+        if(query!=null)
+            prepareQuery(parseQuery, query);
+        parseQuery.findInBackground(new RecordListCallback(requestCode,c));
+    }
+
+    public void getRecordsByPageAsc(Date lastDate, int limit,SunshineQuery query,SunshineCallback callback,Integer requestCode, Class<? extends SunshineRecord> c){
+        this.callback = callback;
+        ParseQuery<ParseObject> parseQuery = ParseQuery.getQuery(c.getSimpleName());
+        if(lastDate!=null)
+            parseQuery.whereGreaterThan(CREATED_AT, lastDate);
+
+        parseQuery.orderByAscending(CREATED_AT);
         parseQuery.setLimit(limit);
 
         prepareRelations(parseQuery, c);

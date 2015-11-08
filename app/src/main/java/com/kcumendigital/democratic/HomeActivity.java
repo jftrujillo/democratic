@@ -37,7 +37,7 @@ import com.squareup.picasso.Transformation;
 import java.util.ArrayList;
 import java.util.List;
 
-public class HomeActivity extends AppCompatActivity implements DrawerLayout.DrawerListener, NavigationView.OnNavigationItemSelectedListener, View.OnClickListener, SunshineParse.SunshineCallback, SurveyListAdapter.OnItemClickListenerSurvey {
+public class HomeActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener, View.OnClickListener, SunshineParse.SunshineCallback, SurveyListAdapter.OnItemClickListenerSurvey {
 
 
     DiscussionHomeFragment fragment;
@@ -53,8 +53,8 @@ public class HomeActivity extends AppCompatActivity implements DrawerLayout.Draw
     @Override
     protected void onRestart() {
         super.onRestart();
-        discussionFragment.notifyDataChagued();
-        surveyFragment.notidyDataChangued();
+        discussionFragment.notifyDataChanged();
+        surveyFragment.notidyDataChanged();
     }
 
     @Override
@@ -77,7 +77,7 @@ public class HomeActivity extends AppCompatActivity implements DrawerLayout.Draw
                 .oval(true)
                 .build();
         Picasso.with(this).load("https://goo.gl/TF0Cwd").transform(transformation).into(imm_nav);
-        drawer.setDrawerListener(this);
+
         toggle = new ActionBarDrawerToggle(this, drawer, R.string.drawer_open, R.string.drawer_close);
         nav.setNavigationItemSelectedListener(this);
         toggle.setToolbarNavigationClickListener(this);
@@ -124,7 +124,7 @@ public class HomeActivity extends AppCompatActivity implements DrawerLayout.Draw
                         ColletionsStatics.getDataSurvey().add((Survey) records.get(i));
                     }
 
-                    surveyFragment.notifyDataset();
+                    surveyFragment.notidyDataChanged();
 
 
                 }
@@ -135,6 +135,20 @@ public class HomeActivity extends AppCompatActivity implements DrawerLayout.Draw
 
     }
 
+
+    //region OptionMenu
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.menu_home, menu);
+
+        SearchManager searchManager = (SearchManager) getSystemService(this.SEARCH_SERVICE);
+        SearchView searchView = (SearchView) menu.findItem(R.id.navigate).getActionView();
+
+        searchView.setSearchableInfo(searchManager.getSearchableInfo(getComponentName()));
+        return true;
+    }
+
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
@@ -142,33 +156,17 @@ public class HomeActivity extends AppCompatActivity implements DrawerLayout.Draw
         if (toggle.onOptionsItemSelected(item)) {
             return true;
         }
-        if (id == R.id.navigate) {
-            //startActivity(new Intent(this, LookingForAcitivity.class));
-
-        }
         return super.onOptionsItemSelected(item);
-
     }
+    //endregion
 
+    //region DrawerLayout
     @Override
-    public void onDrawerSlide(View drawerView, float slideOffset) {
-        toggle.onDrawerSlide(drawerView, slideOffset);
+    public void onPostCreate(Bundle savedInstanceState) {
+        super.onPostCreate(savedInstanceState);
+        toggle.syncState();
     }
 
-    @Override
-    public void onDrawerOpened(View drawerView) {
-
-    }
-
-    @Override
-    public void onDrawerClosed(View drawerView) {
-
-    }
-
-    @Override
-    public void onDrawerStateChanged(int newState) {
-
-    }
 
     @Override
     public boolean onNavigationItemSelected(MenuItem menuItem) {
@@ -179,43 +177,21 @@ public class HomeActivity extends AppCompatActivity implements DrawerLayout.Draw
         drawer.closeDrawers();
         return false;
     }
+    //endregion
 
-    @Override
-    public void onPostCreate(Bundle savedInstanceState) {
-        super.onPostCreate(savedInstanceState);
-        toggle.syncState();
-    }
-
+    //region FAB
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.new_encuesta:
                 startActivity(new Intent(this, CreateSurveyAcitivty.class));
-
                 break;
-
             case R.id.new_forum:
                 startActivity(new Intent(this, CreateBoardDiscussion_activity.class));
                 break;
         }
-
-
     }
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        MenuInflater inflater = getMenuInflater();
-        inflater.inflate(R.menu.menu_home, menu);
-
-        SearchManager searchManager = (SearchManager) getSystemService(this.SEARCH_SERVICE);
-        SearchView searchView = (SearchView) menu.findItem(R.id.navigate).getActionView();
-
-        searchView.setSearchableInfo(searchManager.getSearchableInfo(getComponentName()));
-
-
-        return true;
-    }
-
+    //endregion
 
     //region ParseCallback
     @Override
@@ -235,7 +211,7 @@ public class HomeActivity extends AppCompatActivity implements DrawerLayout.Draw
             ColletionsStatics.getDataDiscusion().add((Discussion) records.get(i));
         }
 
-        discussionFragment.notifyDataset();
+        discussionFragment.notifyDataChanged();
 
 
     }
@@ -245,4 +221,6 @@ public class HomeActivity extends AppCompatActivity implements DrawerLayout.Draw
         startActivity(new Intent(getApplicationContext(), SurveyDescriptionActivity.class).putExtra("pos", position));
     }
     //endregion
+
+
 }
