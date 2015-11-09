@@ -16,6 +16,7 @@ public class AppUtil {
 
         if (userStatic == null){
             userStatic = new User();
+            userStatic.setObjectId("Jgb5AcAcBp");
         }
         return userStatic;
     }
