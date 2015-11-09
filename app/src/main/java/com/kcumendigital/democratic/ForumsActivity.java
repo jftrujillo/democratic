@@ -260,6 +260,9 @@ public class ForumsActivity extends AppCompatActivity implements SunshineParse.S
                     adapter.notifyDataSetChanged();
                     parseVoice.incrementField(discussion.getObjectId(), "comments", Discussion.class);
                     ColletionsStatics.getDataDiscusion().get(pos).setComments(ColletionsStatics.getDataDiscusion().get(pos).getComments() + 1);
+                    if(ColletionsStatics.getDataComments().size()==5)
+                        control.nextPage();
+
                 } else {
                     Toast.makeText(getApplicationContext(), "Nota de Voz no Creada", Toast.LENGTH_SHORT).show();
                 }
@@ -316,6 +319,8 @@ public class ForumsActivity extends AppCompatActivity implements SunshineParse.S
                         parse.incrementField(discussion.getObjectId(), "comments", Discussion.class);
                         ColletionsStatics.getDataDiscusion().get(pos).setComments(ColletionsStatics.getDataDiscusion().get(pos).getComments() + 1);
                         adapter.notifyDataSetChanged();
+                        if(ColletionsStatics.getDataComments().size()<5)
+                            control.nextPage();
                     }
 
                     else {

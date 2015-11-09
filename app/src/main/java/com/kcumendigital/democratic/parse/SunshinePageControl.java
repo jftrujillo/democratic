@@ -4,6 +4,7 @@ import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 
+
 import com.kcumendigital.democratic.Util.ColletionsStatics;
 import com.parse.ParseException;
 
@@ -30,6 +31,7 @@ public class SunshinePageControl implements SwipeRefreshLayout.OnRefreshListener
 
     OnScroll onScroll;
     boolean refreshing;
+    boolean addingPage;
 
 
     public SunshinePageControl(int type, RecyclerView recyclerView, SwipeRefreshLayout refreshLayout, List to, SunshineQuery query, Class parseClass) {
@@ -41,6 +43,9 @@ public class SunshinePageControl implements SwipeRefreshLayout.OnRefreshListener
         this.parseClass = parseClass;
 
         parse =  new SunshineParse();
+
+        refreshing = false;
+        addingPage = false;
 
         onScroll = new OnScroll();
         if(refreshLayout !=null)
@@ -72,11 +77,16 @@ public class SunshinePageControl implements SwipeRefreshLayout.OnRefreshListener
 
         @Override
         public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
+
+
             int  visibleItemCount = recyclerView.getLayoutManager().getChildCount();
             int totalItemCount = recyclerView.getLayoutManager().getItemCount();
             int pastVisiblesItems = ((LinearLayoutManager)recyclerView.getLayoutManager()).findFirstVisibleItemPosition();
 
-            if ( (visibleItemCount + pastVisiblesItems) >= totalItemCount && !refreshing) {
+
+
+            if ( (visibleItemCount + pastVisiblesItems) >= totalItemCount && !addingPage) {
+
                 nextPage();
             }
 
@@ -89,6 +99,7 @@ public class SunshinePageControl implements SwipeRefreshLayout.OnRefreshListener
     //region Page Methods
 
     public void reload(){
+
         to.clear();
         nextPage();
     }
@@ -99,7 +110,7 @@ public class SunshinePageControl implements SwipeRefreshLayout.OnRefreshListener
     }
 
     public void getRecents(){
-
+        refreshing = true;
         Date lastDate = to.size()>0?((SunshineRecord) to.get(0)).getCreatedAt():null;
         parse.getRecentRecords(lastDate
                     ,query,this, ColletionsStatics.RECENTS,parseClass);
@@ -107,7 +118,7 @@ public class SunshinePageControl implements SwipeRefreshLayout.OnRefreshListener
     }
 
     public void nextPage(){
-        refreshing = true;
+        addingPage = true;
         Date lastDate = to.size()>0?((SunshineRecord) to.get(to.size() - 1)).getCreatedAt():null;
 
         if(type==ORDER_DESCENING)
@@ -117,6 +128,7 @@ public class SunshinePageControl implements SwipeRefreshLayout.OnRefreshListener
     }
 
     private void addPageToList(List<SunshineRecord> from){
+        addingPage = false;
         for(SunshineRecord obj : from){
             to.add(obj);
         }
