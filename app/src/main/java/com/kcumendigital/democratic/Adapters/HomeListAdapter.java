@@ -105,20 +105,25 @@ public class HomeListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
            Picasso.with(context).load(Uri.parse(data.get(position).getUser().getImg()))
                       .transform(transformation).into(spanHolder.img);
 
-           if (categoria.equals("Gobierno")) {
+           if (categoria.equals(context.getString(R.string.c_gobierno))) {
                Picasso.with(context).load(R.drawable.ic_account_balance_white_36dp).into(spanHolder.leftIcon);
                spanHolder.leftColor.setBackgroundResource(R.color.gobierno);
 
            }
-           if (categoria.equals("Salud")) {
-               spanHolder.leftIcon.setBackgroundResource(R.drawable.ic_local_hospital_white_18dp);
+           else if (categoria.equals(context.getString(R.string.c_salud))) {
+               Picasso.with(context).load(R.drawable.ic_local_hospital_white_18dp).into(spanHolder.leftIcon);
                spanHolder.leftColor.setBackgroundResource(R.color.salud);
 
            }
-           if (categoria.equals("Educación")) {
-               spanHolder.leftIcon.setBackgroundResource(R.drawable.ic_school_white_18dp);
+           else if (categoria.equals(context.getString(R.string.c_educacion))) {
+               Picasso.with(context).load(R.drawable.ic_school_white_18dp).into(spanHolder.leftIcon);
                spanHolder.leftColor.setBackgroundResource(R.color.educacion);
+
+           }else if (categoria.equals(context.getString(R.string.c_ambiente))) {
+               Picasso.with(context).load(R.drawable.ic_send_white_24dp).into(spanHolder.leftIcon);
+               spanHolder.leftColor.setBackgroundResource(R.color.medio_ambiente);
            }
+
        }
 
         else if (holder instanceof HomeListNoSpanViewHolder){
