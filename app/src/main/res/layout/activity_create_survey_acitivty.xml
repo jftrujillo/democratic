@@ -65,7 +65,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="@dimen/small_margin"
-
+        android:background="#ffffff"
         />
     <LinearLayout
         android:layout_width="match_parent"
@@ -78,7 +78,7 @@
             android:layout_height="wrap_content"
             android:text="Opciones"
             android:textSize="@dimen/medium_Letter"
-            android:layout_margin="@dimen/small_margin"
+            android:layout_marginLeft="@dimen/small_margin"
             android:textColor="#000000"
             />
         <RelativeLayout
@@ -106,7 +106,6 @@
         android:layout_weight="1"
         android:layout_margin="@dimen/small_margin"
         android:layout_height="0dp"></ListView>
-
 
     <Button
         android:id="@+id/crear_new_survey"
