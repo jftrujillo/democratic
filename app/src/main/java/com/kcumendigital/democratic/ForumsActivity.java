@@ -154,7 +154,12 @@ public class ForumsActivity extends AppCompatActivity implements SunshineParse.S
         }
 
         transformation = new RoundedTransformationBuilder().oval(true).build();
-        Picasso.with(this).load(Uri.parse(discussion.getUser().getImg())).transform(transformation).into(discussionUser);
+
+        int avatar = getResources().getDimensionPixelSize(R.dimen.forum_avatar);
+        Picasso.with(this).load(Uri.parse(discussion.getUser().getImg()))
+                .resize(avatar, avatar)
+                .centerCrop()
+                .transform(transformation).into(discussionUser);
 
         recyclerView = (RecyclerView) findViewById(R.id.recyclerviewForumsComents);
 

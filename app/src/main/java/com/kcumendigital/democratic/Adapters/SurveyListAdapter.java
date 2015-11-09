@@ -47,6 +47,8 @@ public class SurveyListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
     ArrayList<Survey> data;
     com.squareup.picasso.Transformation transformation;
 
+    int sizeAvatar;
+
     public SurveyListAdapter(OnItemClickListenerSurvey onItemClickListenerSurvey, Context context, FragmentManager fm, RecyclerView recyclerView) {
         this.recyclerView = recyclerView;
         this.onItemClickListenerSurvey = onItemClickListenerSurvey;
@@ -57,6 +59,8 @@ public class SurveyListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
         transformation = new RoundedTransformationBuilder()
                 .oval(true)
                 .build();
+
+        sizeAvatar = context.getResources().getDimensionPixelSize(R.dimen.list_avatar);
     }
 
     @Override
@@ -125,7 +129,8 @@ public class SurveyListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
             }
 
             Picasso.with(context).load(Uri.parse(data.get(position).getUser().getImg()))
-
+                    .resize(sizeAvatar, sizeAvatar)
+                    .centerCrop()
                     .transform(transformation).into(spanHolder.img);
 
         }

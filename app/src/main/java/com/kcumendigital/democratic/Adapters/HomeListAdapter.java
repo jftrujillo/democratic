@@ -44,6 +44,8 @@ public class HomeListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
      ArrayList<Discussion> data;
     Transformation transformation;
 
+    int sizeAvatar;
+
     public HomeListAdapter(OnItemClickLister onItemClickLister,Context context, FragmentManager fm, RecyclerView recyclerView) {
 
         this.onItemClickLister = onItemClickLister;
@@ -55,6 +57,8 @@ public class HomeListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
         transformation = new RoundedTransformationBuilder()
                 .oval(true)
                 .build();
+
+        sizeAvatar = context.getResources().getDimensionPixelSize(R.dimen.list_avatar);
     }
 
     @Override
@@ -103,7 +107,9 @@ public class HomeListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
            spanHolder.categoria.setText(data.get(position).getCategory());
            String categoria = data.get(position).getCategory();
            Picasso.with(context).load(Uri.parse(data.get(position).getUser().getImg()))
-                      .transform(transformation).into(spanHolder.img);
+                   .resize(sizeAvatar, sizeAvatar)
+                   .centerCrop()
+                   .transform(transformation).into(spanHolder.img);
 
            if (categoria.equals(context.getString(R.string.c_gobierno))) {
                Picasso.with(context).load(R.drawable.ic_account_balance_white_36dp).into(spanHolder.leftIcon);

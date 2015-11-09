@@ -82,8 +82,10 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
                 .scaleType(ImageView.ScaleType.CENTER_CROP)
                 .oval(true)
                 .build();
+
+        int avatar = getResources().getDimensionPixelSize(R.dimen.nav_header_avatar);
         Picasso.with(this).load(AppUtil.getUserStatic().getImg())
-                .resize(250, 250)
+                .resize(avatar, avatar)
                 .centerCrop()
                 .transform(transformation).into(imm_nav);
         TextView userName = (TextView) nav.findViewById(R.id.txt_usr);
