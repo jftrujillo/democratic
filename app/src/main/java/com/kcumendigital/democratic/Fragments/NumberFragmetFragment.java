@@ -2,7 +2,9 @@ package com.kcumendigital.democratic.Fragments;
 
 
 import android.app.Fragment;
+import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,9 +12,11 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.kcumendigital.democratic.Adapters.PagerAdpater;
+import com.kcumendigital.democratic.ForumsActivity;
 import com.kcumendigital.democratic.Models.Discussion;
 import com.kcumendigital.democratic.Models.Survey;
 import com.kcumendigital.democratic.R;
+import com.kcumendigital.democratic.SurveyDescriptionActivity;
 import com.kcumendigital.democratic.Util.ColletionsStatics;
 import com.squareup.picasso.Picasso;
 
@@ -21,7 +25,7 @@ import java.util.List;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class NumberFragmetFragment extends android.support.v4.app.Fragment {
+public class NumberFragmetFragment extends android.support.v4.app.Fragment implements View.OnClickListener {
     int position;
     Discussion discussion;
     Survey survey;
@@ -43,10 +47,11 @@ public class NumberFragmetFragment extends android.support.v4.app.Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View v = inflater.inflate(R.layout.fragment_number_fragmet, container, false);
+        v.setOnClickListener(this);
         TextView txt = (TextView) v.findViewById(R.id.numberPage);
         ImageView img_bacground = (ImageView) v.findViewById(R.id.bacground_pager);
         if (TYPE_lIST == PagerAdpater.TYPE_DISCUSION) {
-            discussion = ColletionsStatics.getDataDiscusion().get(position);
+            discussion = ColletionsStatics.getHomeDiscusion().get(position);
             txt.setText(discussion.getTitle());
             String categoria = discussion.getCategory();
 
@@ -66,7 +71,7 @@ public class NumberFragmetFragment extends android.support.v4.app.Fragment {
         }
 
         if (TYPE_lIST == PagerAdpater.TYPE_SURVEY){
-            survey = ColletionsStatics.getDataSurvey().get(position);
+            survey = ColletionsStatics.getHomeSurvey().get(position);
             txt.setText(survey.getTitle());
             String categoria = survey.getCategory();
             if (categoria.equals("Salud")){
@@ -86,4 +91,17 @@ public class NumberFragmetFragment extends android.support.v4.app.Fragment {
     }
 
 
+    @Override
+    public void onClick(View v) {
+        Intent  intent =  null;
+        if(TYPE_lIST == PagerAdpater.TYPE_SURVEY)
+            intent = new Intent(getActivity(), SurveyDescriptionActivity.class);
+        else
+            intent = new Intent(getActivity(), ForumsActivity.class);
+
+        intent.putExtra("pos", position);
+        intent.putExtra("pager",true);
+        startActivity(intent);
+
+    }
 }

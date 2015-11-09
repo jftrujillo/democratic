@@ -1,27 +1,27 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
 <item android:id="@+id/nav_home"
-    android:title="Inicio"
+    android:title="@string/nav_item_home"
     android:icon="@android:drawable/ic_btn_speak_now"/>
    <group android:id="@+id/secciones_menu_nav"
        android:checkableBehavior="single">
 
-    <item android:title="Secciones">
+    <item android:title="@string/nav_group_section">
         <menu>
             <item android:id="@+id/nav_gobierno"
-                android:title="Gobierno"
+                android:title="@string/c_gobierno"
                 android:icon="@drawable/iconosslide17"
                 />
             <item android:id="@+id/nav_educacion"
-                android:title="Educación"
+                android:title="@string/c_educacion"
                 android:icon="@drawable/iconosslide19"
                 />
             <item android:id="@+id/nav_salud"
-                android:title="Salud"
+                android:title="@string/c_salud"
                 android:icon="@drawable/iconosslide21"
                 ></item>
             <item android:id="@+id/nav_medio_ambiente"
-                android:title="Medio Ambiente"
+                android:title="@string/c_ambiente"
                 android:icon="@drawable/iconosslide23"
                 ></item>
         </menu>
@@ -32,14 +32,13 @@
 
     <group android:id="@+id/persona_menu_nav">
 
-    <item android:title="personal">
+    <item android:title="@string/nav_group_my">
         <menu>
-           <item android:id="@+id/nav_favoritos"
-               android:title="favoritos"
+           <item android:id="@+id/nav_my_post"
+               android:title="@string/nav_item_mypost"
                android:icon="@drawable/iconosslide26"
                />
-            <item android:id="@+id/nav_comentados"
-                android:title="comentarios"/>
+
 
         </menu>
     </item>

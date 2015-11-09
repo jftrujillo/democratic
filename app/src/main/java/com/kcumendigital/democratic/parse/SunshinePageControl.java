@@ -88,6 +88,16 @@ public class SunshinePageControl implements SwipeRefreshLayout.OnRefreshListener
 
     //region Page Methods
 
+    public void reload(){
+        to.clear();
+        nextPage();
+    }
+
+    public void reloadWithQuery(SunshineQuery query){
+        this.query = query;
+        reload();
+    }
+
     public void getRecents(){
 
         Date lastDate = to.size()>0?((SunshineRecord) to.get(0)).getCreatedAt():null;

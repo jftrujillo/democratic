@@ -3,6 +3,7 @@ package com.kcumendigital.democratic.Util;
 import com.kcumendigital.democratic.Models.Comment;
 import com.kcumendigital.democratic.Models.Discussion;
 import com.kcumendigital.democratic.Models.Survey;
+import com.kcumendigital.democratic.parse.SunshineQuery;
 
 import java.util.ArrayList;
 
@@ -11,7 +12,7 @@ import java.util.ArrayList;
  */
 public class ColletionsStatics {
 
-    public static final int LIMIT=10;
+    public static final int LIMIT=20;
     public static final int RECENTS=0;
     public static final int PAGE=1;
 
@@ -37,5 +38,23 @@ public class ColletionsStatics {
             dataSurvey = new ArrayList<>();
         }
         return dataSurvey;
+    }
+
+    public static SunshineQuery queryFilter;
+
+    private static ArrayList<Discussion> homeDiscusion;
+    public static ArrayList<Discussion> getHomeDiscusion(){
+        if (homeDiscusion == null){
+            homeDiscusion = new ArrayList<>();
+        }
+        return homeDiscusion;
+    }
+
+    private static ArrayList<Survey> homeSurvey;
+    public static ArrayList<Survey> getHomeSurvey(){
+        if (homeSurvey == null){
+            homeSurvey= new ArrayList<>();
+        }
+        return homeSurvey;
     }
 }

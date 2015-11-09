@@ -26,8 +26,10 @@ import com.kcumendigital.democratic.Fragments.DiscussionHomeFragment;
 import com.kcumendigital.democratic.Fragments.SurveyHomeFragment;
 import com.kcumendigital.democratic.Models.Discussion;
 import com.kcumendigital.democratic.Models.Survey;
+import com.kcumendigital.democratic.Util.AppUtil;
 import com.kcumendigital.democratic.Util.ColletionsStatics;
 import com.kcumendigital.democratic.parse.SunshineParse;
+import com.kcumendigital.democratic.parse.SunshineQuery;
 import com.kcumendigital.democratic.parse.SunshineRecord;
 import com.makeramen.roundedimageview.RoundedTransformationBuilder;
 import com.parse.ParseException;
@@ -37,7 +39,7 @@ import com.squareup.picasso.Transformation;
 import java.util.ArrayList;
 import java.util.List;
 
-public class HomeActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener, View.OnClickListener, SunshineParse.SunshineCallback, SurveyListAdapter.OnItemClickListenerSurvey {
+public class HomeActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener, View.OnClickListener, SurveyListAdapter.OnItemClickListenerSurvey {
 
 
     DiscussionHomeFragment fragment;
@@ -46,15 +48,17 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
     ActionBarDrawerToggle toggle;
     FloatingActionButton new_encuesta, new_forum;
     String filtro;
-    Boolean isFiltred;
+
     DiscussionHomeFragment discussionFragment;
     SurveyHomeFragment surveyFragment;
+
+    SunshineQuery query;
 
     @Override
     protected void onRestart() {
         super.onRestart();
         discussionFragment.notifyDataChanged();
-        surveyFragment.notidyDataChanged();
+        surveyFragment.notifyDataChanged();
     }
 
     @Override
@@ -102,37 +106,6 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
         tabLayout.setTabsFromPagerAdapter(adapter);
         tabLayout.setupWithViewPager(viewPager);
 
-
-        if (savedInstanceState == null) {
-            SunshineParse parse = new SunshineParse();
-            parse.getRecordsByPage(null, ColletionsStatics.LIMIT, null, this, null, Discussion.class);
-            SunshineParse parseSurveys = new SunshineParse();
-            parseSurveys.getRecordsByPage(null, ColletionsStatics.LIMIT, null, new SunshineParse.SunshineCallback() {
-                @Override
-                public void done(boolean success, ParseException e) {
-
-                }
-
-                @Override
-                public void resultRecord(boolean success, SunshineRecord record, ParseException e) {
-
-                }
-
-                @Override
-                public void resultListRecords(boolean success, Integer requestCode, List<SunshineRecord> records, ParseException e) {
-                    for (int i = 0; i < records.size(); i++) {
-                        ColletionsStatics.getDataSurvey().add((Survey) records.get(i));
-                    }
-
-                    surveyFragment.notidyDataChanged();
-
-
-                }
-            }
-                    , null, Survey.class);
-        }
-
-
     }
 
 
@@ -170,10 +143,37 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
 
     @Override
     public boolean onNavigationItemSelected(MenuItem menuItem) {
-        Log.i("Navigation menu", menuItem.getTitle().toString());
         filtro = menuItem.getTitle().toString();
         getSupportActionBar().setTitle(filtro);
-        isFiltred = true;
+
+        switch(menuItem.getItemId()){
+            case R.id.nav_home:
+                query = null;
+                break;
+            case R.id.nav_gobierno:
+                query = new SunshineQuery();
+                query.addFieldValue("category", getString(R.string.c_gobierno));
+                break;
+            case R.id.nav_educacion:
+                query = new SunshineQuery();
+                query.addFieldValue("category", getString(R.string.c_educacion));
+                break;
+            case R.id.nav_salud:
+                query = new SunshineQuery();
+                query.addFieldValue("category", getString(R.string.c_salud));
+                break;
+            case R.id.nav_medio_ambiente:
+                query = new SunshineQuery();
+                query.addFieldValue("category", getString(R.string.c_ambiente));
+                break;
+            case R.id.nav_my_post:
+                query = new SunshineQuery();
+                query.addUser("user", AppUtil.getUserStatic().getObjectId());
+                break;
+        }
+
+        surveyFragment.reloadWithQuery(query);
+        discussionFragment.reloadWithQuery(query);
         drawer.closeDrawers();
         return false;
     }
@@ -192,29 +192,6 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
         }
     }
     //endregion
-
-    //region ParseCallback
-    @Override
-    public void done(boolean success, ParseException e) {
-
-    }
-
-    @Override
-    public void resultRecord(boolean success, SunshineRecord record, ParseException e) {
-
-    }
-
-    @Override
-    public void resultListRecords(boolean success, Integer requestCode, List<SunshineRecord> records, ParseException e) {
-
-        for (int i = 0; i < records.size(); i++) {
-            ColletionsStatics.getDataDiscusion().add((Discussion) records.get(i));
-        }
-
-        discussionFragment.notifyDataChanged();
-
-
-    }
 
     @Override
     public void onItemClick(int position) {

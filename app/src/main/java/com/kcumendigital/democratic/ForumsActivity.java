@@ -100,6 +100,7 @@ public class ForumsActivity extends AppCompatActivity implements SunshineParse.S
 
         Bundle bundle = getIntent().getExtras();
         pos = (int) bundle.get("pos");
+        boolean pager = bundle.getBoolean("pager",false);
 
         mToolbar = (Toolbar) findViewById(R.id.toolbar);
         collapsingToolbarLayout = (CollapsingToolbarLayout) findViewById(R.id.collapsingToolbar);
@@ -126,7 +127,12 @@ public class ForumsActivity extends AppCompatActivity implements SunshineParse.S
         btnLike.setOnClickListener(this);
         btnDislike.setOnClickListener(this);
 
-        ArrayList<Discussion> dataDiscusion = ColletionsStatics.getDataDiscusion();
+
+        ArrayList<Discussion> dataDiscusion = null;
+        if(!pager)
+            dataDiscusion = ColletionsStatics.getDataDiscusion();
+        else
+            dataDiscusion = ColletionsStatics.getHomeDiscusion();
 
         discussion = dataDiscusion.get(pos);
         tittle.setText(discussion.getTitle());

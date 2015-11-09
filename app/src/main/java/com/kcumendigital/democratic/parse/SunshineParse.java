@@ -264,7 +264,8 @@ public class SunshineParse implements DeleteCallback {
         if(fieldValues !=null){
 
             for(SunshineQuery.FieldValue fV:fieldValues){
-                parseQuery.whereEqualTo(fV.getField(), (String) fV.getValue());
+                parseQuery.whereEqualTo(fV.getField(), ""+fV.getValue());
+
             }
         }
         if(pointerValues!=null){

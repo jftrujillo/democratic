@@ -22,5 +22,7 @@
     <color name="medio_ambiente">#4DBB5C</color>
     <color name="morado_demo">#512DA8</color>
 
+    <color name="pager_bg">#555555</color>
+
 
 </resources>

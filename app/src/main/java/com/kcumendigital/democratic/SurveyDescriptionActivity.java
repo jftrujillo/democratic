@@ -54,7 +54,16 @@ public class SurveyDescriptionActivity extends AppCompatActivity implements Adap
         });
         parse = new SunshineParse();
         pos = bundle.getInt("pos", 0);
-        data = ColletionsStatics.getDataSurvey().get(pos).getOptions();
+        boolean pager = bundle.getBoolean("pager",false);
+
+        if(!pager) {
+            data = ColletionsStatics.getDataSurvey().get(pos).getOptions();
+            survey = ColletionsStatics.getDataSurvey().get(pos);
+        }else {
+            data = ColletionsStatics.getHomeSurvey().get(pos).getOptions();
+            survey = ColletionsStatics.getHomeSurvey().get(pos);
+        }
+
         titulo = (TextView) findViewById(R.id.TitleSurvey);
         votes = (TextView) findViewById(R.id.VotesCount);
         list = (ListView) findViewById(R.id.listView);
@@ -77,7 +86,7 @@ public class SurveyDescriptionActivity extends AppCompatActivity implements Adap
         mostVotedOpcionPercentage.setText("" + df.format(percentage));
         mostVotedOpcionText.setText(mostVotedOpcionString);
         votes.setText(""+sum);
-        survey = ColletionsStatics.getDataSurvey().get(pos);
+
         data = survey.getOptions();
         titulo.setText(survey.getTitle());
         adapter = new OptionListSurveyActivity(data,this,sum);
