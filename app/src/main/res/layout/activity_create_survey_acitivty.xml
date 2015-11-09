@@ -5,7 +5,8 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.kcumendigital.democratic.CreateSurveyAcitivty">
+    tools:context="com.kcumendigital.democratic.CreateSurveyAcitivty"
+    >
 
     <android.support.v7.widget.Toolbar
         android:id="@+id/toolbar"
@@ -84,24 +85,17 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
-        <android.support.design.widget.FloatingActionButton
+        <ImageButton
             android:id="@+id/add_options"
-            android:layout_height="wrap_content"
-            android:layout_width="wrap_content"
-            android:layout_margin="@dimen/small_margin"
+            android:layout_height="50dp"
+            android:layout_width="50dp"
             android:src="@drawable/ic_add_black_24dp"
-            android:scaleType="centerCrop"
-            app:elevation="8dp"
-            app:borderWidth="0dp"
-            app:backgroundTint="#ffffff"
-
+            android:scaleType="center"
+            android:layout_centerVertical="true"
+            android:background="@android:color/transparent"
             />
         </RelativeLayout>
-
-
     </LinearLayout>
-
-
 
     <ListView
         android:id="@+id/list"

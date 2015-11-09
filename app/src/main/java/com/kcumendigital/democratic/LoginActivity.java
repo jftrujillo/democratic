@@ -58,7 +58,6 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
     }
 
-
     @Override
     protected void onSaveInstanceState(Bundle outState) {
         outState.putString(SAVED_EMAIL, email.getEditText().getText().toString());
@@ -83,8 +82,6 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                     login.login(emailT, passT, this);
                 else
                     Toast.makeText(getApplicationContext(), R.string.sigin_fail, Toast.LENGTH_SHORT).show();
-
-
                 break;
             case R.id.login_facebook_btn:
                 login.loginByFacebook(this,null,this);

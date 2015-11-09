@@ -115,8 +115,12 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
         tabLayout.setTabsFromPagerAdapter(adapter);
         tabLayout.setupWithViewPager(viewPager);
 
+        if (getResources().getBoolean(R.bool.port) == true){
+            getSupportActionBar().show();
+        }else{
+            getSupportActionBar().hide();
+        }
     }
-
 
     //region OptionMenu
     @Override
