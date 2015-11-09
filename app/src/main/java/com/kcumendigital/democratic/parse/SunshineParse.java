@@ -403,8 +403,11 @@ public class SunshineParse implements DeleteCallback {
                         String mdU = getSetMethodName(fuN);
                         if (annotation.equals(ANNOTATION_NORMAL))
                             cU.getMethod(mdU,fU.getType()).invoke(u, user.get(fuN));
-                        else if(annotation.equals(ANNOTATION_FILE_URL))
-                            cU.getMethod(mdU,fU.getType()).invoke(u, user.getParseFile(fuN).getUrl());
+                        else if(annotation.equals(ANNOTATION_FILE_URL)) {
+                            ParseFile parseFile = user.getParseFile(fuN);
+                            if(parseFile!=null)
+                                cU.getMethod(mdU, fU.getType()).invoke(u, parseFile.getUrl());
+                        }
 
                     } catch (IllegalAccessException e) {
                         e.printStackTrace();

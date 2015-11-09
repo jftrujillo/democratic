@@ -16,6 +16,8 @@ public class RootActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+
         User user = SunshineLogin.getLoggedUser(User.class);
         Intent intent = null;
         if(user == null){

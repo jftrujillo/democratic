@@ -16,8 +16,9 @@ import com.kcumendigital.democratic.Models.User;
 import com.kcumendigital.democratic.Util.AppUtil;
 import com.kcumendigital.democratic.parse.SunshineLogin;
 import com.parse.ParseException;
+import com.parse.ParseFacebookUtils;
 
-public class LoginActivity extends AppCompatActivity implements View.OnClickListener, SunshineLogin.SunshineLoginCallback {
+public class LoginActivity extends AppCompatActivity implements View.OnClickListener, SunshineLogin.SunshineLoginCallback, SunshineLogin.SunshineFacebookLoginCallback {
 
     static final int REQUEST_SIGIN=102;
 
@@ -25,7 +26,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     static final String SAVED_PASS="pass";
 
     TextInputLayout email, pass;
-    Button btnRegistro;
+    Button btnRegistro, btnFacebook;
     FloatingActionButton ingresar;
     ProgressDialog dialog;
     SunshineLogin login;
@@ -35,11 +36,15 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
+        login = new SunshineLogin();
+
         email = (TextInputLayout) findViewById(R.id.email_login);
         pass = (TextInputLayout) findViewById(R.id.password);
         btnRegistro= (Button) findViewById(R.id.register);
         ingresar = (FloatingActionButton) findViewById(R.id.ingresar);
+        btnFacebook = (Button) findViewById(R.id.login_facebook_btn);
 
+        btnFacebook.setOnClickListener(this);
         btnRegistro.setOnClickListener(this);
         ingresar.setOnClickListener(this);
 
@@ -74,14 +79,16 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                 String emailT=email.getEditText().getText().toString();
                 String passT = pass.getEditText().getText().toString();
 
-                if(validate(emailT)&&validate(passT)){
-                    login = new SunshineLogin();
+                if(validate(emailT)&&validate(passT))
                     login.login(emailT, passT, this);
-                }else{
+                else
                     Toast.makeText(getApplicationContext(), R.string.sigin_fail, Toast.LENGTH_SHORT).show();
-                }
+
 
                 break;
+            case R.id.login_facebook_btn:
+                login.loginByFacebook(this,null,this);
+            break;
         }
     }
 
@@ -109,13 +116,25 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
             if(resultCode == RESULT_OK){
                 inApp();
             }
+        }else{
+            ParseFacebookUtils.onActivityResult(requestCode, resultCode, data);
         }
     }
+
+
 
     public void inApp(){
         Intent intent = new Intent(this, HomeActivity.class);
         startActivity(intent);
         AppUtil.setUser(SunshineLogin.getLoggedUser(User.class));
         finish();
+    }
+
+    @Override
+    public void done(int type, ParseException e) {
+        if(type == LOGIN || type == SIGINUP)
+            inApp();
+        else
+            Toast.makeText(this,"Error al ingresar con Facebook",Toast.LENGTH_SHORT).show();
     }
 }

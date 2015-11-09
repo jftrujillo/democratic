@@ -15,7 +15,7 @@
         android:layout_height="100dp"
         android:layout_centerInParent="true"
         android:layout_marginLeft="@dimen/small_margin"
-        android:scaleType="fitXY"
+        
         />
 
     <LinearLayout

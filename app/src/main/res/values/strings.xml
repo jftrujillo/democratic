@@ -46,5 +46,7 @@
         <item>@string/c_ambiente</item>
     </string-array>
 
+    <string name="facebook_app_id">867572283358216</string>
+
 
 </resources>
