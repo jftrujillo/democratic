@@ -24,7 +24,7 @@ public class AppIntroActivity extends AppIntro {
         showSkipButton(false);
         setBarColor(Color.parseColor("#512DA8"));
         setSeparatorColor(Color.parseColor("#FFC107"));
-        setDoneText("Continuar");
+        setDoneText("Entrar");
 
 
 
@@ -38,6 +38,6 @@ public class AppIntroActivity extends AppIntro {
 
     @Override
     public void onDonePressed() {
-        startActivity(new Intent(this,HomeActivity.class));
+        startActivity(new Intent(this,LoginActivity.class));
     }
 }

@@ -32,6 +32,7 @@ import com.kcumendigital.democratic.Models.DiscussionScore;
 import com.kcumendigital.democratic.Models.User;
 import com.kcumendigital.democratic.Util.AppUtil;
 import com.kcumendigital.democratic.Util.ColletionsStatics;
+import com.kcumendigital.democratic.parse.SunshinePageControl;
 import com.kcumendigital.democratic.parse.SunshineParse;
 import com.kcumendigital.democratic.parse.SunshineQuery;
 import com.kcumendigital.democratic.parse.SunshineRecord;
@@ -48,22 +49,16 @@ import java.util.List;
 
 public class ForumsActivity extends AppCompatActivity implements SunshineParse.SunshineCallback, View.OnClickListener, DialogInterface.OnClickListener, View.OnTouchListener,CommentAdapter.OnItemClickListener {
 
-   // static final String USER_ID = "Jgb5AcAcBp"; // BORRAR
-
-    static final int REQUEST_PAGE = 0;
-    static final int REQUEST_RECENT = 1;
     static final int REQUEST_DISCUSION_SCORE_LIKE = 2;
-    static final int REQUEST_DISCUSION_SCORE_DISLIKE = 3;
+    static final int REQUEST_DISCUSION_SCORE_DISLIKE = 1;
     static final int REQUEST_COMMENT_SCORE = 4;
-    static boolean IS_STOP = false;
+
+    static boolean IS_STOP;
+
     private Toolbar mToolbar;
-
-
 
     CollapsingToolbarLayout collapsingToolbarLayout;
     Transformation transformation;
-
-    List<Comment> data;
 
     RecyclerView recyclerView;
     CommentAdapter adapter;
@@ -73,36 +68,29 @@ public class ForumsActivity extends AppCompatActivity implements SunshineParse.S
     LinearLayout btnLike, btnDislike;
     ImageView btn_record;
     ImageView discussionUser, imgCategory;
-    ImageButton imgPlay;
+
     User user;
     MediaRecorder recorder;
     File archivo;
 
-
-
-
     SunshineParse parse;
+    SunshinePageControl control;
+
     Discussion discussion;
     DiscussionScore score;
+
     String scoreD;
 
     EditText comentario;
 
     @Override
-    protected void onStart() {
-        super.onStart();
-        imgPlay = (ImageButton) findViewById(R.id.playVoice);
-    }
-
-    @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_forums);
-        AppUtil.initStaticUser();
+
         user = AppUtil.getUserStatic();
         comentario = (EditText) findViewById(R.id.comentario);
 
-        imgPlay = (ImageButton) findViewById(R.id.playVoice);
         btn_record = (ImageView) findViewById(R.id.btnRecord);
         btn_record.setOnTouchListener(this);
 
@@ -112,6 +100,7 @@ public class ForumsActivity extends AppCompatActivity implements SunshineParse.S
 
         Bundle bundle = getIntent().getExtras();
         pos = (int) bundle.get("pos");
+        boolean pager = bundle.getBoolean("pager",false);
 
         mToolbar = (Toolbar) findViewById(R.id.toolbar);
         collapsingToolbarLayout = (CollapsingToolbarLayout) findViewById(R.id.collapsingToolbar);
@@ -138,7 +127,12 @@ public class ForumsActivity extends AppCompatActivity implements SunshineParse.S
         btnLike.setOnClickListener(this);
         btnDislike.setOnClickListener(this);
 
-        ArrayList<Discussion> dataDiscusion = ColletionsStatics.getDataDiscusion();
+
+        ArrayList<Discussion> dataDiscusion = null;
+        if(!pager)
+            dataDiscusion = ColletionsStatics.getDataDiscusion();
+        else
+            dataDiscusion = ColletionsStatics.getHomeDiscusion();
 
         discussion = dataDiscusion.get(pos);
         tittle.setText(discussion.getTitle());
@@ -160,19 +154,30 @@ public class ForumsActivity extends AppCompatActivity implements SunshineParse.S
         }
 
         transformation = new RoundedTransformationBuilder().oval(true).build();
-        Picasso.with(this).load(Uri.parse(discussion.getUser().getImg())).transform(transformation).into(discussionUser);
+
+        int avatar = getResources().getDimensionPixelSize(R.dimen.forum_avatar);
+        Picasso.with(this).load(Uri.parse(discussion.getUser().getImg()))
+                .resize(avatar, avatar)
+                .centerCrop()
+                .transform(transformation).into(discussionUser);
 
         recyclerView = (RecyclerView) findViewById(R.id.recyclerviewForumsComents);
 
-        data = new ArrayList<>();
-        adapter = new CommentAdapter(this,this, data,recyclerView);
+
+        adapter = new CommentAdapter(this,this, ColletionsStatics.getDataComments(),recyclerView);
 
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(new commentsLayoutManager(this));
 
         parse = new SunshineParse();
+        SunshineQuery query = new SunshineQuery();
+        query.addPointerValue("discussion",discussion.getObjectId());
+
+        control =  new SunshinePageControl(SunshinePageControl.ORDER_ASCENING
+                ,recyclerView,null,ColletionsStatics.getDataComments(),query,Comment.class);
+
         if(savedInstanceState==null)
-            getComments();
+            control.nextPage();
 
         comentario.addTextChangedListener(new TextWatcher() {
             @Override
@@ -195,6 +200,7 @@ public class ForumsActivity extends AppCompatActivity implements SunshineParse.S
         });
     }
 
+    //region Voice Recorder
     public void grabar() {
         recorder = new MediaRecorder();
         recorder.setAudioSource(MediaRecorder.AudioSource.MIC);
@@ -221,13 +227,25 @@ public class ForumsActivity extends AppCompatActivity implements SunshineParse.S
             createNewVoiceComent(archivo.getPath());
             btn_record.setEnabled(true);
             IS_STOP = true;
-        } else{}
+        }
     }
 
+    public void tiempoGrabacion() {
+        new CountDownTimer(10000, 1000) {
+            @Override
+            public void onTick(long millisUntilFinished) {
+            }
 
+            @Override
+            public void onFinish() {
+                Toast.makeText(getApplicationContext(), "se termino el tiempo de grabacion", Toast.LENGTH_SHORT).show();
+                detener();
+            }
+        }.start();
+    }
+    //endregion
 
-
-
+    //region Enviar Comentario
     private void createNewVoiceComent(String absolutePath) {
         final Comment comment = new Comment();
         comment.setRecord(true);
@@ -239,8 +257,7 @@ public class ForumsActivity extends AppCompatActivity implements SunshineParse.S
             @Override
             public void done(boolean success, ParseException e) {
                 if (success == true) {
-                    Toast.makeText(getApplicationContext(), "Nota de Voz Creada", Toast.LENGTH_SHORT).show();
-                    getNewComments();
+                    Toast.makeText(getApplicationContext(), "Nota de Voz Creada al final de comentarios", Toast.LENGTH_SHORT).show();
                     adapter.notifyDataSetChanged();
                     parseVoice.incrementField(discussion.getObjectId(), "comments", Discussion.class);
                     ColletionsStatics.getDataDiscusion().get(pos).setComments(ColletionsStatics.getDataDiscusion().get(pos).getComments() + 1);
@@ -259,171 +276,6 @@ public class ForumsActivity extends AppCompatActivity implements SunshineParse.S
 
             }
         });
-    }
-
-    public void tiempoGrabacion() {
-        new CountDownTimer(10000, 1000) {
-            @Override
-            public void onTick(long millisUntilFinished) {
-            }
-
-            @Override
-            public void onFinish() {
-                Toast.makeText(getApplicationContext(), "se termino el tiempo de grabacion", Toast.LENGTH_SHORT).show();
-                detener();
-            }
-        }.start();
-    }
-
-    @Override
-    public void onClick(View v) {
-        switch (v.getId()) {
-            case R.id.btn_like:
-                likeDiscussion(user.getObjectId());
-                break;
-            case R.id.btn_dislike:
-                dislikeDiscussion(user.getObjectId());
-                break;
-        }
-    }
-
-    public void getComments() {
-        SunshineQuery query = new SunshineQuery();
-        query.addPointerValue("discussion", discussion.getObjectId());
-        Date date = null;
-        if (data.size() > 0)
-            date = data.get(data.size() - 1).getCreatedAt();
-        parse.getRecordsByPage(date, ColletionsStatics.LIMIT, query, this, REQUEST_PAGE, Comment.class);
-    }
-
-    public void getNewComments(){
-        SunshineQuery query = new SunshineQuery();
-        query.addPointerValue("discussion", discussion.getObjectId());
-        Date date = null;
-        if (data.size() > 0)
-            date = data.get(0).getCreatedAt();
-        parse.getRecentRecords(date, query, this, REQUEST_RECENT, Comment.class);
-    }
-
-    public void likeDiscussion(String id) {
-        SunshineQuery queryVotes = new SunshineQuery();
-        queryVotes.addUser("user", id);
-        parse.getAllRecords(queryVotes, this, REQUEST_DISCUSION_SCORE_LIKE, DiscussionScore.class);
-    }
-
-    public void dislikeDiscussion(String id) {
-        SunshineQuery queryVotes = new SunshineQuery();
-        queryVotes.addUser("user", id);
-        parse.getAllRecords(queryVotes, this, REQUEST_DISCUSION_SCORE_DISLIKE, DiscussionScore.class);
-    }
-
-    public void likeComment(Comment comment) {
-
-    }
-
-    public void dislikeComment(Comment comment) {
-
-    }
-
-
-    @Override
-    public void done(boolean success, ParseException e) {
-    }
-
-    @Override
-    public void resultRecord(boolean success, SunshineRecord record, ParseException e) {
-    }
-
-    @Override
-    public void resultListRecords(boolean success, Integer requestCode, List<SunshineRecord> records, ParseException e) {
-        if (requestCode == REQUEST_PAGE) {
-            addPage(records);
-        } else if(requestCode == REQUEST_RECENT){
-            addRecent(records);
-        }
-
-        else if (requestCode == REQUEST_DISCUSION_SCORE_LIKE) {
-            processDiscussionScore(records, DiscussionScore.LIKE);
-        } else if (requestCode == REQUEST_DISCUSION_SCORE_DISLIKE) {
-            processDiscussionScore(records, DiscussionScore.DISLIKE);
-        }
-    }
-
-    private void addRecent(List<SunshineRecord> records) {
-        for(int i = records.size()-1; i>-1;i--){
-            data.add(0, (Comment)records.get(i));
-        }
-        adapter.notifyDataSetChanged();
-    }
-
-    private void addPage(List<SunshineRecord> records) {
-        for (SunshineRecord r : records) {
-            data.add((Comment) r);
-        }
-        adapter.notifyDataSetChanged();
-    }
-
-    private void processDiscussionScore(List<SunshineRecord> records, String like) {
-
-        if (records.size() > 0) {
-            score = (DiscussionScore) records.get(0);
-            if (score.getType().equals(like)) {
-                Toast.makeText(this, R.string.voted, Toast.LENGTH_SHORT).show();
-
-            } else {
-                scoreD = like;
-                AlertDialog alert = new AlertDialog.Builder(this)
-                        .setMessage(R.string.change_vote)
-                        .setPositiveButton(R.string.dialog_positive, this)
-                        .setNegativeButton(R.string.dialog_negative, this)
-                        .create();
-                alert.show();
-            }
-
-        } else {
-            DiscussionScore discussionScore = new DiscussionScore();
-            discussionScore.setDiscussion(discussion.getObjectId());
-            discussionScore.setUser(user.getObjectId());
-            discussionScore.setType(like);
-            parse.insert(discussionScore);
-            if (like.equals(DiscussionScore.LIKE)) {
-                parse.incrementField(discussion.getObjectId(), "likes", Discussion.class);
-               ColletionsStatics.getDataDiscusion().get(pos).setLikes(ColletionsStatics.getDataDiscusion().get(pos).getLikes() + 1);
-                likes.setText("" + (Integer.valueOf("" + likes.getText()) + 1));
-            } else {
-                parse.incrementField(discussion.getObjectId(), "dislikes", Discussion.class);
-                ColletionsStatics.getDataDiscusion().get(pos).setDislikes(ColletionsStatics.getDataDiscusion().get(pos).getDislikes() + 1);
-                data.get(pos).setLikes(data.get(pos).getDislikes()+1);
-            }
-        }
-    }
-
-    private void showAlertInternet() {
-        Toast.makeText(this, R.string.con_intenert_fail, Toast.LENGTH_SHORT).show();
-    }
-
-    @Override
-    public void onClick(DialogInterface dialog, int which) {
-        if (which == DialogInterface.BUTTON_POSITIVE) {
-            score.setType(scoreD);
-            parse.update(score, false,false, this);
-            if (scoreD.equals(DiscussionScore.LIKE)) {
-                parse.decrementField(discussion.getObjectId(), "dislikes", Discussion.class);
-                parse.incrementField(discussion.getObjectId(), "likes", Discussion.class);
-                likes.setText("" + (Integer.valueOf("" + likes.getText()) + 1));
-                int d = Integer.valueOf("" + dislikes.getText());
-                if (d > 0)
-                    dislikes.setText("" + (d - 1));
-            } else {
-                parse.decrementField(discussion.getObjectId(), "likes", Discussion.class);
-                parse.incrementField(discussion.getObjectId(), "dislikes", Discussion.class);
-
-                dislikes.setText("" + (Integer.valueOf("" + dislikes.getText()) + 1));
-                int d = Integer.valueOf("" + likes.getText());
-                if (d > 0)
-                    likes.setText("" + (d - 1));
-            }
-        }
     }
 
     @Override
@@ -462,7 +314,7 @@ public class ForumsActivity extends AppCompatActivity implements SunshineParse.S
                         query.addPointerValue("discussion", discussion.getObjectId());
                         comentario.setText("");
                         Date date = null;
-                        getNewComments();
+                        Toast.makeText(ForumsActivity.this,"Comentado creado al final",Toast.LENGTH_SHORT).show();
                         parse.incrementField(discussion.getObjectId(), "comments", Discussion.class);
                         ColletionsStatics.getDataDiscusion().get(pos).setComments(ColletionsStatics.getDataDiscusion().get(pos).getComments() + 1);
                         adapter.notifyDataSetChanged();
@@ -488,6 +340,113 @@ public class ForumsActivity extends AppCompatActivity implements SunshineParse.S
         return false;
     }
 
+    //endregion
+
+    //region Votar Discusion
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()) {
+            case R.id.btn_like:
+                likeDiscussion(user.getObjectId());
+                break;
+            case R.id.btn_dislike:
+                dislikeDiscussion(user.getObjectId());
+                break;
+        }
+    }
+
+    public void likeDiscussion(String id) {
+        SunshineQuery queryVotes = new SunshineQuery();
+        queryVotes.addUser("user", id);
+        parse.getAllRecords(queryVotes, this, REQUEST_DISCUSION_SCORE_LIKE, DiscussionScore.class);
+    }
+
+    public void dislikeDiscussion(String id) {
+        SunshineQuery queryVotes = new SunshineQuery();
+        queryVotes.addUser("user", id);
+        parse.getAllRecords(queryVotes, this, REQUEST_DISCUSION_SCORE_DISLIKE, DiscussionScore.class);
+    }
+
+    private void processDiscussionScore(List<SunshineRecord> records, String like) {
+
+        if (records.size() > 0) {
+            score = (DiscussionScore) records.get(0);
+            if (score.getType().equals(like)) {
+                Toast.makeText(this, R.string.voted, Toast.LENGTH_SHORT).show();
+
+            } else {
+                scoreD = like;
+                AlertDialog alert = new AlertDialog.Builder(this)
+                        .setMessage(R.string.change_vote)
+                        .setPositiveButton(R.string.dialog_positive, this)
+                        .setNegativeButton(R.string.dialog_negative, this)
+                        .create();
+                alert.show();
+            }
+
+        } else {
+            DiscussionScore discussionScore = new DiscussionScore();
+            discussionScore.setDiscussion(discussion.getObjectId());
+            discussionScore.setUser(user.getObjectId());
+            discussionScore.setType(like);
+            parse.insert(discussionScore);
+            if (like.equals(DiscussionScore.LIKE)) {
+                parse.incrementField(discussion.getObjectId(), "likes", Discussion.class);
+                ColletionsStatics.getDataDiscusion().get(pos).setLikes(ColletionsStatics.getDataDiscusion().get(pos).getLikes() + 1);
+                likes.setText("" + (Integer.valueOf("" + likes.getText()) + 1));
+            } else {
+                parse.incrementField(discussion.getObjectId(), "dislikes", Discussion.class);
+                ColletionsStatics.getDataDiscusion().get(pos).setDislikes(ColletionsStatics.getDataDiscusion().get(pos).getDislikes() + 1);
+                dislikes.setText("" + (Integer.valueOf("" + dislikes.getText()) + 1));
+            }
+        }
+    }
+
+    @Override
+    public void onClick(DialogInterface dialog, int which) {
+        if (which == DialogInterface.BUTTON_POSITIVE) {
+            score.setType(scoreD);
+            parse.update(score, false, false, this);
+            if (scoreD.equals(DiscussionScore.LIKE)) {
+                parse.decrementField(discussion.getObjectId(), "dislikes", Discussion.class);
+                parse.incrementField(discussion.getObjectId(), "likes", Discussion.class);
+                likes.setText("" + (Integer.valueOf("" + likes.getText()) + 1));
+                int d = Integer.valueOf("" + dislikes.getText());
+                if (d > 0)
+                    dislikes.setText("" + (d - 1));
+            } else {
+                parse.decrementField(discussion.getObjectId(), "likes", Discussion.class);
+                parse.incrementField(discussion.getObjectId(), "dislikes", Discussion.class);
+
+                dislikes.setText("" + (Integer.valueOf("" + dislikes.getText()) + 1));
+                int d = Integer.valueOf("" + likes.getText());
+                if (d > 0)
+                    likes.setText("" + (d - 1));
+            }
+        }
+    }
+    //endregion
+
+    //region Metodos Parse
+    @Override
+    public void done(boolean success, ParseException e) {
+    }
+
+    @Override
+    public void resultRecord(boolean success, SunshineRecord record, ParseException e) {
+    }
+
+    @Override
+    public void resultListRecords(boolean success, Integer requestCode, List<SunshineRecord> records, ParseException e) {
+        if (requestCode == REQUEST_DISCUSION_SCORE_LIKE) {
+            processDiscussionScore(records, DiscussionScore.LIKE);
+        } else if (requestCode == REQUEST_DISCUSION_SCORE_DISLIKE) {
+            processDiscussionScore(records, DiscussionScore.DISLIKE);
+        }
+    }
+    //endregion
+
+    //region Votar Comentario
     @Override
     public void onItemClick(int position, int type) {
 
@@ -499,6 +458,7 @@ public class ForumsActivity extends AppCompatActivity implements SunshineParse.S
         }
 
     }
+    //endregion
 
 
 

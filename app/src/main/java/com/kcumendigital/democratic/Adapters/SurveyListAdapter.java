@@ -26,6 +26,8 @@ public class SurveyListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
     static final int VIEW_SPAN = 0;
     static final int VIEW_PAGER = 3;
 
+    boolean pagerEnabled;
+
     @Override
     public void onClick(View v) {
         int position = recyclerView.getChildAdapterPosition(v);
@@ -45,6 +47,8 @@ public class SurveyListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
     ArrayList<Survey> data;
     com.squareup.picasso.Transformation transformation;
 
+    int sizeAvatar;
+
     public SurveyListAdapter(OnItemClickListenerSurvey onItemClickListenerSurvey, Context context, FragmentManager fm, RecyclerView recyclerView) {
         this.recyclerView = recyclerView;
         this.onItemClickListenerSurvey = onItemClickListenerSurvey;
@@ -55,6 +59,8 @@ public class SurveyListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
         transformation = new RoundedTransformationBuilder()
                 .oval(true)
                 .build();
+
+        sizeAvatar = context.getResources().getDimensionPixelSize(R.dimen.list_avatar);
     }
 
     @Override
@@ -79,6 +85,8 @@ public class SurveyListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
 
         if (holder instanceof SurveyListSpanViewHolder){
             SurveyListSpanViewHolder spanHolder = (SurveyListSpanViewHolder) holder;
+            if(ColletionsStatics.getHomeSurvey().size()>0 && pagerEnabled)
+                position = position - 1;
             spanHolder.title_survey_list.setText(data.get(position).getTitle());
             spanHolder.user_name.setText(data.get(position).getUser().getUserName());
             String BiggerOpcion = data.get(position).getOptions().get(0).getDescription();
@@ -101,24 +109,28 @@ public class SurveyListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
             spanHolder.percentage_opcion.setText(""+porcentaje);
             spanHolder.opcion_name.setText(BiggerOpcion);
             String categoria = data.get(position).getCategory();
-            if (categoria.equals("Gobierno")){
+            if (categoria.equals(context.getString(R.string.c_gobierno))) {
                 Picasso.with(context).load(R.drawable.ic_account_balance_white_36dp).into(spanHolder.leftIcon);
                 spanHolder.leftColor.setBackgroundResource(R.color.gobierno);
 
             }
-            if (categoria.equals("Salud")){
-                spanHolder.leftIcon.setBackgroundResource(R.drawable.ic_local_hospital_white_18dp);
+            else if (categoria.equals(context.getString(R.string.c_salud))) {
+                Picasso.with(context).load(R.drawable.ic_local_hospital_white_18dp).into(spanHolder.leftIcon);
                 spanHolder.leftColor.setBackgroundResource(R.color.salud);
 
             }
-            if (categoria.equals("Educación")){
-                spanHolder.leftIcon.setBackgroundResource(R.drawable.ic_school_white_18dp);
+            else if (categoria.equals(context.getString(R.string.c_educacion))) {
+                Picasso.with(context).load(R.drawable.ic_school_white_18dp).into(spanHolder.leftIcon);
                 spanHolder.leftColor.setBackgroundResource(R.color.educacion);
 
+            }else if (categoria.equals(context.getString(R.string.c_ambiente))) {
+                Picasso.with(context).load(R.drawable.ic_send_white_24dp).into(spanHolder.leftIcon);
+                spanHolder.leftColor.setBackgroundResource(R.color.medio_ambiente);
             }
 
             Picasso.with(context).load(Uri.parse(data.get(position).getUser().getImg()))
-
+                    .resize(sizeAvatar, sizeAvatar)
+                    .centerCrop()
                     .transform(transformation).into(spanHolder.img);
 
         }
@@ -133,12 +145,16 @@ public class SurveyListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
 
     @Override
     public int getItemCount() {
-        return data.size();
+
+        if(pagerEnabled && ColletionsStatics.getHomeSurvey().size()>0)
+            return data.size()+1;
+        else
+            return data.size();
     }
 
     @Override
     public int getItemViewType(int position) {
-        if (position == 0) {
+        if (position == 0 && pagerEnabled && ColletionsStatics.getHomeSurvey().size()>0) {
             return  VIEW_PAGER;
 
         }
@@ -184,4 +200,8 @@ public class SurveyListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
 
 
     //endregion
+
+    public void setPagerEnabled(boolean pagerEnabled) {
+        this.pagerEnabled = pagerEnabled;
+    }
 }

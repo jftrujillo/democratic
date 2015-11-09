@@ -1,9 +1,19 @@
 package com.kcumendigital.democratic.parse;
 
+import android.app.Activity;
+
+import com.kcumendigital.democratic.Models.User;
 import com.parse.LogInCallback;
 import com.parse.ParseException;
+import com.parse.ParseFacebookUtils;
+import com.parse.ParseFile;
 import com.parse.ParseUser;
+import com.parse.SaveCallback;
 import com.parse.SignUpCallback;
+
+import java.io.File;
+import java.util.Collection;
+import java.util.HashMap;
 
 //import com.parse.ParseFacebookUtils;
 
@@ -11,6 +21,11 @@ import com.parse.SignUpCallback;
  * Created by Dario Chamorro on 22/10/2015.
  */
 public class SunshineLogin implements SignUpCallback, LogInCallback {
+
+    static User user;
+
+    ParseUser parseUser;
+    ParseFile parseFile;
 
     public interface SunshineLoginCallback{
         void done(boolean success, ParseException e);
@@ -28,18 +43,32 @@ public class SunshineLogin implements SignUpCallback, LogInCallback {
     SunshineLoginCallback callback;
     SunshineFacebookLoginCallback facebookLoginCallback;
 
-    public void siginUp(SunshineUser user, SunshineLoginCallback callback){
+    public void siginUp(User user, SunshineLoginCallback callback){
 
         this.callback = callback;
 
-        ParseUser parseUser =  new ParseUser();
+        parseUser =  new ParseUser();
         parseUser.setEmail(user.getEmail());
         parseUser.setUsername(user.getUserName());
         parseUser.setPassword(user.getPassword());
-        prepareParseUser(parseUser, user);
+        //prepareParseUser(parseUser, user);
+        parseUser.put("name", user.getName());
 
-        parseUser.signUpInBackground(this);
-
+        if(user.getImgPath()!=null) {
+            File file = new File(user.getImgPath());
+            parseFile = new ParseFile(file);
+            parseFile.saveInBackground(new SaveCallback() {
+                @Override
+                public void done(ParseException e) {
+                    if(e!=null)
+                        e.printStackTrace();
+                    parseUser.put("img", parseFile);
+                    parseUser.signUpInBackground(SunshineLogin.this);
+                }
+            });
+        }else{
+            parseUser.signUpInBackground(SunshineLogin.this);
+        }
     }
 
     public void login(String username, String password, SunshineLoginCallback callback){
@@ -47,10 +76,28 @@ public class SunshineLogin implements SignUpCallback, LogInCallback {
         ParseUser.logInInBackground(username, password, this);
     }
 
-    public static SunshineUser getLoggedUser(Class<? extends  SunshineUser> c){
+    public static User getLoggedUser(Class<? extends  SunshineUser> c){
         ParseUser currentUser = ParseUser.getCurrentUser();
         if (currentUser != null) {
-            return prepareUser(currentUser, c);
+
+            if(user == null)
+                user =  new User();
+
+            if(currentUser.get("authData")==null){
+                user.setImg(currentUser.getParseFile("img").getUrl());
+            }else{
+                HashMap<String, HashMap<String, String>> data = (HashMap<String, HashMap<String, String>>) currentUser.get("authData");
+                HashMap<String, String> fb = data.get("facebook");
+                String id = fb.get("id");
+                user.setImg("https://graph.facebook.com/"+id+"/picture?type=large");
+            }
+            user.setEmail(currentUser.getEmail());
+            user.setName(currentUser.getString("name"));
+            user.setUserName(currentUser.getUsername());
+            user.setObjectId(currentUser.getObjectId());
+            user.setCreatedAt(currentUser.getCreatedAt());
+            user.setUpdateAt(currentUser.getUpdatedAt());
+            return user;
         } else {
             return null;
         }
@@ -63,41 +110,23 @@ public class SunshineLogin implements SignUpCallback, LogInCallback {
         }
     }
 
-    /*public void loginByFacebook(Activity activity,Collection<String> permissions, final SunshineFacebookLoginCallback facebookLoginCallback){
+    public void loginByFacebook(Activity activity,Collection<String> permissions, final SunshineFacebookLoginCallback facebookLoginCallback){
         this.facebookLoginCallback = facebookLoginCallback;
         ParseFacebookUtils.logInWithReadPermissionsInBackground(activity, permissions, new LogInCallback() {
             @Override
             public void done(ParseUser user, ParseException e) {
 
-                if(user == null){
+                if (user == null) {
                     facebookLoginCallback.done(SunshineFacebookLoginCallback.CANCELED, e);
-                }else if(user.isNew()){
-                    HashMap<String,HashMap<String,String>> data = (HashMap<String, HashMap<String, String>>) user.get("authData");
-                    HashMap<String,String> fb = data.get("facebook");
-                    String id = fb.get("id");
+                } else if (user.isNew()) {
                     facebookLoginCallback.done(SunshineFacebookLoginCallback.SIGINUP, e);
 
-                }else{
+                } else {
                     facebookLoginCallback.done(SunshineFacebookLoginCallback.LOGIN, e);
                 }
             }
         });
     }
-*/
-    private void prepareParseUser(ParseUser parseUser, SunshineUser user) {
-        //HashMap<String,List<String>> fields = getFields(record.getClass());
-        //ParseObject parseObject = getParseObject(fields.get(ANNOTATION_NORMAL), record);
-        //addRelations(parseObject,fields.get(ANNOTATION_RELATION), record);
-        //addRelationsById(parseObject, fields.get(ANNOTATION_RELATION_ID), record);
-    }
-
-
-
-    private static SunshineUser prepareUser(ParseUser currentUser, Class<? extends SunshineUser> c) {
-        return null;
-    }
-
-
 
 
     //region Callbacks

@@ -34,7 +34,7 @@ public class CreateBoardDiscussion_activity extends AppCompatActivity implements
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_create_board_discussion);
         user = new User();
-        AppUtil.initStaticUser();//Borrar
+
 
         user = AppUtil.getUserStatic();
 

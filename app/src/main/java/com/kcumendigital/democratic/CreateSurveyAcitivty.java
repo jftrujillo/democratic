@@ -50,7 +50,7 @@ public class CreateSurveyAcitivty extends AppCompatActivity implements View.OnCl
         setContentView(R.layout.activity_create_survey_acitivty);
         user = new User();
 
-        AppUtil.initStaticUser();//Borrar
+
 
 
         user = AppUtil.getUserStatic();
