@@ -31,7 +31,8 @@ public class SurveyListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
     @Override
     public void onClick(View v) {
         int position = recyclerView.getChildAdapterPosition(v);
-        onItemClickListenerSurvey.onItemClick(position);
+        if(pagerEnabled && ColletionsStatics.getHomeSurvey().size()>0)
+            onItemClickListenerSurvey.onItemClick(position-1);
     }
 
 
