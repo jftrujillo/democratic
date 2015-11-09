@@ -26,6 +26,7 @@ public class AppUtil {
     }
 
 
+
     public static boolean isConnected(Context context){
 
         ConnectivityManager connectivityManager

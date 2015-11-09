@@ -216,7 +216,7 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
 
     @Override
     public void onItemClick(int position) {
-        startActivity(new Intent(getApplicationContext(), SurveyDescriptionActivity.class).putExtra("pos", position));
+        startActivity(new Intent(getApplicationContext(), SurveyDescriptionActivity.class).putExtra("pos", position-3));
     }
     //endregion
 
