@@ -64,6 +64,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="13dp"
+                android:layout_marginRight="10dp"
                 android:layout_below="@id/nombre_usuario"
                 android:layout_toRightOf="@id/actionVoice" />
 
