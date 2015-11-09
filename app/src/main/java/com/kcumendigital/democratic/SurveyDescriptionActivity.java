@@ -15,8 +15,13 @@ import android.widget.Toast;
 import com.kcumendigital.democratic.Adapters.OptionListSurveyActivity;
 import com.kcumendigital.democratic.Models.Survey;
 import com.kcumendigital.democratic.Models.SurveyOption;
+import com.kcumendigital.democratic.Models.SurveyVote;
+import com.kcumendigital.democratic.Models.User;
+import com.kcumendigital.democratic.Util.AppUtil;
 import com.kcumendigital.democratic.Util.ColletionsStatics;
 import com.kcumendigital.democratic.parse.SunshineParse;
+import com.kcumendigital.democratic.parse.SunshineRecord;
+import com.parse.ParseException;
 
 import java.text.DecimalFormat;
 import java.util.List;
@@ -38,11 +43,16 @@ public class SurveyDescriptionActivity extends AppCompatActivity implements Adap
     String mostVotedOpcionString;
     float percentage;
     SunshineParse parse;
-
+    SurveyVote surveyVote;
+    User user;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_survey_description);
+        user = new User();
+
+        user = AppUtil.getUserStatic();
+        surveyVote = new SurveyVote();
         Bundle bundle = getIntent().getExtras();
         mToolbar = (Toolbar) findViewById(R.id.toolbar);
         mToolbar.setNavigationIcon(ContextCompat.getDrawable(this, R.drawable.abc_ic_ab_back_mtrl_am_alpha));
@@ -87,10 +97,36 @@ public class SurveyDescriptionActivity extends AppCompatActivity implements Adap
 
     }
 
+
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
         Toast.makeText(this,"selecionno "+survey.getOptions().get(position).getDescription(),Toast.LENGTH_SHORT).show();
         parse.incrementField(data.get(position).getObjectId(), "votes", SurveyOption.class);
+        surveyVote.setSurveyOption(ColletionsStatics.getDataSurvey().get(pos).getOptions().get(position).getObjectId());
+        surveyVote.setUser(user.getObjectId());
+        parse.insert(surveyVote, new SunshineParse.SunshineCallback() {
+            @Override
+            public void done(boolean success, ParseException e) {
+                if (success == true){
+                    Log.i("succes","true");
+                }
+
+                else{
+                    Log.i("succes","false");
+                    e.printStackTrace();
+                }
+            }
+
+            @Override
+            public void resultRecord(boolean success, SunshineRecord record, ParseException e) {
+
+            }
+
+            @Override
+            public void resultListRecords(boolean success, Integer requestCode, List<SunshineRecord> records, ParseException e) {
+
+            }
+        });
         ColletionsStatics.getDataSurvey().get(pos).getOptions().get(position).setVotes(ColletionsStatics.getDataSurvey().get(pos).getOptions().get(position).getVotes() + 1);
         sum = sum + 1;
         adapter.updateSum(sum);
@@ -115,4 +151,5 @@ public class SurveyDescriptionActivity extends AppCompatActivity implements Adap
         mostVotedOpcionPercentage.setText(""+df.format(percentage));
         votes.setText(""+sum);
     }
+
 }

@@ -16,15 +16,11 @@ public class AppUtil {
 
         if (userStatic == null){
             userStatic = new User();
+            userStatic.setObjectId("Jgb5AcAcBp");
         }
         return userStatic;
     }
 
-    public static void initStaticUser(){
-        User user = new User();
-        user.setObjectId("Jgb5AcAcBp");
-        getUserStatic().setObjectId(user.getObjectId());
-    }
 
 
     public static boolean isConnected(Context context){

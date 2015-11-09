@@ -8,21 +8,21 @@ import com.kcumendigital.democratic.parse.SunshineRecord;
  */
 public class SurveyVote extends SunshineRecord {
 
-    @relation
-    SurveyOption option;
+    @relationId(type = ID_RELATION)
+    String surveyOption;
     //pbejto de la opcion votada
 
     @relationId(type = ID_USER)
     String user;
 
-    //id del usuario 
+    //id del usuario
 
-    public SurveyOption getOption() {
-        return option;
+    public String getSurveyOption() {
+        return surveyOption;
     }
 
-    public void setOption(SurveyOption option) {
-        this.option = option;
+    public void setSurveyOption(String option) {
+        this.surveyOption= option;
     }
 
     public String getUser() {

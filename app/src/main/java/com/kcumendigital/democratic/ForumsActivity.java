@@ -98,7 +98,6 @@ public class ForumsActivity extends AppCompatActivity implements SunshineParse.S
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_forums);
-        AppUtil.initStaticUser();
         user = AppUtil.getUserStatic();
         comentario = (EditText) findViewById(R.id.comentario);
 
