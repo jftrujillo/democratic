@@ -5,6 +5,12 @@
         <item name="android:layout_margin">0dp</item>
     </style>
 
+    <style name="FbButton" parent="Base.Widget.AppCompat.Button">
+        <item name="colorControlHighlight">#27437c</item>
+        <item name="colorButtonNormal">#395795</item>
+        <item name="android:textColor">#ffffff</item>
+    </style>
+
     <!-- Base application theme. -->
 
 

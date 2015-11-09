@@ -3,6 +3,7 @@ package com.kcumendigital.democratic.Adapters;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.media.MediaPlayer;
+import android.net.Uri;
 import android.os.AsyncTask;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -50,6 +51,8 @@ public class CommentAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
     int pos;
     ProgressHandler progressHandler;
 
+    int sizeAvatar;
+
     public interface OnItemClickListener {
         void onItemClick(int position, int button);
     }
@@ -64,6 +67,9 @@ public class CommentAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
         this.onItemClick = onItemClick;
         pos = -1;
         bars = new HashMap<>();
+
+        transformation = new RoundedTransformationBuilder().oval(true).build();
+        sizeAvatar = context.getResources().getDimensionPixelSize(R.dimen.forum_avatar);
     }
 
     @Override
@@ -95,6 +101,10 @@ public class CommentAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
             ((TextViewHolder) holder).likes.setOnClickListener(this);
             ((TextViewHolder) holder).dislikes.setOnClickListener(this);
 
+            Picasso.with(context).load(data.get(position).getUser().getImg())
+                    .resize(sizeAvatar, sizeAvatar)
+                    .centerCrop()
+                    .transform(transformation).into(((TextViewHolder) holder).imgPerfil);
 
             //  comment,likes,dislikes,titulo;
         }
@@ -114,6 +124,11 @@ public class CommentAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
                 ((VoiceViewHolder) holder).btn_play.setVisibility(ImageView.GONE);
                 ((VoiceViewHolder) holder).downloading.setVisibility(ImageView.VISIBLE);
             }
+
+            Picasso.with(context).load(data.get(position).getUser().getImg())
+                    .resize(sizeAvatar, sizeAvatar)
+                    .centerCrop()
+                    .transform(transformation).into(((VoiceViewHolder) holder).imgPerfil);
 
             bars.put(position, ((VoiceViewHolder) holder).progress);
 
@@ -150,14 +165,11 @@ public class CommentAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
             dislikes = (TextView) itemView.findViewById(R.id.value_dislike);
             nombreUsuario = (TextView) itemView.findViewById(R.id.nombreUsuario);
             imgPerfil = (ImageView) itemView.findViewById(R.id.imgPerfil);
-
-            transformation = new RoundedTransformationBuilder().oval(true).build();
-            Picasso.with(context).load("https://fbcdn-sphotos-b-a.akamaihd.net/hphotos-ak-frc3/v/t1.0-9/1970810_10151892227450771_595738950_n.jpg?oh=882c88204af7abd222bc73a21a3edc62&oe=56C9C868&__gda__=1459270949_613753f7ed5e1b07391330a1d893d390").transform(transformation).into(imgPerfil);
         }
     }
 
     public class VoiceViewHolder extends RecyclerView.ViewHolder {
-        ImageView perfil;
+        ImageView imgPerfil;
         ImageButton btn_play;
         ProgressBar downloading;
         ProgressBar progress;
@@ -165,9 +177,7 @@ public class CommentAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
         public VoiceViewHolder(View itemView) {
             super(itemView);
 
-            perfil = (ImageView) itemView.findViewById(R.id.imgPerfilvoice);
-            com.squareup.picasso.Transformation transformation = (com.squareup.picasso.Transformation) new RoundedTransformationBuilder().oval(true).build();
-            Picasso.with(context).load("http://k10.kn3.net/taringa/6/6/8/7/9/1/4/takehikoinoue/FA7.jpg").transform(transformation).into(perfil);
+            imgPerfil = (ImageView) itemView.findViewById(R.id.imgPerfilvoice);
             btn_play = (ImageButton) itemView.findViewById(R.id.playVoice);
             downloading = (ProgressBar) itemView.findViewById(R.id.downloadingVoice);
             progress = (ProgressBar) itemView.findViewById(R.id.progressVoice);

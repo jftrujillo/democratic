@@ -27,4 +27,8 @@
     <dimen name="img_margin_right">8dp</dimen>
     <dimen name="big_padding">30dp</dimen>
     <dimen name="card_margin">0dp</dimen>
+    <dimen name="sigin_picture">150dp</dimen>
+    <dimen name="nav_header_avatar">100dp</dimen>
+    <dimen name="list_avatar">40dp</dimen>
+    <dimen name="forum_avatar">50dp</dimen>
 </resources>

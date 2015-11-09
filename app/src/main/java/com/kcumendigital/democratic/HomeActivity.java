@@ -18,6 +18,7 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.getbase.floatingactionbutton.FloatingActionButton;
 import com.kcumendigital.democratic.Adapters.CustomPagerAdapter;
@@ -26,8 +27,11 @@ import com.kcumendigital.democratic.Fragments.DiscussionHomeFragment;
 import com.kcumendigital.democratic.Fragments.SurveyHomeFragment;
 import com.kcumendigital.democratic.Models.Discussion;
 import com.kcumendigital.democratic.Models.Survey;
+import com.kcumendigital.democratic.Util.AppUtil;
 import com.kcumendigital.democratic.Util.ColletionsStatics;
+import com.kcumendigital.democratic.parse.SunshineLogin;
 import com.kcumendigital.democratic.parse.SunshineParse;
+import com.kcumendigital.democratic.parse.SunshineQuery;
 import com.kcumendigital.democratic.parse.SunshineRecord;
 import com.makeramen.roundedimageview.RoundedTransformationBuilder;
 import com.parse.ParseException;
@@ -37,7 +41,7 @@ import com.squareup.picasso.Transformation;
 import java.util.ArrayList;
 import java.util.List;
 
-public class HomeActivity extends AppCompatActivity implements DrawerLayout.DrawerListener, NavigationView.OnNavigationItemSelectedListener, View.OnClickListener, SunshineParse.SunshineCallback, SurveyListAdapter.OnItemClickListenerSurvey {
+public class HomeActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener, View.OnClickListener, SurveyListAdapter.OnItemClickListenerSurvey {
 
 
     DiscussionHomeFragment fragment;
@@ -46,15 +50,17 @@ public class HomeActivity extends AppCompatActivity implements DrawerLayout.Draw
     ActionBarDrawerToggle toggle;
     FloatingActionButton new_encuesta, new_forum;
     String filtro;
-    Boolean isFiltred;
+
     DiscussionHomeFragment discussionFragment;
     SurveyHomeFragment surveyFragment;
+
+    SunshineQuery query;
 
     @Override
     protected void onRestart() {
         super.onRestart();
-        discussionFragment.notifyDataChagued();
-        surveyFragment.notidyDataChangued();
+        discussionFragment.notifyDataChanged();
+        surveyFragment.notifyDataChanged();
     }
 
     @Override
@@ -76,8 +82,15 @@ public class HomeActivity extends AppCompatActivity implements DrawerLayout.Draw
                 .scaleType(ImageView.ScaleType.CENTER_CROP)
                 .oval(true)
                 .build();
-        Picasso.with(this).load("https://goo.gl/TF0Cwd").transform(transformation).into(imm_nav);
-        drawer.setDrawerListener(this);
+
+        int avatar = getResources().getDimensionPixelSize(R.dimen.nav_header_avatar);
+        Picasso.with(this).load(AppUtil.getUserStatic().getImg())
+                .resize(avatar, avatar)
+                .centerCrop()
+                .transform(transformation).into(imm_nav);
+        TextView userName = (TextView) nav.findViewById(R.id.txt_usr);
+        userName.setText(AppUtil.getUserStatic().getName());
+
         toggle = new ActionBarDrawerToggle(this, drawer, R.string.drawer_open, R.string.drawer_close);
         nav.setNavigationItemSelectedListener(this);
         toggle.setToolbarNavigationClickListener(this);
@@ -102,106 +115,10 @@ public class HomeActivity extends AppCompatActivity implements DrawerLayout.Draw
         tabLayout.setTabsFromPagerAdapter(adapter);
         tabLayout.setupWithViewPager(viewPager);
 
-
-        if (savedInstanceState == null) {
-            SunshineParse parse = new SunshineParse();
-            parse.getRecordsByPage(null, ColletionsStatics.LIMIT, null, this, null, Discussion.class);
-            SunshineParse parseSurveys = new SunshineParse();
-            parseSurveys.getRecordsByPage(null, ColletionsStatics.LIMIT, null, new SunshineParse.SunshineCallback() {
-                @Override
-                public void done(boolean success, ParseException e) {
-
-                }
-
-                @Override
-                public void resultRecord(boolean success, SunshineRecord record, ParseException e) {
-
-                }
-
-                @Override
-                public void resultListRecords(boolean success, Integer requestCode, List<SunshineRecord> records, ParseException e) {
-                    for (int i = 0; i < records.size(); i++) {
-                        ColletionsStatics.getDataSurvey().add((Survey) records.get(i));
-                    }
-
-                    surveyFragment.notifyDataset();
-
-
-                }
-            }
-                    , null, Survey.class);
-        }
-
-
     }
 
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        int id = item.getItemId();
 
-        if (toggle.onOptionsItemSelected(item)) {
-            return true;
-        }
-        if (id == R.id.navigate) {
-            //startActivity(new Intent(this, LookingForAcitivity.class));
-
-        }
-        return super.onOptionsItemSelected(item);
-
-    }
-
-    @Override
-    public void onDrawerSlide(View drawerView, float slideOffset) {
-        toggle.onDrawerSlide(drawerView, slideOffset);
-    }
-
-    @Override
-    public void onDrawerOpened(View drawerView) {
-
-    }
-
-    @Override
-    public void onDrawerClosed(View drawerView) {
-
-    }
-
-    @Override
-    public void onDrawerStateChanged(int newState) {
-
-    }
-
-    @Override
-    public boolean onNavigationItemSelected(MenuItem menuItem) {
-        Log.i("Navigation menu", menuItem.getTitle().toString());
-        filtro = menuItem.getTitle().toString();
-        getSupportActionBar().setTitle(filtro);
-        isFiltred = true;
-        drawer.closeDrawers();
-        return false;
-    }
-
-    @Override
-    public void onPostCreate(Bundle savedInstanceState) {
-        super.onPostCreate(savedInstanceState);
-        toggle.syncState();
-    }
-
-    @Override
-    public void onClick(View v) {
-        switch (v.getId()) {
-            case R.id.new_encuesta:
-                startActivity(new Intent(this, CreateSurveyAcitivty.class));
-
-                break;
-
-            case R.id.new_forum:
-                startActivity(new Intent(this, CreateBoardDiscussion_activity.class));
-                break;
-        }
-
-
-    }
-
+    //region OptionMenu
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
@@ -211,38 +128,92 @@ public class HomeActivity extends AppCompatActivity implements DrawerLayout.Draw
         SearchView searchView = (SearchView) menu.findItem(R.id.navigate).getActionView();
 
         searchView.setSearchableInfo(searchManager.getSearchableInfo(getComponentName()));
-
-
         return true;
     }
 
-
-    //region ParseCallback
     @Override
-    public void done(boolean success, ParseException e) {
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int id = item.getItemId();
 
+        if (toggle.onOptionsItemSelected(item)) {
+            return true;
+        }
+        return super.onOptionsItemSelected(item);
+    }
+    //endregion
+
+    //region DrawerLayout
+    @Override
+    public void onPostCreate(Bundle savedInstanceState) {
+        super.onPostCreate(savedInstanceState);
+        toggle.syncState();
     }
 
-    @Override
-    public void resultRecord(boolean success, SunshineRecord record, ParseException e) {
-
-    }
 
     @Override
-    public void resultListRecords(boolean success, Integer requestCode, List<SunshineRecord> records, ParseException e) {
+    public boolean onNavigationItemSelected(MenuItem menuItem) {
+        filtro = menuItem.getTitle().toString();
+        getSupportActionBar().setTitle(filtro);
 
-        for (int i = 0; i < records.size(); i++) {
-            ColletionsStatics.getDataDiscusion().add((Discussion) records.get(i));
+        switch(menuItem.getItemId()){
+            case R.id.nav_home:
+                query = null;
+                break;
+            case R.id.nav_gobierno:
+                query = new SunshineQuery();
+                query.addFieldValue("category", getString(R.string.c_gobierno));
+                break;
+            case R.id.nav_educacion:
+                query = new SunshineQuery();
+                query.addFieldValue("category", getString(R.string.c_educacion));
+                break;
+            case R.id.nav_salud:
+                query = new SunshineQuery();
+                query.addFieldValue("category", getString(R.string.c_salud));
+                break;
+            case R.id.nav_medio_ambiente:
+                query = new SunshineQuery();
+                query.addFieldValue("category", getString(R.string.c_ambiente));
+                break;
+            case R.id.nav_my_post:
+                query = new SunshineQuery();
+                query.addUser("user", AppUtil.getUserStatic().getObjectId());
+                break;
+            case R.id.nav_logout:
+                SunshineLogin.logout();
+                Intent intent = new Intent(this, LoginActivity.class);
+                startActivity(intent);
+                finish();
+                break;
+
         }
 
-        discussionFragment.notifyDataset();
-
-
+        surveyFragment.reloadWithQuery(query);
+        discussionFragment.reloadWithQuery(query);
+        drawer.closeDrawers();
+        return false;
     }
+    //endregion
+
+    //region FAB
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()) {
+            case R.id.new_encuesta:
+                startActivity(new Intent(this, CreateSurveyAcitivty.class));
+                break;
+            case R.id.new_forum:
+                startActivity(new Intent(this, CreateBoardDiscussion_activity.class));
+                break;
+        }
+    }
+    //endregion
 
     @Override
     public void onItemClick(int position) {
         startActivity(new Intent(getApplicationContext(), SurveyDescriptionActivity.class).putExtra("pos", position));
     }
     //endregion
+
+
 }

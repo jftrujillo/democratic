@@ -1,5 +1,7 @@
 package com.kcumendigital.democratic;
 
+import android.app.ProgressDialog;
+import android.content.Intent;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.TextInputLayout;
 import android.support.v7.app.AppCompatActivity;
@@ -8,27 +10,46 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
-public class LoginActivity extends AppCompatActivity implements View.OnClickListener {
+import com.kcumendigital.democratic.Models.User;
+import com.kcumendigital.democratic.Util.AppUtil;
+import com.kcumendigital.democratic.parse.SunshineLogin;
+import com.parse.ParseException;
+import com.parse.ParseFacebookUtils;
+
+public class LoginActivity extends AppCompatActivity implements View.OnClickListener, SunshineLogin.SunshineLoginCallback, SunshineLogin.SunshineFacebookLoginCallback {
+
+    static final int REQUEST_SIGIN=102;
 
     static final String SAVED_EMAIL="email";
     static final String SAVED_PASS="pass";
 
     TextInputLayout email, pass;
-    Button btnRegistro;
+    Button btnRegistro, btnFacebook;
     FloatingActionButton ingresar;
+    ProgressDialog dialog;
+    SunshineLogin login;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
+        login = new SunshineLogin();
+
         email = (TextInputLayout) findViewById(R.id.email_login);
         pass = (TextInputLayout) findViewById(R.id.password);
         btnRegistro= (Button) findViewById(R.id.register);
         ingresar = (FloatingActionButton) findViewById(R.id.ingresar);
+        btnFacebook = (Button) findViewById(R.id.login_facebook_btn);
 
+        btnFacebook.setOnClickListener(this);
         btnRegistro.setOnClickListener(this);
         ingresar.setOnClickListener(this);
+
+        dialog= new ProgressDialog(this);
+        dialog.setMessage(getString(R.string.login_validate));
 
         if(savedInstanceState!=null){
             email.getEditText().setText(savedInstanceState.getString(SAVED_EMAIL));
@@ -40,8 +61,8 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
     @Override
     protected void onSaveInstanceState(Bundle outState) {
-        outState.putString(SAVED_EMAIL,email.getEditText().getText().toString());
-        outState.putString(SAVED_PASS,pass.getEditText().getText().toString());
+        outState.putString(SAVED_EMAIL, email.getEditText().getText().toString());
+        outState.putString(SAVED_PASS, pass.getEditText().getText().toString());
         super.onSaveInstanceState(outState);
     }
 
@@ -49,10 +70,71 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     public void onClick(View v) {
         switch (v.getId()){
             case R.id.register:
+                Intent intent = new Intent(this,SignInAcitivity.class);
+                startActivityForResult(intent, REQUEST_SIGIN);
                 break;
 
             case R.id.ingresar:
+                dialog.show();
+                String emailT=email.getEditText().getText().toString();
+                String passT = pass.getEditText().getText().toString();
+
+                if(validate(emailT)&&validate(passT))
+                    login.login(emailT, passT, this);
+                else
+                    Toast.makeText(getApplicationContext(), R.string.sigin_fail, Toast.LENGTH_SHORT).show();
+
+
                 break;
+            case R.id.login_facebook_btn:
+                login.loginByFacebook(this,null,this);
+            break;
         }
+    }
+
+    public boolean validate(String txt){
+        if(txt==null || txt.equals(""))
+            return false;
+        else
+            return true;
+    }
+
+    @Override
+    public void done(boolean success, ParseException e) {
+        dialog.hide();
+        if(success){
+            inApp();
+        }else{
+            Toast.makeText(this,"Email o password incorrectos",Toast.LENGTH_SHORT).show();
+            e.printStackTrace();
+        }
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if(requestCode == REQUEST_SIGIN){
+            if(resultCode == RESULT_OK){
+                inApp();
+            }
+        }else{
+            ParseFacebookUtils.onActivityResult(requestCode, resultCode, data);
+        }
+    }
+
+
+
+    public void inApp(){
+        Intent intent = new Intent(this, HomeActivity.class);
+        startActivity(intent);
+        AppUtil.setUser(SunshineLogin.getLoggedUser(User.class));
+        finish();
+    }
+
+    @Override
+    public void done(int type, ParseException e) {
+        if(type == LOGIN || type == SIGINUP)
+            inApp();
+        else
+            Toast.makeText(this,"Error al ingresar con Facebook",Toast.LENGTH_SHORT).show();
     }
 }

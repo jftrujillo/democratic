@@ -203,7 +203,7 @@ public class SunshineParse implements DeleteCallback {
         prepareRelations(parseQuery, c);
         if(query!=null)
             prepareQuery(parseQuery, query);
-        parseQuery.findInBackground(new RecordListCallback(requestCode,c));
+        parseQuery.findInBackground(new RecordListCallback(requestCode, c));
     }
 
     public void getRecentRecords(Date lastDate,SunshineQuery query,SunshineCallback callback,Integer requestCode, Class<? extends SunshineRecord> c){
@@ -232,6 +232,21 @@ public class SunshineParse implements DeleteCallback {
         parseQuery.findInBackground(new RecordListCallback(requestCode,c));
     }
 
+    public void getRecordsByPageAsc(Date lastDate, int limit,SunshineQuery query,SunshineCallback callback,Integer requestCode, Class<? extends SunshineRecord> c){
+        this.callback = callback;
+        ParseQuery<ParseObject> parseQuery = ParseQuery.getQuery(c.getSimpleName());
+        if(lastDate!=null)
+            parseQuery.whereGreaterThan(CREATED_AT, lastDate);
+
+        parseQuery.orderByAscending(CREATED_AT);
+        parseQuery.setLimit(limit);
+
+        prepareRelations(parseQuery, c);
+        if(query!=null)
+            prepareQuery(parseQuery, query);
+        parseQuery.findInBackground(new RecordListCallback(requestCode,c));
+    }
+
     private void prepareQuery(ParseQuery<ParseObject> parseQuery, SunshineQuery query){
         Integer limit = query.getLimit();
         String orderByAscending = query.orderAscending;
@@ -249,7 +264,8 @@ public class SunshineParse implements DeleteCallback {
         if(fieldValues !=null){
 
             for(SunshineQuery.FieldValue fV:fieldValues){
-                parseQuery.whereEqualTo(fV.getField(), (String) fV.getValue());
+                parseQuery.whereEqualTo(fV.getField(), ""+fV.getValue());
+
             }
         }
         if(pointerValues!=null){
@@ -387,8 +403,11 @@ public class SunshineParse implements DeleteCallback {
                         String mdU = getSetMethodName(fuN);
                         if (annotation.equals(ANNOTATION_NORMAL))
                             cU.getMethod(mdU,fU.getType()).invoke(u, user.get(fuN));
-                        else if(annotation.equals(ANNOTATION_FILE_URL))
-                            cU.getMethod(mdU,fU.getType()).invoke(u, user.getParseFile(fuN).getUrl());
+                        else if(annotation.equals(ANNOTATION_FILE_URL)) {
+                            ParseFile parseFile = user.getParseFile(fuN);
+                            if(parseFile!=null)
+                                cU.getMethod(mdU, fU.getType()).invoke(u, parseFile.getUrl());
+                        }
 
                     } catch (IllegalAccessException e) {
                         e.printStackTrace();

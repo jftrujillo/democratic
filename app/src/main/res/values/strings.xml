@@ -5,8 +5,6 @@
     <string name="action_settings">Settings</string>
     <string name="title_activity_home">HomeActivity</string>
 
-<!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="drawer_open">menu lateral abierto</string>
     <string name="drawer_close">menu lateral cerrado</string>
     <string name="titulo">Titulo</string>
@@ -23,9 +21,32 @@
     <string name="email">Correo Electronico</string>
     <string name="already_have_acount">¿Ya tienes una cuenta?</string>
 
+    <string name="c_gobierno">Gobierno</string>
+    <string name="c_salud">Salud</string>
+    <string name="c_educacion">Educación</string>
+    <string name="c_ambiente">Medio Ambiente</string>
+    <string name="nav_item_home">Inicio</string>
+    <string name="nav_group_section">Secciones</string>
+    <string name="nav_group_my">personal</string>
+    <string name="nav_item_mydiscussion">Mis Discusiones</string>
+    <string name="nav_item_mysurvey">Mis Encuestas</string>
+    <string name="nav_item_mypost">Mis Publicaciones</string>
+    <string name="nav_item_logout">Cerrar Sesion</string>
+    <string name="sigin_fail">Llena todos los campos</string>
+    <string name="sigin_pass_fail">Las contraseñas deben ser iguales</string>
+    <string name="sigin_register">Registrando</string>
+    <string name="sigin_success">Registro Exitoso</string>
+    <string name="sigin_error">Error al registrar, intenta de nuevo</string>
+    <string name="login_validate">Verificando</string>
+
     <string-array name="Categorias">
-        <item>Gobierno</item>
-        <item>Salud</item>
-        <item>Educación</item>
+        <item>@string/c_gobierno</item>
+        <item>@string/c_salud</item>
+        <item>@string/c_educacion</item>
+        <item>@string/c_ambiente</item>
     </string-array>
+
+    <string name="facebook_app_id">867572283358216</string>
+
+
 </resources>

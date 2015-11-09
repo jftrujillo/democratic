@@ -17,8 +17,8 @@
             android:layout_height="wrap_content">
             <ImageView
                 android:id="@+id/imgPerfilvoice"
-                android:layout_width="50dp"
-                android:layout_height="50dp"
+                android:layout_width="@dimen/list_avatar"
+                android:layout_height="@dimen/list_avatar"
                 android:layout_margin="10dp"
                 android:scaleType="fitXY"/>
 

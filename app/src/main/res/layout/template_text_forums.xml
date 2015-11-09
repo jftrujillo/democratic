@@ -9,7 +9,9 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:cardElevation="4dp"
-        android:background="#f6f6f6">
+        android:background="#f6f6f6"
+        android:layout_margin="@dimen/card_margin"
+        >
 
         <RelativeLayout
             android:layout_width="match_parent"
@@ -17,8 +19,8 @@
 
             <ImageView
                 android:id="@+id/imgPerfil"
-                android:layout_width="50dp"
-                android:layout_height="50dp"
+                android:layout_width="@dimen/list_avatar"
+                android:layout_height="@dimen/list_avatar"
                 android:layout_margin="10dp"
                 android:scaleType="fitXY"/>
 

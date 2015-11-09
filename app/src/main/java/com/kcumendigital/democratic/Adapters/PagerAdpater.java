@@ -19,6 +19,7 @@ public class PagerAdpater extends FragmentStatePagerAdapter implements ViewPager
     public static final int TYPE_SURVEY = 1;
     int TYPE_LIST;
 
+
     ViewPager pager;
     LinearLayout marksLayout;
     ImageView marks[];

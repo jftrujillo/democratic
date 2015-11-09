@@ -8,6 +8,8 @@ import com.kcumendigital.democratic.parse.SunshineRecord;
  */
 public class Comment extends SunshineRecord{
 
+
+
     @ignore
     int state;
 

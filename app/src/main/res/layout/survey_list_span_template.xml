@@ -42,9 +42,9 @@
 
                 <ImageView
                     android:id="@+id/user_img"
-                    android:layout_width="40dp"
-                    android:layout_height="40dp"
-                    android:scaleType="fitXY"
+                    android:layout_width="@dimen/list_avatar"
+                    android:layout_height="@dimen/list_avatar"
+
                     />
 
                 <TextView

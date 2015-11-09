@@ -29,6 +29,7 @@ public class HomeListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
     static final int VIEW_NOSPAN =1;
     static final int VIEW_PAGER =3;
 
+    boolean pagerEnabled;
 
 
     public interface OnItemClickLister{
@@ -43,6 +44,8 @@ public class HomeListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
      ArrayList<Discussion> data;
     Transformation transformation;
 
+    int sizeAvatar;
+
     public HomeListAdapter(OnItemClickLister onItemClickLister,Context context, FragmentManager fm, RecyclerView recyclerView) {
 
         this.onItemClickLister = onItemClickLister;
@@ -54,6 +57,8 @@ public class HomeListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
         transformation = new RoundedTransformationBuilder()
                 .oval(true)
                 .build();
+
+        sizeAvatar = context.getResources().getDimensionPixelSize(R.dimen.list_avatar);
     }
 
     @Override
@@ -92,36 +97,38 @@ public class HomeListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
 
        if (holder instanceof HomeListspanViewHolder){
            HomeListspanViewHolder spanHolder = (HomeListspanViewHolder) holder;
-          if (position < data.size()-2) {
-              position = position + 2;
-              spanHolder.title_forum_list.setText(data.get(position).getTitle());
-              spanHolder.user_name.setText(data.get(position).getUser().getUserName());
-              spanHolder.count_cometns_forums.setText("" + data.get(position).getComments());
-              spanHolder.likes.setText("" + data.get(position).getLikes());
-              spanHolder.dislikes.setText("" + data.get(position).getDislikes());
-              spanHolder.categoria.setText(data.get(position).getCategory());
-              String categoria = data.get(position).getCategory();
-              Picasso.with(context).load(Uri.parse(data.get(position).getUser().getImg()))
-                      .transform(transformation).into(spanHolder.img);
+           if(ColletionsStatics.getHomeDiscusion().size()>0 && pagerEnabled)
+               position = position - 1;
+           spanHolder.title_forum_list.setText(data.get(position).getTitle());
+           spanHolder.user_name.setText(data.get(position).getUser().getUserName());
+           spanHolder.count_cometns_forums.setText("" + data.get(position).getComments());
+           spanHolder.likes.setText("" + data.get(position).getLikes());
+           spanHolder.dislikes.setText("" + data.get(position).getDislikes());
+           spanHolder.categoria.setText(data.get(position).getCategory());
+           String categoria = data.get(position).getCategory();
+           Picasso.with(context).load(Uri.parse(data.get(position).getUser().getImg()))
+                   .resize(sizeAvatar, sizeAvatar)
+                   .centerCrop()
+                   .transform(transformation).into(spanHolder.img);
 
-              if (categoria.equals("Gobierno")) {
-                  Picasso.with(context).load(R.drawable.ic_account_balance_white_36dp).into(spanHolder.leftIcon);
-                  spanHolder.leftColor.setBackgroundResource(R.color.gobierno);
+           if (categoria.equals(context.getString(R.string.c_gobierno))) {
+               Picasso.with(context).load(R.drawable.ic_account_balance_white_36dp).into(spanHolder.leftIcon);
+               spanHolder.leftColor.setBackgroundResource(R.color.gobierno);
 
-              }
-              if (categoria.equals("Salud")) {
-                  spanHolder.leftIcon.setBackgroundResource(R.drawable.ic_local_hospital_white_18dp);
-                  spanHolder.leftColor.setBackgroundResource(R.color.salud);
+           }
+           else if (categoria.equals(context.getString(R.string.c_salud))) {
+               Picasso.with(context).load(R.drawable.ic_local_hospital_white_18dp).into(spanHolder.leftIcon);
+               spanHolder.leftColor.setBackgroundResource(R.color.salud);
 
-              }
-              if (categoria.equals("Educación")) {
-                  spanHolder.leftIcon.setBackgroundResource(R.drawable.ic_school_white_18dp);
-                  spanHolder.leftColor.setBackgroundResource(R.color.educacion);
+           }
+           else if (categoria.equals(context.getString(R.string.c_educacion))) {
+               Picasso.with(context).load(R.drawable.ic_school_white_18dp).into(spanHolder.leftIcon);
+               spanHolder.leftColor.setBackgroundResource(R.color.educacion);
 
-              }
-          }
-
-
+           }else if (categoria.equals(context.getString(R.string.c_ambiente))) {
+               Picasso.with(context).load(R.drawable.ic_send_white_24dp).into(spanHolder.leftIcon);
+               spanHolder.leftColor.setBackgroundResource(R.color.medio_ambiente);
+           }
 
        }
 
@@ -133,20 +140,22 @@ public class HomeListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
            HomeListPagerHolder pagerHolder = (HomeListPagerHolder) holder;
            pagerAdapter = new PagerAdpater(fm,pagerHolder.pager,pagerHolder.marksLayout,PagerAdpater.TYPE_DISCUSION);
            pagerHolder.pager.setAdapter(pagerAdapter);
-
-    }
+        }
     }
 
     @Override
     public int getItemCount() {
-        return data.size()-2;
+        if(pagerEnabled && ColletionsStatics.getHomeDiscusion().size()>0)
+            return data.size()+1;
+        else
+            return data.size();
     }
 
     @Override
     public int getItemViewType(int position) {
-        if (position == 0) {
-            return  VIEW_PAGER;
 
+        if (position == 0 && pagerEnabled && ColletionsStatics.getHomeDiscusion().size()>0) {
+            return  VIEW_PAGER;
         }
 
         else {
@@ -157,7 +166,6 @@ public class HomeListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
 
     @Override
     public void onClick(View v) {
-        Toast.makeText(context,"Click en un item de la lista",Toast.LENGTH_LONG).show();
         int position = recyclerView.getChildAdapterPosition(v);
         onItemClickLister.onItemclick(position+2);
 
@@ -207,4 +215,9 @@ public class HomeListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
     }
 
     //endregion
+
+
+    public void setPagerEnabled(boolean pagerEnabled) {
+        this.pagerEnabled = pagerEnabled;
+    }
 }

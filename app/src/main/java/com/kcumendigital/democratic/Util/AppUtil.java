@@ -11,7 +11,7 @@ import com.kcumendigital.democratic.Models.User;
  * Created by Dario Chamorro on 24/10/2015.
  */
 public class AppUtil {
-    public static User userStatic;
+    private static User userStatic;
     public static User getUserStatic(){
 
         if (userStatic == null){
@@ -19,6 +19,10 @@ public class AppUtil {
             userStatic.setObjectId("Jgb5AcAcBp");
         }
         return userStatic;
+    }
+
+    public static void setUser(User user){
+        userStatic=user;
     }
 
 

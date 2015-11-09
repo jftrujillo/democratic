@@ -48,7 +48,8 @@
                 <EditText
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="E-mail Adrress"
+                    android:hint="Email"
+                    android:inputType="textEmailAddress"
                     />
 
             </android.support.design.widget.TextInputLayout>
@@ -60,6 +61,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="password"
+                    android:inputType="textPassword"
                     />
 
 
@@ -82,6 +84,7 @@
 
     <Button
         android:id="@+id/login_facebook_btn"
+        app:theme="@style/FbButton"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Loogin with facebook"

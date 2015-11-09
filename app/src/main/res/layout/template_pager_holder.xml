@@ -8,7 +8,7 @@
         android:id="@+id/pager"
         android:layout_width="match_parent"
         android:layout_height="200dp"
-        android:background="#d10d0d"
+        android:background="@color/pager_bg"
         />
     <LinearLayout
         android:id="@+id/marks"
