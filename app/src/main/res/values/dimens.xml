@@ -5,7 +5,7 @@
     <dimen name="fab_margin">16dp</dimen>
     <dimen name="title_forum_size">14sp</dimen>
     <dimen name="size_count_coments_forums">12sp</dimen>
-    <dimen name="small_margin">8dp</dimen>
+    <dimen name="small_margin">10dp</dimen>
     <dimen name="text_coments_forums">14sp</dimen>
     <dimen name="subtitle_forums_list">16sp</dimen>
     <dimen name="medium_Letter">16sp</dimen>
