@@ -75,12 +75,17 @@ public class SignInAcitivity extends AppCompatActivity implements View.OnClickLi
                         user.setEmail(email);
                         user.setName(name);
                         user.setUserName(email);
-                        if(imgF!=null)
+                        if(imgF!=null) {
                             user.setImgPath(imgF.getPath());
 
-                        SunshineLogin login = new SunshineLogin();
-                        login.siginUp(user, this);
-                        dialog.show();
+                            SunshineLogin login = new SunshineLogin();
+                            login.siginUp(user, this);
+                            dialog.show();
+
+                        }
+                        else {
+                            Toast.makeText(getApplicationContext(),"Seleccione una imagen", Toast.LENGTH_SHORT).show();
+                        }
 
                     }else{
                         Toast.makeText(getApplicationContext(), R.string.sigin_pass_fail,Toast.LENGTH_SHORT).show();

@@ -64,31 +64,34 @@ public class CreateBoardDiscussion_activity extends AppCompatActivity implements
 
     @Override
     public void OnButtonClick() {
-        Discussion discussion =  forum.getNewDisucion();
-        discussion.setTitle(title.getEditText().getText().toString());
-        discussion.setUser(user);
-        SunshineParse parse = new SunshineParse();
-        parse.insert(discussion, new SunshineParse.SunshineCallback() {
-            @Override
-            public void done(boolean success, ParseException e) {
-                if (success == true){
-                    Toast.makeText(getApplicationContext(),"Se guardo con Exito el foro",Toast.LENGTH_SHORT).show();
-                    finish();
+        Discussion discussion = forum.getNewDisucion();
+        if (title.getEditText().getText().toString().equals("") || discussion.getCategory().equals("") || discussion.getDescription().toString().equals("")) {
+            Toast.makeText(getApplicationContext(), "Llene todos los campos", Toast.LENGTH_SHORT).show();
+        } else {
+            discussion.setTitle(title.getEditText().getText().toString());
+            discussion.setUser(user);
+            SunshineParse parse = new SunshineParse();
+            parse.insert(discussion, new SunshineParse.SunshineCallback() {
+                @Override
+                public void done(boolean success, ParseException e) {
+                    if (success == true) {
+                        Toast.makeText(getApplicationContext(), "Se guardo con Exito el foro", Toast.LENGTH_SHORT).show();
+                        finish();
+                    } else
+                        Toast.makeText(getApplicationContext(), "Se guardo sin exito el foro", Toast.LENGTH_SHORT).show();
                 }
-                else
-                    Toast.makeText(getApplicationContext(),"Se guardo con Exito el foro",Toast.LENGTH_SHORT).show();
-            }
 
-            @Override
-            public void resultRecord(boolean success, SunshineRecord record, ParseException e) {
+                @Override
+                public void resultRecord(boolean success, SunshineRecord record, ParseException e) {
 
-            }
+                }
 
-            @Override
-            public void resultListRecords(boolean success, Integer requestCode, List<SunshineRecord> records, ParseException e) {
+                @Override
+                public void resultListRecords(boolean success, Integer requestCode, List<SunshineRecord> records, ParseException e) {
 
-            }
-        });
+                }
+            });
 
+        }
     }
 }

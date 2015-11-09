@@ -85,7 +85,7 @@ public class DiscussionHomeFragment extends Fragment implements HomeListAdapter.
 
     @Override
     public void onItemclick(int position) {
-        startActivity(new Intent(getActivity(), ForumsActivity.class).putExtra("pos", position-3));
+        startActivity(new Intent(getActivity(), ForumsActivity.class).putExtra("pos", position));
     }
 
     @Override
