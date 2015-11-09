@@ -83,13 +83,19 @@
             />
         <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="match_parent"
+            android:background="#ffffff">
 
         <android.support.design.widget.FloatingActionButton
             android:id="@+id/add_options"
-            android:layout_height="30dp"
-            android:layout_width="30dp"
+            android:layout_height="wrap_content"
+            android:layout_width="wrap_content"
             android:layout_centerVertical="true"
+            android:src="@drawable/ic_add_black_24dp"
+            app:fab_addButtonColorNormal="#FFC11F"
+            app:fab_addButtonColorPressed="@color/primary_material_light"
+            app:fab_addButtonPlusIconColor="#000000"
+            android:layout_margin="10dp"
             />
         </RelativeLayout>
     </LinearLayout>
