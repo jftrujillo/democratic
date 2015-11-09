@@ -18,6 +18,7 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.getbase.floatingactionbutton.FloatingActionButton;
 import com.kcumendigital.democratic.Adapters.CustomPagerAdapter;
@@ -28,6 +29,7 @@ import com.kcumendigital.democratic.Models.Discussion;
 import com.kcumendigital.democratic.Models.Survey;
 import com.kcumendigital.democratic.Util.AppUtil;
 import com.kcumendigital.democratic.Util.ColletionsStatics;
+import com.kcumendigital.democratic.parse.SunshineLogin;
 import com.kcumendigital.democratic.parse.SunshineParse;
 import com.kcumendigital.democratic.parse.SunshineQuery;
 import com.kcumendigital.democratic.parse.SunshineRecord;
@@ -80,7 +82,9 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
                 .scaleType(ImageView.ScaleType.CENTER_CROP)
                 .oval(true)
                 .build();
-        Picasso.with(this).load("https://goo.gl/TF0Cwd").transform(transformation).into(imm_nav);
+        Picasso.with(this).load(AppUtil.getUserStatic().getImg()).transform(transformation).into(imm_nav);
+        TextView userName = (TextView) nav.findViewById(R.id.txt_usr);
+        userName.setText(AppUtil.getUserStatic().getName());
 
         toggle = new ActionBarDrawerToggle(this, drawer, R.string.drawer_open, R.string.drawer_close);
         nav.setNavigationItemSelectedListener(this);
@@ -170,6 +174,13 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
                 query = new SunshineQuery();
                 query.addUser("user", AppUtil.getUserStatic().getObjectId());
                 break;
+            case R.id.nav_logout:
+                SunshineLogin.logout();
+                Intent intent = new Intent(this, LoginActivity.class);
+                startActivity(intent);
+                finish();
+                break;
+
         }
 
         surveyFragment.reloadWithQuery(query);

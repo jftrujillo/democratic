@@ -27,4 +27,5 @@
     <dimen name="img_margin_right">8dp</dimen>
     <dimen name="big_padding">30dp</dimen>
     <dimen name="card_margin">0dp</dimen>
+    <dimen name="sigin_picture">150dp</dimen>
 </resources>

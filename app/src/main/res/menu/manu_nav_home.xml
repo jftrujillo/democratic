@@ -35,9 +35,13 @@
     <item android:title="@string/nav_group_my">
         <menu>
            <item android:id="@+id/nav_my_post"
-               android:title="@string/nav_item_mypost"
-               android:icon="@drawable/iconosslide26"
-               />
+            android:title="@string/nav_item_mypost"
+            android:icon="@drawable/iconosslide26"
+            />
+
+            <item android:id="@+id/nav_logout"
+                android:title="@string/nav_item_logout"
+                />
 
 
         </menu>

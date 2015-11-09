@@ -31,6 +31,13 @@
     <string name="nav_item_mydiscussion">Mis Discusiones</string>
     <string name="nav_item_mysurvey">Mis Encuestas</string>
     <string name="nav_item_mypost">Mis Publicaciones</string>
+    <string name="nav_item_logout">Cerrar Sesion</string>
+    <string name="sigin_fail">Llena todos los campos</string>
+    <string name="sigin_pass_fail">Las contraseñas deben ser iguales</string>
+    <string name="sigin_register">Registrando</string>
+    <string name="sigin_success">Registro Exitoso</string>
+    <string name="sigin_error">Error al registrar, intenta de nuevo</string>
+    <string name="login_validate">Verificando</string>
 
     <string-array name="Categorias">
         <item>@string/c_gobierno</item>

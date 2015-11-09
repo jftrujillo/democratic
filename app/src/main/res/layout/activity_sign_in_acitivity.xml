@@ -35,9 +35,11 @@
             android:layout_marginBottom="50dp"
             >
             <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:src="@drawable/democraticmarca"
+                android:id="@+id/picture"
+                android:layout_width="@dimen/sigin_picture"
+                android:layout_height="@dimen/sigin_picture"
+                android:layout_marginBottom="@dimen/small_margin"
+                android:src="@drawable/silueta"
 
                 />
 
@@ -49,6 +51,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="@string/email"
+                    android:inputType="textEmailAddress"
                     />
 
             </android.support.design.widget.TextInputLayout>
@@ -60,6 +63,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="Nombre"
+                    android:inputType="text"
                     />
 
 
@@ -76,6 +80,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="@string/password"
+                    android:inputType="textPassword"
                     />
 
 
@@ -92,6 +97,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="@string/confirm_pass"
+                    android:inputType="textPassword"
                     />
 
 
