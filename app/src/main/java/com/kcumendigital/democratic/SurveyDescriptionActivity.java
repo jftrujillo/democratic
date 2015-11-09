@@ -15,6 +15,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.kcumendigital.democratic.Adapters.OptionListSurveyActivity;
+import com.kcumendigital.democratic.Models.DiscussionScore;
 import com.kcumendigital.democratic.Models.Survey;
 import com.kcumendigital.democratic.Models.SurveyOption;
 import com.kcumendigital.democratic.Models.SurveyVote;
@@ -29,7 +30,7 @@ import com.parse.ParseException;
 import java.text.DecimalFormat;
 import java.util.List;
 
-public class SurveyDescriptionActivity extends AppCompatActivity implements AdapterView.OnItemClickListener,DialogInterface.OnClickListener {
+public class SurveyDescriptionActivity extends AppCompatActivity implements AdapterView.OnItemClickListener {
     List<SurveyOption> data;
     Survey survey;
     Toolbar mToolbar;
@@ -111,48 +112,14 @@ public class SurveyDescriptionActivity extends AppCompatActivity implements Adap
 
 
     @Override
-    public void onItemClick(AdapterView<?> parent, View view, final int position, long id) {
+    public void onItemClick(AdapterView<?> parent, final View view, final int position, long id) {
         SunshineParse parseVotes = new SunshineParse();
-        SunshineQuery optionSurveyQuery = new SunshineQuery();
-        optionSurveyQuery.addUser("user",user.getObjectId());
-        parseVotes.getAllRecords(optionSurveyQuery, new SunshineParse.SunshineCallback() {
+        SunshineQuery query = new SunshineQuery();
+        query.addUser("user", user.getObjectId());
+        parse.getAllRecords(query, new SunshineParse.SunshineCallback() {
             @Override
             public void done(boolean success, ParseException e) {
-            }
 
-            @Override
-            public void resultRecord(boolean success, SunshineRecord record, ParseException e) {
-            }
-
-            @Override
-            public void resultListRecords(boolean success, Integer requestCode, List<SunshineRecord> records, ParseException e) {
-
-                if (success == true) {
-                    Log.i("get optiones_l", "succes");
-                    processOptionSurveyVote(records,position);
-                } else {
-                    Log.i("get optiones", "failed");
-                }
-            }
-        }, REQUEST_OPTION_VOTE, SurveyVote.class);
-
-
-
-     /*   Toast.makeText(this,"selecionno "+survey.getOptions().get(position).getDescription(),Toast.LENGTH_SHORT).show();
-        parse.incrementField(data.get(position).getObjectId(), "votes", SurveyOption.class);
-        surveyVote.setSurveyOption(ColletionsStatics.getDataSurvey().get(pos).getOptions().get(position).getObjectId());
-        surveyVote.setUser(user.getObjectId());
-        parse.insert(surveyVote, new SunshineParse.SunshineCallback() {
-            @Override
-            public void done(boolean success, ParseException e) {
-                if (success == true){
-                    Log.i("succes","true");
-                }
-
-                else{
-                    Log.i("succes","false");
-                    e.printStackTrace();
-                }
             }
 
             @Override
@@ -162,111 +129,80 @@ public class SurveyDescriptionActivity extends AppCompatActivity implements Adap
 
             @Override
             public void resultListRecords(boolean success, Integer requestCode, List<SunshineRecord> records, ParseException e) {
+               boolean isvoted = false;
+              for (int i = 0; i<data.size();i++){
+                 for (int j = 0 ; j < records.size();j++){
+                     SurveyVote vote = (SurveyVote) records.get(j);
+                     if (vote.getSurveyOption().equals(data.get(i).getObjectId())){
+                         isvoted = true;
+                     }
 
-            }
-        });
-        ColletionsStatics.getDataSurvey().get(pos).getOptions().get(position).setVotes(ColletionsStatics.getDataSurvey().get(pos).getOptions().get(position).getVotes() + 1);
-        sum = sum + 1;
-        adapter.updateSum(sum);
-        adapter.notifyDataSetChanged();
-        long sum_2 = 0;
-        mostVotedOpcionString = null;
-        biggerOpcionNumber = 0;
-        for (int i = 0; i<data.size();i++){
-            sum_2 = sum_2 + data.get(i).getVotes();
-            if(biggerOpcionNumber < data.get(i).getVotes()){
-                biggerOpcionNumber = data.get(i).getVotes();
-                mostVotedOpcionString = data.get(i).getDescription();
-            }
-            Log.i("sum",""+sum);
-        }
+                 }
+             }
+                if (isvoted == false){
+                    Toast.makeText(getApplicationContext(),"selecionno "+survey.getOptions().get(position).getDescription(),Toast.LENGTH_SHORT).show();
+                    parse.incrementField(data.get(position).getObjectId(), "votes", SurveyOption.class);
+                    surveyVote.setSurveyOption(ColletionsStatics.getDataSurvey().get(pos).getOptions().get(position).getObjectId());
+                    surveyVote.setUser(user.getObjectId());
+                    parse.insert(surveyVote, new SunshineParse.SunshineCallback() {
+                        @Override
+                        public void done(boolean success, ParseException e) {
+                            if (success == true){
+                                Log.i("succes","true");
+                            }
 
-        percentage = biggerOpcionNumber*100f/sum_2;
-        progressBar.setProgress((int) percentage);
-        DecimalFormat df = new DecimalFormat();
-        df.setMaximumFractionDigits(2);
-        mostVotedOpcionText.setText(mostVotedOpcionString);
-        mostVotedOpcionPercentage.setText("" + df.format(percentage));
-        votes.setText("" + sum);*/
-    }
+                            else{
+                                Log.i("succes","false");
+                                e.printStackTrace();
+                            }
+                        }
 
-    public void processOptionSurveyVote(List<SunshineRecord> records, int position) {
-        if (records.size()>0){
-         SurveyVote vote = (SurveyVote) records.get(0);
-            if(vote.getSurveyOption().equals(data.get(position).getDescription())){
-                Toast.makeText(getApplicationContext(),R.string.voted,Toast.LENGTH_SHORT).show();
-            }
+                        @Override
+                        public void resultRecord(boolean success, SunshineRecord record, ParseException e) {
 
-            else {
-               AlertDialog alertDialog =  new AlertDialog.Builder(this).setMessage("Desea Cambiar la votacion").setPositiveButton("Aceptar",this).setNegativeButton("Cancelar",this).create();
-               alertDialog.show();
+                        }
 
-            }
+                        @Override
+                        public void resultListRecords(boolean success, Integer requestCode, List<SunshineRecord> records, ParseException e) {
 
-        }
-
-        else {
-            parse.incrementField(data.get(position).getObjectId(), "votes", SurveyOption.class);
-            surveyVote.setSurveyOption(ColletionsStatics.getDataSurvey().get(pos).getOptions().get(position).getObjectId());
-            surveyVote.setUser(user.getObjectId());
-            parse.insert(surveyVote, new SunshineParse.SunshineCallback() {
-                @Override
-                public void done(boolean success, ParseException e) {
-                    if (success == true){
-                        Log.i("succes","true");
+                        }
+                    });
+                    ColletionsStatics.getDataSurvey().get(pos).getOptions().get(position).setVotes(ColletionsStatics.getDataSurvey().get(pos).getOptions().get(position).getVotes() + 1);
+                    sum = sum + 1;
+                    adapter.updateSum(sum);
+                    adapter.notifyDataSetChanged();
+                    long sum_2 = 0;
+                    mostVotedOpcionString = null;
+                    biggerOpcionNumber = 0;
+                    for (int i = 0; i<data.size();i++){
+                        sum_2 = sum_2 + data.get(i).getVotes();
+                        if(biggerOpcionNumber < data.get(i).getVotes()){
+                            biggerOpcionNumber = data.get(i).getVotes();
+                            mostVotedOpcionString = data.get(i).getDescription();
+                        }
+                        Log.i("sum",""+sum);
                     }
 
-                    else{
-                        Log.i("succes","false");
-                        e.printStackTrace();
-                    }
+                    percentage = biggerOpcionNumber*100f/sum_2;
+                    progressBar.setProgress((int) percentage);
+                    DecimalFormat df = new DecimalFormat();
+                    df.setMaximumFractionDigits(2);
+                    mostVotedOpcionText.setText(mostVotedOpcionString);
+                    mostVotedOpcionPercentage.setText("" + df.format(percentage));
+                    votes.setText("" + sum);
+                }
+                else {
+                    Toast.makeText(getApplicationContext(),"ya ha votado aqui",Toast.LENGTH_SHORT).show();
+                }
                 }
 
-                @Override
-                public void resultRecord(boolean success, SunshineRecord record, ParseException e) {
-
-                }
-
-                @Override
-                public void resultListRecords(boolean success, Integer requestCode, List<SunshineRecord> records, ParseException e) {
-
-                }
-            });
-            ColletionsStatics.getDataSurvey().get(pos).getOptions().get(position).setVotes(ColletionsStatics.getDataSurvey().get(pos).getOptions().get(position).getVotes() + 1);
-            sum = sum + 1;
-            adapter.updateSum(sum);
-            adapter.notifyDataSetChanged();
-            long sum_2 = 0;
-            mostVotedOpcionString = null;
-            biggerOpcionNumber = 0;
-            for (int i = 0; i<data.size();i++){
-                sum_2 = sum_2 + data.get(i).getVotes();
-                if(biggerOpcionNumber < data.get(i).getVotes()){
-                    biggerOpcionNumber = data.get(i).getVotes();
-                    mostVotedOpcionString = data.get(i).getDescription();
-                }
-                Log.i("sum",""+sum);
-            }
-
-            percentage = biggerOpcionNumber*100f/sum_2;
-            progressBar.setProgress((int) percentage);
-            DecimalFormat df = new DecimalFormat();
-            df.setMaximumFractionDigits(2);
-            mostVotedOpcionText.setText(mostVotedOpcionString);
-            mostVotedOpcionPercentage.setText("" + df.format(percentage));
-            votes.setText("" + sum);
-        }
-    }
-
-    @Override
-    public void onClick(DialogInterface dialog, int which) {
-        if (which == DialogInterface.BUTTON_POSITIVE){
 
 
 
-        }
+        },null,SurveyVote.class);
 
 
 
-    }
+
+}
 }
