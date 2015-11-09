@@ -140,17 +140,16 @@ public class ForumsActivity extends AppCompatActivity implements SunshineParse.S
         dislikes.setText("" + discussion.getDislikes());
         categoria.setText(discussion.getCategory());
 
-        if(discussion.getCategory().equals("Gobierno")){
+        if(discussion.getCategory().equals(getString(R.string.c_gobierno))){
             Picasso.with(this).load(R.drawable.ic_account_balance_white_36dp).into(imgCategory);
 
-        }else
-        if(discussion.getCategory().equals("Educación")) {
+        }else if(discussion.getCategory().equals(getString(R.string.c_educacion))) {
             Picasso.with(this).load(R.drawable.ic_school_white_18dp).into(imgCategory);
 
-        }else{
-            if (discussion.getCategory().equals("Salud")){
+        }else if (discussion.getCategory().equals(getString(R.string.c_salud))){
                 Picasso.with(this).load(R.drawable.ic_local_hospital_white_18dp).into(imgCategory);
-            }
+        }else if (discussion.getCategory().equals(getString(R.string.c_ambiente))){
+            Picasso.with(this).load(R.drawable.ic_local_hospital_white_18dp).into(imgCategory);
         }
 
         transformation = new RoundedTransformationBuilder().oval(true).build();
@@ -300,8 +299,7 @@ public class ForumsActivity extends AppCompatActivity implements SunshineParse.S
         {
             Comment comment = new Comment();
             comment.setDescription(comentario.getText().toString());
-            User user = new User();
-            user.setObjectId("9zq30KL7Gu");
+            User user = AppUtil.getUserStatic();
             comment.setUser(user);
             comment.setDiscussion(ColletionsStatics.getDataDiscusion().get(pos).getObjectId());
             comment.setRecord(false);
@@ -459,6 +457,8 @@ public class ForumsActivity extends AppCompatActivity implements SunshineParse.S
 
     }
     //endregion
+
+
 
 
 

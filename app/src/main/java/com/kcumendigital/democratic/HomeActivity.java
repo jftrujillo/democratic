@@ -61,6 +61,7 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
         super.onRestart();
         discussionFragment.notifyDataChanged();
         surveyFragment.notifyDataChanged();
+        ColletionsStatics.getDataComments().clear();
     }
 
     @Override
