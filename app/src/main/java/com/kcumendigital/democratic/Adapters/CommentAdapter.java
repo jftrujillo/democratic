@@ -93,7 +93,7 @@ public class CommentAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
         if (holder instanceof TextViewHolder) {
-            ((TextViewHolder) holder).nombreUsuario.setText(data.get(position).getUser().getUserName());
+            ((TextViewHolder) holder).nombreUsuario.setText(data.get(position).getUser().getName());
             ((TextViewHolder) holder).likes.setText("" + data.get(position).getLikes());
             ((TextViewHolder) holder).dislikes.setText("" + data.get(position).getDislikes());
             ((TextViewHolder) holder).comment.setText(data.get(position).getDescription());
