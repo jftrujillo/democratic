@@ -39,8 +39,7 @@
                 android:layout_width="@dimen/sigin_picture"
                 android:layout_height="@dimen/sigin_picture"
                 android:layout_marginBottom="@dimen/small_margin"
-                android:src="@drawable/silueta"
-
+                android:src="@drawable/tomarfotoperfil"
                 />
 
             <android.support.design.widget.TextInputLayout
@@ -117,14 +116,8 @@
                 />
 
         </LinearLayout>
-
-
-
-
-
-
-
     </LinearLayout>
+
     <android.support.design.widget.FloatingActionButton
         android:id="@+id/ingresar_sign"
         android:layout_width="wrap_content"

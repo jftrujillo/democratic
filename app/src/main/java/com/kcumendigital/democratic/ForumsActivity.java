@@ -148,7 +148,7 @@ public class ForumsActivity extends AppCompatActivity implements SunshineParse.S
         }else if (discussion.getCategory().equals(getString(R.string.c_salud))){
                 Picasso.with(this).load(R.drawable.ic_local_hospital_white_18dp).into(imgCategory);
         }else if (discussion.getCategory().equals(getString(R.string.c_ambiente))){
-            Picasso.with(this).load(R.drawable.ic_local_hospital_white_18dp).into(imgCategory);
+            Picasso.with(this).load(R.drawable.ic_nature_white_24dp).into(imgCategory);
         }
 
         transformation = new RoundedTransformationBuilder().oval(true).build();

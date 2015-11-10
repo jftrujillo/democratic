@@ -85,9 +85,6 @@ public class HomeListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
             viewHolder = new HomeListPagerHolder(v);
         }
 
-
-
-
         return viewHolder;
     }
 

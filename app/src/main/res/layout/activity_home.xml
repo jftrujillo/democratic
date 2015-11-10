@@ -81,8 +81,6 @@
                         fab:fab_colorNormal="#ffffff"
                         fab:fab_colorPressed="#FFC11F"
                         fab:fab_title="Discusion" />
-
-
                 </com.getbase.floatingactionbutton.FloatingActionsMenu>
             </RelativeLayout>
 
