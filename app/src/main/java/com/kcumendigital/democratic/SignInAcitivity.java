@@ -144,7 +144,6 @@ public class SignInAcitivity extends AppCompatActivity implements View.OnClickLi
         ExifInterface exif = new ExifInterface(imgF.getPath());
         int rotation = exif.getAttributeInt(ExifInterface.TAG_ORIENTATION, ExifInterface.ORIENTATION_NORMAL);
 
-
         BitmapFactory.Options o =  new BitmapFactory.Options();
         o.inJustDecodeBounds=true;
 
