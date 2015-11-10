@@ -55,7 +55,6 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
             email.getEditText().setText(savedInstanceState.getString(SAVED_EMAIL));
             pass.getEditText().setText(savedInstanceState.getString(SAVED_PASS));
         }
-
     }
 
     @Override
