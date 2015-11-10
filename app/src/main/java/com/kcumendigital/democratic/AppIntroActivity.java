@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import com.github.paolorotolo.appintro.AppIntro;
+import com.kcumendigital.democratic.Adapters.HomeListAdapter;
 import com.kcumendigital.democratic.Fragments.IntroFragment;
 import com.kcumendigital.democratic.Fragments.WelcomeFragment;
 
@@ -38,6 +39,6 @@ public class AppIntroActivity extends AppIntro {
 
     @Override
     public void onDonePressed() {
-        startActivity(new Intent(this,LoginActivity.class));
+        startActivity(new Intent(this,HomeActivity.class));
     }
 }

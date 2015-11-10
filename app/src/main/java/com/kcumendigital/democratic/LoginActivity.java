@@ -12,6 +12,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.github.paolorotolo.appintro.AppIntro;
 import com.kcumendigital.democratic.Models.User;
 import com.kcumendigital.democratic.Util.AppUtil;
 import com.kcumendigital.democratic.parse.SunshineLogin;
@@ -121,7 +122,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
 
     public void inApp(){
-        Intent intent = new Intent(this, HomeActivity.class);
+        Intent intent = new Intent(this, AppIntroActivity.class);
         startActivity(intent);
         AppUtil.setUser(SunshineLogin.getLoggedUser(User.class));
         finish();

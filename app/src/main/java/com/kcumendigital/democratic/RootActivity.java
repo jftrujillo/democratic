@@ -21,7 +21,7 @@ public class RootActivity extends AppCompatActivity {
         User user = SunshineLogin.getLoggedUser(User.class);
         Intent intent = null;
         if(user == null){
-            intent = new Intent(this, AppIntroActivity.class);
+            intent = new Intent(this, LoginActivity.class);
         }else{
             AppUtil.setUser(user);
             intent = new Intent(this, HomeActivity.class);
