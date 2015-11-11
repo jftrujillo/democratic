@@ -13,6 +13,7 @@ public class ForumsAdapter extends RecyclerView.Adapter {
 
     Context context;
 
+
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
            return null;

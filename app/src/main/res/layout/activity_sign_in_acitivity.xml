@@ -46,7 +46,7 @@
                 android:id="@+id/email_login_sign"
                 android:layout_height="wrap_content"
                 android:layout_width="match_parent">
-                <EditText
+                <EditText3333333333333
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="@string/email"

@@ -34,7 +34,8 @@ public class CommentAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
 
     public static final int BTN_LIKE = 1;
     public static final int BTN_DISLIKE = 2;
-
+    public static final int BTN_OVERFLOW = 3;
+    public static final int BTN_OVERFLOW_VOICE = 4;
     public static final int STATE_PAUSED=0;
     public static final int STATE_PLAYING=1;
     public static final int STATE_DOWNLOADING=2;
@@ -54,7 +55,7 @@ public class CommentAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
     int sizeAvatar;
 
     public interface OnItemClickListener {
-        void onItemClick(int position, int button);
+        void onItemClick(int position, int button, View v);
     }
 
     ImageButton imgPlay;
@@ -100,6 +101,8 @@ public class CommentAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
 
             ((TextViewHolder) holder).likes.setOnClickListener(this);
             ((TextViewHolder) holder).dislikes.setOnClickListener(this);
+            ((TextViewHolder) holder).overflow.setOnClickListener(this);
+
 
             Picasso.with(context).load(data.get(position).getUser().getImg())
                     .resize(sizeAvatar, sizeAvatar)
@@ -112,6 +115,7 @@ public class CommentAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
         if (holder instanceof VoiceViewHolder) {
             ((VoiceViewHolder) holder).btn_play.setOnClickListener(this);
             ((VoiceViewHolder) holder).btn_play.setTag(position);
+            ((VoiceViewHolder) holder).overflowVoice.setOnClickListener(this);
             if(data.get(position).getState()==STATE_PAUSED){
                 ((VoiceViewHolder) holder).btn_play.setVisibility(ImageView.VISIBLE);
                 ((VoiceViewHolder) holder).downloading.setVisibility(ImageView.GONE);
@@ -147,16 +151,13 @@ public class CommentAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
             return TYPE_VOICE;
         } else {
             return TYPE_TEXT;
-
         }
-
     }
-
 
     class TextViewHolder extends RecyclerView.ViewHolder {
 
         TextView comment, likes, dislikes, nombreUsuario;
-        ImageView imgPerfil;
+        ImageView imgPerfil, overflow;
 
         public TextViewHolder(View itemView) {
             super(itemView);
@@ -165,6 +166,7 @@ public class CommentAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
             dislikes = (TextView) itemView.findViewById(R.id.value_dislike);
             nombreUsuario = (TextView) itemView.findViewById(R.id.nombreUsuario);
             imgPerfil = (ImageView) itemView.findViewById(R.id.imgPerfil);
+            overflow = (ImageView) itemView.findViewById(R.id.overflow);
         }
     }
 
@@ -173,6 +175,8 @@ public class CommentAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
         ImageButton btn_play;
         ProgressBar downloading;
         ProgressBar progress;
+        ImageView overflowVoice;
+        TextView nombreUsuario;
 
         public VoiceViewHolder(View itemView) {
             super(itemView);
@@ -181,6 +185,8 @@ public class CommentAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
             btn_play = (ImageButton) itemView.findViewById(R.id.playVoice);
             downloading = (ProgressBar) itemView.findViewById(R.id.downloadingVoice);
             progress = (ProgressBar) itemView.findViewById(R.id.progressVoice);
+            overflowVoice = (ImageView) itemView.findViewById(R.id.overflowVoice);
+            nombreUsuario = (TextView) itemView.findViewById(R.id.nombre_usuario);
         }
 
     }
@@ -194,10 +200,16 @@ public class CommentAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
                 handlePlayer(data.get(posC).getFile(), posC);
                 break;
             case R.id.like:
-                onItemClick.onItemClick(0, BTN_LIKE);
+                onItemClick.onItemClick(0, BTN_LIKE,view);
                 break;
             case R.id.disLike:
-                onItemClick.onItemClick(0, BTN_DISLIKE);
+                onItemClick.onItemClick(0, BTN_DISLIKE,view);
+                break;
+            case R.id.overflow:
+                onItemClick.onItemClick(0,BTN_OVERFLOW,view);
+                break;
+            case R.id.overflowVoice:
+                onItemClick.onItemClick(0,BTN_OVERFLOW_VOICE,view);
                 break;
         }
 
@@ -242,8 +254,6 @@ public class CommentAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
         pos = posC;
 
     }
-
-
 
     public void stopPlayer(){
         if(player!=null){
