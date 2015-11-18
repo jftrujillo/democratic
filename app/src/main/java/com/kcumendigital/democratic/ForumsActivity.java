@@ -1,6 +1,7 @@
 package com.kcumendigital.democratic;
 
 import android.app.AlertDialog;
+import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.media.MediaRecorder;
 import android.net.Uri;
@@ -15,6 +16,7 @@ import android.support.v7.widget.Toolbar;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -72,6 +74,7 @@ public class ForumsActivity extends AppCompatActivity implements SunshineParse.S
     LinearLayout btnLike, btnDislike;
     ImageView btn_record;
     ImageView discussionUser, imgCategory;
+    TextView countCarcaters;
 
     User user;
     MediaRecorder recorder;
@@ -84,8 +87,8 @@ public class ForumsActivity extends AppCompatActivity implements SunshineParse.S
     DiscussionScore score;
 
     String scoreD;
-
     EditText comentario;
+    ProgressDialog progres;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -98,7 +101,6 @@ public class ForumsActivity extends AppCompatActivity implements SunshineParse.S
         btn_record.setOnTouchListener(this);
 
         imgCategory = (ImageView) findViewById(R.id.imgCategories);
-
 
         Bundle bundle = getIntent().getExtras();
         pos = (int) bundle.get("pos");
@@ -121,6 +123,7 @@ public class ForumsActivity extends AppCompatActivity implements SunshineParse.S
         dislikes = (TextView) findViewById(R.id.value_dislike);
         categoria = (TextView) findViewById(R.id.tittleCategorie);
         discussionUser = (ImageView) findViewById(R.id.imperfiluser);
+        countCarcaters = (TextView) findViewById(R.id.count_caracters);
 
         btnLike = (LinearLayout) findViewById(R.id.btn_like);
         btnDislike = (LinearLayout) findViewById(R.id.btn_dislike);
@@ -177,6 +180,8 @@ public class ForumsActivity extends AppCompatActivity implements SunshineParse.S
         if (savedInstanceState == null)
             control.nextPage();
 
+
+
         comentario.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
@@ -184,6 +189,8 @@ public class ForumsActivity extends AppCompatActivity implements SunshineParse.S
 
             @Override
             public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+                int count = charSequence.length();
+                countCarcaters.setText(""+count+"/150");
             }
 
             @Override
@@ -221,11 +228,35 @@ public class ForumsActivity extends AppCompatActivity implements SunshineParse.S
     public void detener() {
         if (IS_STOP == false)
             try {
+                IS_STOP = true;
                 recorder.stop();
                 recorder.release();
-                createNewVoiceComent(archivo.getPath());
-                btn_record.setEnabled(true);
-                IS_STOP = true;
+                LayoutInflater layoutInflater = LayoutInflater.from(this);
+                View prontView = layoutInflater.inflate(R.layout.alertdialog_create_voice_coment, null);
+                android.support.v7.app.AlertDialog.Builder alert = new android.support.v7.app.AlertDialog.Builder(this);
+                alert.setView(prontView);
+
+                alert.setCancelable(false).setPositiveButton("Si", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        createNewVoiceComent(archivo.getPath());
+                        btn_record.setEnabled(true);
+
+                    }
+                }).setNegativeButton("No", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        btn_record.setEnabled(true);
+                        dialog.cancel();
+
+                    }
+                });
+                android.support.v7.app.AlertDialog alertDialog = alert.create();
+                alertDialog.show();
+
+                //createNewVoiceComent(archivo.getPath());
+                //btn_record.setEnabled(true);
+                //IS_STOP = true;
             } catch (Exception e) {
                 Log.i("expecion", e.toString());
 
@@ -233,22 +264,30 @@ public class ForumsActivity extends AppCompatActivity implements SunshineParse.S
     }
 
     public void tiempoGrabacion() {
-        new CountDownTimer(10000, 1000) {
-            @Override
-            public void onTick(long millisUntilFinished) {
-            }
+      try {
 
-            @Override
-            public void onFinish() {
-                Toast.makeText(getApplicationContext(), "se termino el tiempo de grabacion", Toast.LENGTH_SHORT).show();
-                detener();
-            }
-        }.start();
+
+          new CountDownTimer(10000, 1000) {
+              @Override
+              public void onTick(long millisUntilFinished) {
+              }
+
+              @Override
+              public void onFinish() {
+                  Toast.makeText(getApplicationContext(), "se termino el tiempo de grabacion", Toast.LENGTH_SHORT).show();
+                  detener();
+              }
+          }.start();
+      }
+      catch (Exception e){
+          Log.i("nota de voz",e.toString());
+      }
     }
     //endregion
 
     //region Enviar Comentario
     private void createNewVoiceComent(String absolutePath) {
+        progres = ProgressDialog.show(this,getString(R.string.title_progres_save_voice),getString(R.string.content_progress_voice_note),true);
         final Comment comment = new Comment();
         comment.setRecord(true);
         comment.setDiscussion(ColletionsStatics.getDataDiscusion().get(pos).getObjectId());
@@ -263,10 +302,13 @@ public class ForumsActivity extends AppCompatActivity implements SunshineParse.S
                     adapter.notifyDataSetChanged();
                     parseVoice.incrementField(discussion.getObjectId(), "comments", Discussion.class);
                     ColletionsStatics.getDataDiscusion().get(pos).setComments(ColletionsStatics.getDataDiscusion().get(pos).getComments() + 1);
-                    if (ColletionsStatics.getDataComments().size() == 5)
+                    if (ColletionsStatics.getDataComments().size() == 5) {
                         control.nextPage();
+                    }
+                    progres.dismiss();
 
                 } else {
+                    progres.dismiss();
                     Toast.makeText(getApplicationContext(), "Nota de Voz no Creada", Toast.LENGTH_SHORT).show();
                 }
             }

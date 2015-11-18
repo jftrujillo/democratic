@@ -47,6 +47,9 @@
     </string-array>
 
     <string name="facebook_app_id">867572283358216</string>
+    <string name="title_progres_save_voice">Guardando nota de voz</string>
+    <string name="content_progress_voice_note">por favor espere</string>
+    <string name="title_alertdialog">¿Desea enviar la nota de voz?</string>
 
 
 </resources>

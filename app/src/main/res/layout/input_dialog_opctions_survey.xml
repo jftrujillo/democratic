@@ -24,6 +24,7 @@
             android:layout_height="wrap_content"
             android:hint="ingrese una opción"
             android:textColor="#000000"
+            android:padding="@dimen/small_padding"
             />
 
     </android.support.design.widget.TextInputLayout>
