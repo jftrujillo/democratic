@@ -33,6 +33,9 @@ public class SurveyListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
         int position = recyclerView.getChildAdapterPosition(v);
         if(pagerEnabled && ColletionsStatics.getHomeSurvey().size()>0)
             onItemClickListenerSurvey.onItemClick(position-1);
+        else {
+            onItemClickListenerSurvey.onItemClick(position);
+        }
     }
 
 
@@ -102,13 +105,13 @@ public class SurveyListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
             }
             float porcentaje = 0;
             if (suma != 0) {
-
                 porcentaje = BiggerOpcionNumber * 100 / suma;
             }
             else
             porcentaje = 0;
             spanHolder.percentage_opcion.setText(""+porcentaje);
             spanHolder.opcion_name.setText(BiggerOpcion);
+            spanHolder.categoria.setText(data.get(position).getCategory());
             String categoria = data.get(position).getCategory();
             if (categoria.equals(context.getString(R.string.c_gobierno))) {
                 Picasso.with(context).load(R.drawable.ic_account_balance_white_36dp).into(spanHolder.leftIcon);

@@ -70,7 +70,6 @@ public class SurveyHomeFragment extends Fragment implements SurveyListAdapter.On
 
     @Override
     public void onItemClick(int position) {
-
         Toast.makeText(getActivity(),"pos "+position,Toast.LENGTH_SHORT).show();
         startActivity(new Intent(getActivity(), SurveyDescriptionActivity.class).putExtra("pos", position));
     }

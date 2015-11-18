@@ -169,6 +169,9 @@ public class HomeListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
         int position = recyclerView.getChildAdapterPosition(v);
         if(pagerEnabled && ColletionsStatics.getHomeSurvey().size()>0)
             onItemClickLister.onItemclick(position-1);
+        else{
+            onItemClickLister.onItemclick(position);
+        }
 
     }
 //region ViewHolders

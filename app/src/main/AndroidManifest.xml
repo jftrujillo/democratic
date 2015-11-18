@@ -34,7 +34,7 @@
         </activity>
         <activity
             android:name=".CreateSurveyAcitivty"
-            android:screenOrientation="portrait" >
+             >
         </activity>
         <activity android:name=".CreateBoardDiscussion_activity" />
         <activity android:name=".ForumsActivity" />

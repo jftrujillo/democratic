@@ -76,16 +76,16 @@ public class CreateSurveyAcitivty extends AppCompatActivity implements View.OnCl
         adapters.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 // Apply the adapter to the spinner
         spinner.setAdapter(adapters);
+
         opciones = new ArrayList<>();
         if (savedInstanceState != null){
-
+            opciones = (ArrayList<SurveyOption>) getLastCustomNonConfigurationInstance();
         }
 
         list = (ListView) findViewById(R.id.list);
         adapter = new OptionListAdapter(opciones,this);
         list.setAdapter(adapter);
         create_new_survey.setOnClickListener(this);
-
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -177,7 +177,7 @@ public class CreateSurveyAcitivty extends AppCompatActivity implements View.OnCl
     }
 
     @Override
-    public void onSaveInstanceState(Bundle outState, PersistableBundle outPersistentState) {
-
+    public Object onRetainCustomNonConfigurationInstance() {
+        return opciones;
     }
 }

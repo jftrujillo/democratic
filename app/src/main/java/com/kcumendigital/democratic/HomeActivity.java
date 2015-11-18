@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.support.design.widget.NavigationView;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
+import android.support.v4.view.MenuItemCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
@@ -41,7 +42,7 @@ import com.squareup.picasso.Transformation;
 import java.util.ArrayList;
 import java.util.List;
 
-public class HomeActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener, View.OnClickListener, SurveyListAdapter.OnItemClickListenerSurvey {
+public class HomeActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener, View.OnClickListener, SurveyListAdapter.OnItemClickListenerSurvey, SearchView.OnQueryTextListener, MenuItemCompat.OnActionExpandListener {
 
 
     DiscussionHomeFragment fragment;
@@ -121,6 +122,7 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
         }else{
             getSupportActionBar().hide();
         }
+
     }
 
     //region OptionMenu
@@ -128,13 +130,16 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.menu_home, menu);
-
         SearchManager searchManager = (SearchManager) getSystemService(this.SEARCH_SERVICE);
         SearchView searchView = (SearchView) menu.findItem(R.id.navigate).getActionView();
-
         searchView.setSearchableInfo(searchManager.getSearchableInfo(getComponentName()));
+        searchView.setOnSearchClickListener(this);
+        searchView.setOnQueryTextListener(this);
+        MenuItemCompat.setOnActionExpandListener(menu.findItem(R.id.navigate), this);
         return true;
     }
+
+
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
@@ -210,14 +215,51 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
             case R.id.new_forum:
                 startActivity(new Intent(this, CreateBoardDiscussion_activity.class));
                 break;
+            case R.id.navigate:
+                Log.i("navigate","true");
+                break;
+
         }
     }
     //endregion
 
     @Override
     public void onItemClick(int position) {
-        startActivity(new Intent(getApplicationContext(), SurveyDescriptionActivity.class).putExtra("pos", position-3));
+        startActivity(new Intent(getApplicationContext(), SurveyDescriptionActivity.class).putExtra("pos", position - 3));
     }
+
+    @Override
+    public boolean onQueryTextSubmit(String queryString) {
+        Log.i("query",queryString);
+        query = new SunshineQuery();
+        query.addFieldValue("title", queryString);
+        surveyFragment.reloadWithQuery(query);
+        discussionFragment.reloadWithQuery(query);
+        return false;
+    }
+
+    @Override
+    public boolean onQueryTextChange(String newText) {
+        Log.i("query",newText);
+        return false;
+    }
+
+    @Override
+    public boolean onMenuItemActionExpand(MenuItem item) {
+        Log.i("expand","expand");
+        return true;
+    }
+
+    @Override
+    public boolean onMenuItemActionCollapse(MenuItem item) {
+        Log.i("asdf","asdf");
+        query = null;
+        surveyFragment.reloadWithQuery(query);
+        discussionFragment.reloadWithQuery(query);
+        return true;
+    }
+
+
     //endregion
 
 
