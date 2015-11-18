@@ -34,7 +34,7 @@ import java.util.List;
 public class CreateSurveyAcitivty extends AppCompatActivity implements View.OnClickListener{
     Toolbar toolbar;
     TextInputLayout titulo,description;
-    FloatingActionButton button;
+    Button button;
     Button create_new_survey;
     TextView resultText;
     ArrayList<SurveyOption> opciones;
@@ -69,7 +69,7 @@ public class CreateSurveyAcitivty extends AppCompatActivity implements View.OnCl
         });
         titulo = (TextInputLayout) findViewById(R.id.title_new_survey);
         description = (TextInputLayout) findViewById(R.id.description_create_survey);
-        button = (FloatingActionButton) findViewById(R.id.add_options);
+        button = (Button) findViewById(R.id.add_options);
         create_new_survey = (Button) findViewById(R.id.crear_new_survey);
         spinner = (Spinner) findViewById(R.id.spinner);
         ArrayAdapter<CharSequence> adapters = ArrayAdapter.createFromResource(this,R.array.Categorias,android.R.layout.simple_spinner_item);

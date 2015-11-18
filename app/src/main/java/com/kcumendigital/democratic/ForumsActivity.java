@@ -15,12 +15,16 @@ import android.support.v7.widget.Toolbar;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.PopupMenu;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -47,7 +51,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-public class ForumsActivity extends AppCompatActivity implements SunshineParse.SunshineCallback, View.OnClickListener, DialogInterface.OnClickListener, View.OnTouchListener,CommentAdapter.OnItemClickListener {
+public class ForumsActivity extends AppCompatActivity implements SunshineParse.SunshineCallback, View.OnClickListener, DialogInterface.OnClickListener, View.OnTouchListener, CommentAdapter.OnItemClickListener {
 
     static final int REQUEST_DISCUSION_SCORE_LIKE = 2;
     static final int REQUEST_DISCUSION_SCORE_DISLIKE = 1;
@@ -96,17 +100,14 @@ public class ForumsActivity extends AppCompatActivity implements SunshineParse.S
         imgCategory = (ImageView) findViewById(R.id.imgCategories);
 
 
-
         Bundle bundle = getIntent().getExtras();
         pos = (int) bundle.get("pos");
-        boolean pager = bundle.getBoolean("pager",false);
+        boolean pager = bundle.getBoolean("pager", false);
 
         mToolbar = (Toolbar) findViewById(R.id.toolbar);
         collapsingToolbarLayout = (CollapsingToolbarLayout) findViewById(R.id.collapsingToolbar);
-
         setSupportActionBar(mToolbar);
         getSupportActionBar().setTitle("");
-
         mToolbar.setNavigationIcon(ContextCompat.getDrawable(this, R.drawable.abc_ic_ab_back_mtrl_am_alpha));
         mToolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
@@ -126,9 +127,8 @@ public class ForumsActivity extends AppCompatActivity implements SunshineParse.S
         btnLike.setOnClickListener(this);
         btnDislike.setOnClickListener(this);
 
-
         ArrayList<Discussion> dataDiscusion = null;
-        if(!pager)
+        if (!pager)
             dataDiscusion = ColletionsStatics.getDataDiscusion();
         else
             dataDiscusion = ColletionsStatics.getHomeDiscusion();
@@ -139,15 +139,15 @@ public class ForumsActivity extends AppCompatActivity implements SunshineParse.S
         dislikes.setText("" + discussion.getDislikes());
         categoria.setText(discussion.getCategory());
 
-        if(discussion.getCategory().equals(getString(R.string.c_gobierno))){
+        if (discussion.getCategory().equals(getString(R.string.c_gobierno))) {
             Picasso.with(this).load(R.drawable.ic_account_balance_white_36dp).into(imgCategory);
 
-        }else if(discussion.getCategory().equals(getString(R.string.c_educacion))) {
+        } else if (discussion.getCategory().equals(getString(R.string.c_educacion))) {
             Picasso.with(this).load(R.drawable.ic_school_white_18dp).into(imgCategory);
 
-        }else if (discussion.getCategory().equals(getString(R.string.c_salud))){
-                Picasso.with(this).load(R.drawable.ic_local_hospital_white_18dp).into(imgCategory);
-        }else if (discussion.getCategory().equals(getString(R.string.c_ambiente))){
+        } else if (discussion.getCategory().equals(getString(R.string.c_salud))) {
+            Picasso.with(this).load(R.drawable.ic_local_hospital_white_18dp).into(imgCategory);
+        } else if (discussion.getCategory().equals(getString(R.string.c_ambiente))) {
             Picasso.with(this).load(R.drawable.ic_nature_white_24dp).into(imgCategory);
         }
 
@@ -162,36 +162,36 @@ public class ForumsActivity extends AppCompatActivity implements SunshineParse.S
         recyclerView = (RecyclerView) findViewById(R.id.recyclerviewForumsComents);
 
 
-        adapter = new CommentAdapter(this,this, ColletionsStatics.getDataComments(),recyclerView);
+        adapter = new CommentAdapter(this, this, ColletionsStatics.getDataComments(), recyclerView);
 
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(new commentsLayoutManager(this));
 
         parse = new SunshineParse();
         SunshineQuery query = new SunshineQuery();
-        query.addPointerValue("discussion",discussion.getObjectId());
+        query.addPointerValue("discussion", discussion.getObjectId());
 
-        control =  new SunshinePageControl(SunshinePageControl.ORDER_ASCENING
-                ,recyclerView,null,ColletionsStatics.getDataComments(),query,Comment.class);
+        control = new SunshinePageControl(SunshinePageControl.ORDER_ASCENING
+                , recyclerView, null, ColletionsStatics.getDataComments(), query, Comment.class);
 
-        if(savedInstanceState==null)
+        if (savedInstanceState == null)
             control.nextPage();
 
         comentario.addTextChangedListener(new TextWatcher() {
             @Override
-            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {}
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+            }
 
             @Override
-            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {}
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+            }
 
             @Override
             public void afterTextChanged(Editable editable) {
 
-                if (comentario.getText().toString().equals("")){
+                if (comentario.getText().toString().equals("")) {
                     Picasso.with(getApplicationContext()).load(R.drawable.ic_mic_white_24dp).transform(transformation).into(btn_record);
-                }
-
-                else {
+                } else {
                     Picasso.with(getApplicationContext()).load(R.drawable.ic_send_white_24dp).transform(transformation).into(btn_record);
                 }
             }
@@ -219,13 +219,17 @@ public class ForumsActivity extends AppCompatActivity implements SunshineParse.S
     }
 
     public void detener() {
-        if (IS_STOP == false) {
-            recorder.stop();
-            recorder.release();
-            createNewVoiceComent(archivo.getPath());
-            btn_record.setEnabled(true);
-            IS_STOP = true;
-        }
+        if (IS_STOP == false)
+            try {
+                recorder.stop();
+                recorder.release();
+                createNewVoiceComent(archivo.getPath());
+                btn_record.setEnabled(true);
+                IS_STOP = true;
+            } catch (Exception e) {
+                Log.i("expecion", e.toString());
+
+            }
     }
 
     public void tiempoGrabacion() {
@@ -259,7 +263,7 @@ public class ForumsActivity extends AppCompatActivity implements SunshineParse.S
                     adapter.notifyDataSetChanged();
                     parseVoice.incrementField(discussion.getObjectId(), "comments", Discussion.class);
                     ColletionsStatics.getDataDiscusion().get(pos).setComments(ColletionsStatics.getDataDiscusion().get(pos).getComments() + 1);
-                    if(ColletionsStatics.getDataComments().size()==5)
+                    if (ColletionsStatics.getDataComments().size() == 5)
                         control.nextPage();
 
                 } else {
@@ -296,9 +300,7 @@ public class ForumsActivity extends AppCompatActivity implements SunshineParse.S
                     return true;
             }
             return false;
-        }
-        else
-        {
+        } else {
             Comment comment = new Comment();
             comment.setDescription(comentario.getText().toString());
             User user = AppUtil.getUserStatic();
@@ -309,21 +311,19 @@ public class ForumsActivity extends AppCompatActivity implements SunshineParse.S
             parse.insert(comment, new SunshineParse.SunshineCallback() {
                 @Override
                 public void done(boolean success, ParseException e) {
-                    if (success == true){
+                    if (success == true) {
                         SunshineQuery query = new SunshineQuery();
                         query.addPointerValue("discussion", discussion.getObjectId());
                         comentario.setText("");
                         Date date = null;
-                        Toast.makeText(ForumsActivity.this,"Comentado creado al final",Toast.LENGTH_SHORT).show();
+                        Toast.makeText(ForumsActivity.this, "Comentado creado al final", Toast.LENGTH_SHORT).show();
                         parse.incrementField(discussion.getObjectId(), "comments", Discussion.class);
                         ColletionsStatics.getDataDiscusion().get(pos).setComments(ColletionsStatics.getDataDiscusion().get(pos).getComments() + 1);
                         adapter.notifyDataSetChanged();
-                        if(ColletionsStatics.getDataComments().size()<5)
+                        if (ColletionsStatics.getDataComments().size() < 5)
                             control.nextPage();
-                    }
-
-                    else {
-                        Toast.makeText(getApplicationContext(),"Comentario No Creado",Toast.LENGTH_SHORT).show();
+                    } else {
+                        Toast.makeText(getApplicationContext(), "Comentario No Creado", Toast.LENGTH_SHORT).show();
                     }
                 }
 
@@ -450,20 +450,46 @@ public class ForumsActivity extends AppCompatActivity implements SunshineParse.S
 
     //region Votar Comentario
     @Override
-    public void onItemClick(int position, int type) {
+    public void onItemClick(int position, int type, View view) {
 
-        if(type == CommentAdapter.BTN_LIKE){
+        if (type == CommentAdapter.BTN_LIKE) {
             Log.i("BOTONES", "Se presiono el like");
         }
-        if(type == CommentAdapter.BTN_DISLIKE){
+        if (type == CommentAdapter.BTN_DISLIKE) {
             Log.i("BOTONES", "Se presiono el dislike");
         }
 
+        if (type == CommentAdapter.BTN_OVERFLOW) {
+            Log.i("BOTONES", "OVERFLOW");
+            android.support.v7.widget.PopupMenu popupMenu = new android.support.v7.widget.PopupMenu(this, view);
+            popupMenu.getMenuInflater().inflate(R.menu.items, popupMenu.getMenu());
+
+            popupMenu.setOnMenuItemClickListener(new android.support.v7.widget.PopupMenu.OnMenuItemClickListener() {
+                @Override
+                public boolean onMenuItemClick(MenuItem item) {
+                    Log.i("BOTONES", "CLICK MENU");
+                    return true;
+                }
+            });
+            popupMenu.show();
+        }
+
+        if (type == CommentAdapter.BTN_OVERFLOW_VOICE) {
+            Log.i("BOTONES", "VIOCE VIOCE");
+
+            android.support.v7.widget.PopupMenu popupMenu = new android.support.v7.widget.PopupMenu(this, view);
+            popupMenu.getMenuInflater().inflate(R.menu.items, popupMenu.getMenu());
+
+            popupMenu.setOnMenuItemClickListener(new android.support.v7.widget.PopupMenu.OnMenuItemClickListener() {
+                @Override
+                public boolean onMenuItemClick(MenuItem item) {
+                    Log.i("BOTONES", "CLICK MENU");
+                    return true;
+                }
+            });
+            popupMenu.show();
+        }
     }
     //endregion
-
-
-
-
 
 }

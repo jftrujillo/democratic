@@ -20,6 +20,7 @@
         <item name="android:textColorPrimary">@color/primary_text_material_light</item>
         <item name="actionMenuTextColor">@color/primary_text_material_light</item>
         <item name="android:windowBackground">@drawable/bg_color_white</item>
+
     </style>
     <style name="AppTheme.NoActionBar">
         <item name="windowActionBar">false</item>
@@ -32,5 +33,6 @@
         <item name="android:background">@drawable/fab_label_background</item>
         <item name="android:textColor">#ffffff</item>
     </style>
+    <style name="ToolBarPopUpTheme" parent="@style/ThemeOverlay.AppCompat.Light"/>
 
 </resources>

@@ -15,6 +15,16 @@
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
+
+            <ImageView
+                android:id="@+id/overflowVoice"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/ic_more_vert_black_24dp"
+                android:scaleType="center"
+                android:layout_alignParentRight="true"
+                android:clickable="true"
+                />
             <ImageView
                 android:id="@+id/imgPerfilvoice"
                 android:layout_width="@dimen/list_avatar"

@@ -11,6 +11,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.MultiAutoCompleteTextView;
 import android.widget.Spinner;
 import android.widget.TextView;
@@ -27,12 +28,19 @@ import com.kcumendigital.democratic.R;
  */
 public class CreateForumFragment extends Fragment implements View.OnClickListener {
 
+
+
     OnButton onButton;
     Button btn;
     RecipientEditTextView recipientEditTextView;
     Spinner spinner;
     ArrayAdapter<CharSequence> adapter;
     TextInputLayout descripcion;
+    EditText desc;
+
+    static final String KEY_RECIPIENT="key_tags";
+    static final String KEY_SPINNER ="ket_spinner" ;
+    static final String KEY_DESC = "key_desc";
 
     public CreateForumFragment() {}
 
@@ -69,9 +77,11 @@ public class CreateForumFragment extends Fragment implements View.OnClickListene
 
         spinner = (Spinner) v.findViewById(R.id.categorias);
         descripcion = (TextInputLayout) v.findViewById(R.id.descripcion_foro);
+        desc = (EditText) v.findViewById(R.id.txtDescDis);
         adapter = ArrayAdapter.createFromResource(getActivity(), R.array.Categorias, android.R.layout.simple_spinner_item);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinner.setAdapter(adapter);
+
         btn = (Button) v.findViewById(R.id.crear_foro);
         btn.setOnClickListener(this);
 
@@ -79,7 +89,14 @@ public class CreateForumFragment extends Fragment implements View.OnClickListene
         recipientEditTextView.setTokenizer(new MultiAutoCompleteTextView.CommaTokenizer());
         recipientEditTextView.setAdapter(new BaseRecipientAdapter(BaseRecipientAdapter.QUERY_TYPE_PHONE, getActivity(), 6));
 
+        if (savedInstanceState!=null){
 
+            String spin = savedInstanceState.getString(KEY_SPINNER);
+            String descS = savedInstanceState.getString(KEY_DESC);
+
+            desc.setText(descS);
+
+        }
 
         return v;
     }
@@ -103,6 +120,11 @@ public class CreateForumFragment extends Fragment implements View.OnClickListene
         return discussion;
     }
 
+    @Override
+    public void onSaveInstanceState(Bundle outState) {
 
-
+        outState.putString(KEY_RECIPIENT, recipientEditTextView.getText().toString());
+        outState.putString(KEY_DESC, desc.getText().toString());
+        super.onSaveInstanceState(outState);
+    }
 }

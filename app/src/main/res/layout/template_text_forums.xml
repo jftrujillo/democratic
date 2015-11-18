@@ -17,6 +17,16 @@
             android:layout_height="wrap_content">
 
             <ImageView
+                android:id="@+id/overflow"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/ic_more_vert_black_24dp"
+                android:scaleType="center"
+                android:layout_alignParentRight="true"
+                android:clickable="true"
+                />
+
+            <ImageView
                 android:id="@+id/imgPerfil"
                 android:layout_width="@dimen/list_avatar"
                 android:layout_height="@dimen/list_avatar"
@@ -25,7 +35,7 @@
 
             <TextView
                 android:id="@+id/nombreUsuario"
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Nombre del Usuario"
                 android:layout_toRightOf="@id/imgPerfil"

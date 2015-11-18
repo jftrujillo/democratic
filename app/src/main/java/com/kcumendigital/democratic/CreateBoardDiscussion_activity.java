@@ -2,12 +2,14 @@ package com.kcumendigital.democratic;
 
 
 import android.os.Bundle;
+import android.os.PersistableBundle;
 import android.support.design.widget.TextInputLayout;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
+import android.widget.EditText;
 import android.widget.Toast;
 
 import com.kcumendigital.democratic.Fragments.CreateForumFragment;
@@ -27,6 +29,10 @@ public class CreateBoardDiscussion_activity extends AppCompatActivity implements
     Toolbar mToolbar;
     TextInputLayout title;
     User user;
+    EditText discus;
+
+    static final String KEY_DISCUSSION = "txt_discussion";
+
 
 
     @Override
@@ -34,7 +40,7 @@ public class CreateBoardDiscussion_activity extends AppCompatActivity implements
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_create_board_discussion);
         user = new User();
-
+        discus = (EditText) findViewById(R.id.discus);
 
         user = AppUtil.getUserStatic();
 
@@ -55,11 +61,24 @@ public class CreateBoardDiscussion_activity extends AppCompatActivity implements
         title = (TextInputLayout) findViewById(R.id.tituloForo);
 
 
+
         forum = new CreateForumFragment();
 
         FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
         ft.replace(R.id.container, forum);
         ft.commit();
+
+        if(savedInstanceState!=null){
+            String titleS = savedInstanceState.getString(KEY_DISCUSSION);
+            discus.setText(titleS);
+        }
+    }
+
+    @Override
+    public void onSaveInstanceState(Bundle outState, PersistableBundle outPersistentState) {
+
+        outState.putString(KEY_DISCUSSION, discus.getText().toString());
+        super.onSaveInstanceState(outState, outPersistentState);
     }
 
     @Override
