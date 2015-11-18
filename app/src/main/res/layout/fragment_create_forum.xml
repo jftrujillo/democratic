@@ -2,7 +2,6 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#d0c3e8"
     tools:context="com.kcumendigital.democratic.Fragments.CreateForumFragment">
 
 
@@ -33,7 +32,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="Descripción Foro de discución"
-                android:padding="15dp" />
+                android:padding="15dp"
+                android:layout_margin="10dp"/>
         </android.support.design.widget.TextInputLayout>
 
 

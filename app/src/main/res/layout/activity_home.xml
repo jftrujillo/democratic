@@ -62,18 +62,6 @@
                     fab:fab_labelStyle="@style/menu_labels_style">
 
                     <com.getbase.floatingactionbutton.FloatingActionButton
-                        android:id="@+id/new_encuesta"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        app:fab_icon="@drawable/ic_assignment_black_24dp"
-                        fab:fab_colorNormal="#ffffff"
-                        fab:fab_colorPressed="#FFC11F"
-                        fab:fab_title="Encuesta"
-
-                        />
-
-
-                    <com.getbase.floatingactionbutton.FloatingActionButton
                         android:id="@+id/new_forum"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -81,6 +69,16 @@
                         fab:fab_colorNormal="#ffffff"
                         fab:fab_colorPressed="#FFC11F"
                         fab:fab_title="Discusion" />
+
+                    <com.getbase.floatingactionbutton.FloatingActionButton
+                        android:id="@+id/new_encuesta"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        app:fab_icon="@drawable/ic_assignment_black_24dp"
+                        fab:fab_colorNormal="#ffffff"
+                        fab:fab_colorPressed="#FFC11F"
+                        fab:fab_title="Encuesta"
+                        />
                 </com.getbase.floatingactionbutton.FloatingActionsMenu>
             </RelativeLayout>
 

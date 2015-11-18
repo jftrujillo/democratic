@@ -1,10 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout
-    android:orientation="vertical"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
     tools:context="com.kcumendigital.democratic.SurveyDescriptionActivity">
 
 
@@ -18,119 +19,121 @@
         android:minHeight="?attr/actionBarSize"
         android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
         app:popupTheme="@style/ThemeOverlay.AppCompat.Light">
-<LinearLayout
-    android:orientation="vertical"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:gravity="center"
-    >
-        <TextView
-            android:id="@+id/TitleSurvey"
+
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Titutlo Encuesta"
-            android:textColor="#ffffff"
-            android:textSize="@dimen/big_letter"
-            />
-    <LinearLayout
-        android:orientation="horizontal"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:orientation="vertical">
 
-        <TextView
-            android:id="@+id/VotesCount"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="0"
-            android:textColor="#ffffff"
-            android:textSize="@dimen/medium_Letter"
-            android:layout_marginTop="@dimen/medium_margin"
+            <TextView
+                android:id="@+id/TitleSurvey"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Titutlo Encuesta"
+                android:textColor="#ffffff"
+                android:textSize="@dimen/big_letter" />
 
-            />
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Votos"
-            android:textSize="@dimen/medium_Letter"
-            android:textColor="#ffffff"
-            android:layout_marginTop="@dimen/medium_margin"
-            android:layout_marginLeft="@dimen/medium_margin"
-            />
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Encuesta mas votada:"
+                android:textColor="@color/cardview_light_background"
+                android:textSize="15dp"/>
 
-    </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:gravity="center"
-        >
+                <TextView
+                    android:id="@+id/VotesCount"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/medium_margin"
+                    android:text="0"
+                    android:textColor="#ffffff"
+                    android:textSize="@dimen/medium_Letter"
 
+                    />
 
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/medium_margin"
+                    android:layout_marginTop="@dimen/medium_margin"
+                    android:text="Votos"
+                    android:textColor="#ffffff"
+                    android:textSize="@dimen/medium_Letter" />
 
-        <ProgressBar
-            style="?android:attr/progressBarStyleHorizontal"
-        android:indeterminate="false"
-        android:id="@+id/progressBar"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_weight="1"
-        android:progress="20"
-            android:progressDrawable="@drawable/surbey_progress"
+            </LinearLayout>
 
-        android:paddingRight="@dimen/big_margin"
-        />
-
-        <TextView
-            android:id="@+id/most_voted_opcion_text"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="SI"
-            android:textSize="@dimen/medium_Letter"
-            android:textColor="#ffffff"
-            android:layout_marginLeft="@dimen/small_margin"
-            android:layout_marginRight="@dimen/small_margin"
-            />
-        <TextView
-            android:id="@+id/percentage_value_description"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="30"
-            android:textColor="#ffffff"
-            android:textSize="@dimen/medium_Letter"
-            />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="%"
-            android:textColor="#ffffff"
-            android:textSize="@dimen/medium_Letter"
-            android:layout_marginRight="@dimen/small_margin"
-            android:layout_marginLeft="@dimen/small_margin"
-            />
-
-    </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:orientation="horizontal">
 
 
+                <ProgressBar
+                    android:id="@+id/progressBar"
+                    style="?android:attr/progressBarStyleHorizontal"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:indeterminate="false"
+                    android:paddingRight="@dimen/big_margin"
+                    android:progress="20"
 
-</LinearLayout>
+                    android:progressDrawable="@drawable/surbey_progress" />
+
+                <TextView
+                    android:id="@+id/most_voted_opcion_text"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/small_margin"
+                    android:layout_marginRight="@dimen/small_margin"
+                    android:text="SI"
+                    android:textColor="#ffffff"
+                    android:textSize="@dimen/medium_Letter" />
+
+                <TextView
+                    android:id="@+id/percentage_value_description"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="30"
+                    android:textColor="#ffffff"
+                    android:textSize="@dimen/medium_Letter" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/small_margin"
+                    android:layout_marginRight="@dimen/small_margin"
+                    android:text="%"
+                    android:textColor="#ffffff"
+                    android:textSize="@dimen/medium_Letter" />
+
+            </LinearLayout>
+
+
+        </LinearLayout>
     </android.support.v7.widget.Toolbar>
+
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Seleccione una Opcion"
-        android:textSize="@dimen/medium_Letter"
-        android:gravity="center"
         android:layout_margin="@dimen/small_margin"
+        android:gravity="center"
+        android:text="Seleccione una Opcion"
         android:textColor="#000000"
-        />
- <ListView
-     android:id="@+id/listView"
-     android:layout_width="match_parent"
-     android:layout_height="match_parent"
-     android:layout_marginTop="@dimen/small_margin"
-     android:divider="@drawable/bg_divider"
-     android:dividerHeight="1dp"
-     ></ListView>
+        android:textSize="@dimen/medium_Letter" />
+
+    <ListView
+        android:id="@+id/listView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="@dimen/small_margin"
+        android:divider="@drawable/bg_divider"
+        android:dividerHeight="1dp"></ListView>
 </LinearLayout>

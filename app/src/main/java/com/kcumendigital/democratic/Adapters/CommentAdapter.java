@@ -200,10 +200,10 @@ public class CommentAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
                 int posC = (Integer) view.getTag();
                 handlePlayer(data.get(posC).getFile(), posC);
                 break;
-            case R.id.like:
+            case R.id.btn_like_text:
                 onItemClick.onItemClick(0, BTN_LIKE,view);
                 break;
-            case R.id.disLike:
+            case R.id.btn_dislike_text:
                 onItemClick.onItemClick(0, BTN_DISLIKE,view);
                 break;
             case R.id.overflow:
