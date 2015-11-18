@@ -113,7 +113,8 @@ public class CommentAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
         }
 
         if (holder instanceof VoiceViewHolder) {
-            ((VoiceViewHolder) holder).btn_play.setOnClickListener(this);
+            ((VoiceViewHolder) holder).nombreUsuario.setText(data.get(position).getUser().getName());
+                    ((VoiceViewHolder) holder).btn_play.setOnClickListener(this);
             ((VoiceViewHolder) holder).btn_play.setTag(position);
             ((VoiceViewHolder) holder).overflowVoice.setOnClickListener(this);
             if(data.get(position).getState()==STATE_PAUSED){

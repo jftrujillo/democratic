@@ -36,11 +36,13 @@
             android:name=".CreateSurveyAcitivty"
             android:screenOrientation="portrait" >
         </activity>
-        <activity android:name=".CreateBoardDiscussion_activity" />
+        <activity android:name=".CreateBoardDiscussion_activity"
+            android:screenOrientation="portrait"/>
         <activity android:name=".ForumsActivity" />
         <activity android:name=".LoginActivity">
         </activity>
-        <activity android:name=".SurveyDescriptionActivity" >
+        <activity android:name=".SurveyDescriptionActivity"
+            android:screenOrientation="portrait">
         </activity>
         <activity android:name=".HomeActivity"
 

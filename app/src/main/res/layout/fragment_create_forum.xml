@@ -2,45 +2,49 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.kcumendigital.democratic.Fragments.CreateForumFragment"
-    android:background="#d0c3e8">
+    android:background="#d0c3e8"
+    tools:context="com.kcumendigital.democratic.Fragments.CreateForumFragment">
 
 
-    <com.android.ex.chips.RecipientEditTextView
-        android:id="@+id/recipient"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:hint="Agrega los tags de tu foro"
-        android:layout_margin="10dp"
-        />
-    <Spinner
-        android:id="@+id/categorias"
-        android:layout_width="match_parent"
-        android:layout_height="40dp"
-        android:layout_below="@id/recipient"
-        android:layout_margin="10dp"/>
 
-    <android.support.design.widget.TextInputLayout
-        android:id="@+id/descripcion_foro"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/categorias">
-        <EditText
+
+        <com.android.ex.chips.RecipientEditTextView
+            android:id="@+id/recipient"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Descripción Foro de discución"
-            android:padding="15dp"/>
-    </android.support.design.widget.TextInputLayout>
+            android:layout_margin="10dp"
+            android:hint="Agrega los tags de tu foro" />
+
+        <Spinner
+            android:id="@+id/categorias"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:layout_below="@id/recipient"
+            android:layout_margin="10dp" />
+
+        <android.support.design.widget.TextInputLayout
+            android:id="@+id/descripcion_foro"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/categorias">
+
+            <EditText
+                android:id="@+id/txtDescDis"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Descripción Foro de discución"
+                android:padding="15dp" />
+        </android.support.design.widget.TextInputLayout>
 
 
-    <Button
-        android:id="@+id/crear_foro"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true"
-        android:background="#fdc01f"
-        android:text="Aceptar" />
+        <Button
+            android:id="@+id/crear_foro"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_centerHorizontal="true"
+            android:background="#fdc01f"
+            android:text="Aceptar" />
 
 </RelativeLayout>
 

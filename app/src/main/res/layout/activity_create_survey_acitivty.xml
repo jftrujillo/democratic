@@ -64,40 +64,38 @@
         android:id="@+id/spinner"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="@dimen/small_margin"
+        android:layout_margin="10dp"
         android:background="#ffffff"
         />
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        >
+        android:gravity="center_vertical">
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Opciones"
             android:textSize="@dimen/medium_Letter"
-            android:layout_marginLeft="@dimen/small_margin"
+            android:layout_marginLeft="17dp"
             android:textColor="#000000"
             />
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:background="#ffffff">
 
-        <android.support.design.widget.FloatingActionButton
+        <Button
             android:id="@+id/add_options"
-            android:layout_height="wrap_content"
-            android:layout_width="wrap_content"
+            android:layout_height="20dp"
+            android:layout_width="20dp"
             android:layout_centerVertical="true"
-            android:src="@drawable/ic_add_black_24dp"
-            app:fab_addButtonColorNormal="#FFC11F"
-            app:fab_addButtonColorPressed="@color/primary_material_light"
-            app:fab_addButtonPlusIconColor="#000000"
+            android:background="@drawable/ic_add_black_24dp"
             android:layout_margin="10dp"
             />
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="#ffffff">
         </RelativeLayout>
+
     </LinearLayout>
 
     <ListView
