@@ -20,6 +20,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.getbase.floatingactionbutton.FloatingActionButton;
 import com.kcumendigital.democratic.Adapters.CustomPagerAdapter;
@@ -56,6 +57,7 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
     SurveyHomeFragment surveyFragment;
 
     SunshineQuery query;
+    boolean alreadyTouchedDogue;
 
     @Override
     protected void onRestart() {
@@ -69,6 +71,7 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
+        alreadyTouchedDogue = false;
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
@@ -79,7 +82,27 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
         fragment = new DiscussionHomeFragment();
         drawer = (DrawerLayout) findViewById(R.id.drawer);
         nav = (NavigationView) findViewById(R.id.nav);
+        nav.getMenu().setGroupVisible(R.id.persona_menu_nav,false);
+        nav.getMenu().setGroupVisible(R.id.secciones_menu_nav,true);
+
         ImageView imm_nav = (ImageView) nav.findViewById(R.id.img_user_nav);
+        imm_nav.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (alreadyTouchedDogue == false){
+                Toast.makeText(getApplicationContext(),"cuidado con dogue",Toast.LENGTH_SHORT).show();
+                nav.getMenu().setGroupVisible(R.id.persona_menu_nav,true);
+                nav.getMenu().setGroupVisible(R.id.secciones_menu_nav,false);
+                alreadyTouchedDogue = true;
+            }
+                else {
+                    nav.getMenu().setGroupVisible(R.id.persona_menu_nav,false);
+                    nav.getMenu().setGroupVisible(R.id.secciones_menu_nav,true);
+                    alreadyTouchedDogue =false;
+                }
+            }
+
+        });
         Transformation transformation = new RoundedTransformationBuilder()
                 .scaleType(ImageView.ScaleType.CENTER_CROP)
                 .oval(true)
