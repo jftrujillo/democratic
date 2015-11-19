@@ -114,11 +114,6 @@
     <orderEntry type="library" exported="" name="recyclerview-v7-23.0.1" level="project" />
     <orderEntry type="library" exported="" name="facebook-android-sdk-4.7.0" level="project" />
     <orderEntry type="library" exported="" name="floatingactionbutton-1.10.0" level="project" />
-<<<<<<< HEAD
-    <orderEntry type="library" exported="" name="support-annotations-23.0.1" level="project" />
-    <orderEntry type="library" exported="" name="gson-2.4" level="project" />
-    <orderEntry type="library" exported="" name="recyclerview-v7-23.0.1" level="project" />
-=======
     <orderEntry type="library" exported="" name="support-v4-23.0.1" level="project" />
     <orderEntry type="library" exported="" name="bolts-android-1.2.1" level="project" />
     <orderEntry type="library" exported="" name="appcompat-v7-23.0.1" level="project" />
@@ -126,6 +121,5 @@
     <orderEntry type="library" exported="" name="ParseFacebookUtilsV4-1.10.3" level="project" />
     <orderEntry type="library" exported="" name="android-chips-1.0.1" level="project" />
     <orderEntry type="library" exported="" name="support-annotations-23.0.1" level="project" />
->>>>>>> 78b0cf07a7c03dc4a09c0aa6ec6bd037dcabb419
   </component>
 </module>
