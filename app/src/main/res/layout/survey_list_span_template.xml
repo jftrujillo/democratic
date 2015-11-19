@@ -95,7 +95,7 @@
                     android:id="@+id/text_opcion_survey"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="opcion"
+                    android:text="Votos"
                     android:textColor="@color/color_text_coments_forums"
                     android:textSize="@dimen/text_coments_forums"
                     android:layout_centerVertical="true"/>
