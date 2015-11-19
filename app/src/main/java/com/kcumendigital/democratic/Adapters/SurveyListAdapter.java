@@ -109,8 +109,8 @@ public class SurveyListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
             }
             else
             porcentaje = 0;
-            spanHolder.percentage_opcion.setText(""+porcentaje);
-            spanHolder.opcion_name.setText(BiggerOpcion);
+            spanHolder.percentage_opcion.setText(""+suma);
+            //spanHolder.opcion_name.setText(BiggerOpcion);
             spanHolder.categoria.setText(data.get(position).getCategory());
             String categoria = data.get(position).getCategory();
             if (categoria.equals(context.getString(R.string.c_gobierno))) {

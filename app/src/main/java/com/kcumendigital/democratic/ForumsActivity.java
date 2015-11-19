@@ -1,5 +1,6 @@
 package com.kcumendigital.democratic;
 
+import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
@@ -22,6 +23,7 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
@@ -190,7 +192,7 @@ public class ForumsActivity extends AppCompatActivity implements SunshineParse.S
             @Override
             public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
                 int count = charSequence.length();
-                countCarcaters.setText(""+count+"/150");
+                countCarcaters.setText("" + count + "/150");
             }
 
             @Override
@@ -343,6 +345,7 @@ public class ForumsActivity extends AppCompatActivity implements SunshineParse.S
             }
             return false;
         } else {
+            progres = ProgressDialog.show(this,"Enviando comentario de texto","Por favor espera",true);
             Comment comment = new Comment();
             comment.setDescription(comentario.getText().toString());
             User user = AppUtil.getUserStatic();
@@ -359,13 +362,20 @@ public class ForumsActivity extends AppCompatActivity implements SunshineParse.S
                         comentario.setText("");
                         Date date = null;
                         Toast.makeText(ForumsActivity.this, "Comentado creado al final", Toast.LENGTH_SHORT).show();
+
                         parse.incrementField(discussion.getObjectId(), "comments", Discussion.class);
                         ColletionsStatics.getDataDiscusion().get(pos).setComments(ColletionsStatics.getDataDiscusion().get(pos).getComments() + 1);
                         adapter.notifyDataSetChanged();
                         if (ColletionsStatics.getDataComments().size() < 5)
                             control.nextPage();
+                        progres.dismiss();
+                        InputMethodManager imm = (InputMethodManager) getSystemService(Activity.INPUT_METHOD_SERVICE);
+                        imm.toggleSoftInput(InputMethodManager.HIDE_IMPLICIT_ONLY, 0);
+                        recyclerView.scrollToPosition(adapter.getItemCount() - 1);
                     } else {
+                        progres.dismiss();
                         Toast.makeText(getApplicationContext(), "Comentario No Creado", Toast.LENGTH_SHORT).show();
+
                     }
                 }
 
