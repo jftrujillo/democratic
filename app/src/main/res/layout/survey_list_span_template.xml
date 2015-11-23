@@ -89,7 +89,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_below="@id/contenedor4"
-                android:paddingBottom="14dp">
+                android:layout_marginBottom="10dp">
 
                 <TextView
                     android:id="@+id/text_opcion_survey"

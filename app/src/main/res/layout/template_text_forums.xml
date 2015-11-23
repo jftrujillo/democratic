@@ -54,6 +54,7 @@
                 android:textColor="#080101"
                 android:layout_below="@id/nombreUsuario"
                 android:layout_toRightOf="@id/imgPerfil"
+                android:capitalize="sentences"
                 android:textSize="15sp" />
 
             <LinearLayout
