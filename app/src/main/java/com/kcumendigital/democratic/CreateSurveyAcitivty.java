@@ -9,8 +9,12 @@ import android.support.design.widget.TextInputLayout;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.WindowManager;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ImageButton;
@@ -43,6 +47,7 @@ public class CreateSurveyAcitivty extends AppCompatActivity implements View.OnCl
     OptionListAdapter adapter;
     ProgressDialog dialgog;
     User user;
+    TextView countCaracters;
     public static String DATA = "data";
 
     @Override
@@ -67,6 +72,7 @@ public class CreateSurveyAcitivty extends AppCompatActivity implements View.OnCl
 
             }
         });
+        countCaracters = (TextView) findViewById(R.id.count_caracters_toolbar);
         titulo = (TextInputLayout) findViewById(R.id.title_new_survey);
         description = (TextInputLayout) findViewById(R.id.description_create_survey);
         button = (Button) findViewById(R.id.add_options);
@@ -76,6 +82,23 @@ public class CreateSurveyAcitivty extends AppCompatActivity implements View.OnCl
         adapters.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 // Apply the adapter to the spinner
         spinner.setAdapter(adapters);
+        titulo.getEditText().addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                countCaracters.setText("" + s.length()+"/80");
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+
+            }
+        });
+
 
         opciones = new ArrayList<>();
         if (savedInstanceState != null){
@@ -162,6 +185,9 @@ public class CreateSurveyAcitivty extends AppCompatActivity implements View.OnCl
                 surveyOption.setDescription(textInputLayout.getEditText().getText().toString());
                 opciones.add(surveyOption);
                 adapter.notifyDataSetChanged();
+                getWindow().setSoftInputMode(
+                        WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN
+                );
 
             }
         }).setNegativeButton("Cancelar", new DialogInterface.OnClickListener() {
