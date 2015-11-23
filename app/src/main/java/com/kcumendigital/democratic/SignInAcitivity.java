@@ -62,8 +62,8 @@ public class SignInAcitivity extends AppCompatActivity implements View.OnClickLi
     public void onClick(View v) {
         switch (v.getId()){
             case R.id.ingresar_sign:
-                String email = correo.getEditText().getText().toString();
-                String name = nombre.getEditText().getText().toString();
+                String email = correo.getEditText().getText().toString().toLowerCase();
+                String name = nombre.getEditText().getText().toString().toLowerCase();
                 String pass1 = contrasena.getEditText().getText().toString();
                 String pass2 = cContrasena.getEditText().getText().toString();
 

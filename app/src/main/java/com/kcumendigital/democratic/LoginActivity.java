@@ -75,7 +75,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
             case R.id.ingresar:
                 dialog.show();
-                String emailT=email.getEditText().getText().toString();
+                String emailT=email.getEditText().getText().toString().toLowerCase();
                 String passT = pass.getEditText().getText().toString();
 
                 if(validate(emailT)&&validate(passT))
