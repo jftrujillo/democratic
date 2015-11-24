@@ -1,0 +1,7 @@
+Key store path ----> C:\Users\manuelfernando\AndroidStudioProjects\democratic\key_APK.jks
+password: admin12345
+Alias: kcumendigital
+password: admin12345
+first and last name: andres arias
+organization Unit: kcumen
+organization: kcumen 

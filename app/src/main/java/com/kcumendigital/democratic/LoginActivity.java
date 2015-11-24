@@ -9,12 +9,15 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.github.paolorotolo.appintro.AppIntro;
 import com.kcumendigital.democratic.Models.User;
 import com.kcumendigital.democratic.Util.AppUtil;
+import com.kcumendigital.democratic.library.Techniques;
+import com.kcumendigital.democratic.library.YoYo;
 import com.kcumendigital.democratic.parse.SunshineLogin;
 import com.parse.ParseException;
 import com.parse.ParseFacebookUtils;
@@ -31,6 +34,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     FloatingActionButton ingresar;
     ProgressDialog dialog;
     SunshineLogin login;
+    LinearLayout cordinator;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -80,8 +84,11 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
                 if(validate(emailT)&&validate(passT))
                     login.login(emailT, passT, this);
-                else
+                else {
+                    dialog.dismiss();
+                    YoYo.with(Techniques.Tada).duration(700).playOn(findViewById(R.id.containerLogin));
                     Toast.makeText(getApplicationContext(), R.string.sigin_fail, Toast.LENGTH_SHORT).show();
+                }
                 break;
             case R.id.login_facebook_btn:
                 login.loginByFacebook(this,null,this);
@@ -98,11 +105,12 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
     @Override
     public void done(boolean success, ParseException e) {
-        dialog.hide();
+        dialog.dismiss();
         if(success){
             inApp();
         }else{
             Toast.makeText(this,"Email o password incorrectos",Toast.LENGTH_SHORT).show();
+            YoYo.with(Techniques.Tada).duration(700).playOn(findViewById(R.id.containerLogin));
             e.printStackTrace();
         }
     }

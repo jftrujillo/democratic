@@ -22,12 +22,12 @@ public class RootActivity extends AwesomeSplash {
 
     @Override
     public void initSplash(ConfigSplash configSplash) {
-        configSplash.setBackgroundColor(R.color.morado_demo);
+        configSplash.setBackgroundColor(R.color.white);
         configSplash.setAnimCircularRevealDuration(1000);
         configSplash.setRevealFlagX(Flags.REVEAL_RIGHT);
         configSplash.setRevealFlagY(Flags.REVEAL_BOTTOM);
 
-        configSplash.setLogoSplash(R.drawable.iconodemocratic05);
+        configSplash.setLogoSplash(R.drawable.iconos);
         configSplash.setAnimLogoSplashDuration(1000);
         configSplash.setAnimLogoSplashTechnique(Techniques.FadeIn);
 
