@@ -3,8 +3,8 @@
     xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context="com.kcumendigital.democratic.animation"
-    android:background="@color/morado_demo"
-    >
+    android:background="@color/morado_demo">
+
      <RelativeLayout
          android:id="@+id/parent"
          android:layout_width="match_parent"
@@ -25,7 +25,6 @@
                  android:layout_gravity="center"
                  />
          <TextView
-
              android:layout_marginTop="@dimen/medium_margin"
              android:id="@+id/text"
              android:gravity="center"
@@ -33,10 +32,9 @@
              android:layout_height="wrap_content"
              android:text=""
              android:textColor="#000000"
-             android:textSize="30sp"
-             />
-         </LinearLayout>
+             android:textSize="30sp"/>
 
+         </LinearLayout>
      </RelativeLayout>
 
 
