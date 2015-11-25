@@ -32,4 +32,5 @@
     <dimen name="list_avatar">40dp</dimen>
     <dimen name="forum_avatar">50dp</dimen>
     <dimen name="margin_medium_image">20dp</dimen>
+    <dimen name="margin_medium">20dp</dimen>
 </resources>
