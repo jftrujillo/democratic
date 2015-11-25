@@ -541,6 +541,15 @@ public class ForumsActivity extends AppCompatActivity implements SunshineParse.S
             });
             popupMenu.show();
         }
+
+        if (type == CommentAdapter.SHARE){
+            Log.i("BOTONES", "share");
+
+        }
+        if (type == CommentAdapter.REPORT){
+            Log.i("BOTONES","report");
+
+        }
     }
     //endregion
 
