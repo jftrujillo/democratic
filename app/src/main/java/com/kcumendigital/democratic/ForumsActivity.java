@@ -41,6 +41,8 @@ import com.kcumendigital.democratic.Models.DiscussionScore;
 import com.kcumendigital.democratic.Models.User;
 import com.kcumendigital.democratic.Util.AppUtil;
 import com.kcumendigital.democratic.Util.ColletionsStatics;
+import com.kcumendigital.democratic.library.Techniques;
+import com.kcumendigital.democratic.library.YoYo;
 import com.kcumendigital.democratic.parse.SunshinePageControl;
 import com.kcumendigital.democratic.parse.SunshineParse;
 import com.kcumendigital.democratic.parse.SunshineQuery;
@@ -402,9 +404,11 @@ public class ForumsActivity extends AppCompatActivity implements SunshineParse.S
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.btn_like:
+                YoYo.with(Techniques.Pulse).duration(700).playOn(findViewById(R.id.btn_like));
                 likeDiscussion(user.getObjectId());
                 break;
             case R.id.btn_dislike:
+                YoYo.with(Techniques.Pulse).duration(700).playOn(findViewById(R.id.btn_dislike));
                 dislikeDiscussion(user.getObjectId());
                 break;
         }

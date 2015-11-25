@@ -1,4 +1,3 @@
-
 /*
  * The MIT License (MIT)
  *
@@ -23,30 +22,20 @@
  * SOFTWARE.
  */
 
-package com.kcumendigital.democratic.library;
+package com.kcumendigital.democratic.library.attention;
+
+import android.view.View;
 
 
-import com.kcumendigital.democratic.library.attention.PulseAnimator;
-import com.kcumendigital.democratic.library.attention.TadaAnimator;
+import com.kcumendigital.democratic.library.BaseViewAnimator;
+import com.nineoldandroids.animation.ObjectAnimator;
 
-
-public enum Techniques {
-
-
-    Tada(TadaAnimator.class),
-    Pulse(PulseAnimator.class);
-
-    private Class animatorClazz;
-
-    private Techniques(Class clazz) {
-        animatorClazz = clazz;
-    }
-
-    public BaseViewAnimator getAnimator() {
-        try {
-            return (BaseViewAnimator) animatorClazz.newInstance();
-        } catch (Exception e) {
-            throw new Error("Can not init animatorClazz instance");
-        }
+public class PulseAnimator extends BaseViewAnimator {
+    @Override
+    public void prepare(View target) {
+        getAnimatorAgent().playTogether(
+                ObjectAnimator.ofFloat(target, "scaleY", 1, 1.1f, 1),
+                ObjectAnimator.ofFloat(target, "scaleX", 1, 1.1f, 1)
+        );
     }
 }
