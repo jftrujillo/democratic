@@ -6,33 +6,20 @@
     android:layout_height="match_parent"
     tools:context="com.kcumendigital.democratic.ShareActivity">
 
-    <TextView
-        android:id="@+id/txtShare"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/txt_foro_desc"
-        android:layout_centerHorizontal="true"
-        android:layout_margin="@dimen/margin_medium"/>
-
-    <TextView
-        android:id="@+id/txtForo"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/txt_share_descr"
-        android:layout_below="@id/txtShare"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="@dimen/medium_margin"/>
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
 
     <Button
-        android:id="@+id/login_facebook_btn"
+        android:id="@+id/share"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginBottom="@dimen/small_margin"
         android:layout_marginTop="@dimen/small_margin"
         android:text="@string/txt_share"
-        android:layout_below="@id/txtForo"
         android:layout_margin="@dimen/medium_margin"
         android:textColor="@color/cardview_light_background"
-        android:background="@color/color_share_facebook"/>
+        android:background="@color/color_share_facebook"
+        android:layout_alignParentBottom="true"/>
 
 </RelativeLayout>
