@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.kcumendigital.democratic" >
+    package="com.kcumendigital.democratic">
 
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
@@ -12,7 +12,7 @@
         android:allowBackup="true"
         android:icon="@drawable/logoapli"
         android:label="@string/app_name"
-        android:theme="@style/AppTheme" >
+        android:theme="@style/AppTheme">
         <meta-data
             android:name="com.facebook.sdk.ApplicationId"
             android:value="@string/facebook_app_id" />
@@ -21,7 +21,7 @@
             android:name=".animation"
             android:label="@string/app_name"
             android:noHistory="true"
-            android:screenOrientation="portrait" >
+            android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -31,26 +31,20 @@
         <activity
             android:name=".MainActivity"
             android:label="@string/title_activity_home"
-            android:theme="@style/AppTheme.NoActionBar" >
-        </activity>
-        <activity android:name=".CreateSurveyAcitivty" >
-        </activity>
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity android:name=".CreateSurveyAcitivty" />
         <activity
             android:name=".CreateBoardDiscussion_activity"
             android:screenOrientation="portrait" />
         <activity android:name=".ForumsActivity" />
-        <activity android:name=".LoginActivity" >
-        </activity>
+        <activity android:name=".LoginActivity" />
         <activity
             android:name=".SurveyDescriptionActivity"
-            android:screenOrientation="portrait" >
-        </activity>
-        <activity android:name=".HomeActivity" >
-        </activity>
+            android:screenOrientation="portrait" />
+        <activity android:name=".HomeActivity" />
         <activity
             android:name=".SignInAcitivity"
-            android:screenOrientation="portrait" >
-        </activity>
+            android:screenOrientation="portrait" />
         <activity
             android:name=".AppIntroActivity"
             android:noHistory="true"
@@ -60,8 +54,8 @@
             android:configChanges="keyboard|keyboardHidden|screenLayout|screenSize|orientation"
             android:label="@string/app_name"
             android:theme="@android:style/Theme.Translucent.NoTitleBar" />
-        <activity android:name=".RootActivity" >
-        </activity>
+        <activity android:name=".RootActivity" />
+        <activity android:name=".ShareActivity"></activity>
     </application>
 
 </manifest>

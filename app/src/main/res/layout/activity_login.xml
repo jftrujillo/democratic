@@ -84,7 +84,7 @@
             android:layout_height="wrap_content"
             android:layout_marginBottom="@dimen/small_margin"
             android:layout_marginTop="@dimen/small_margin"
-            android:text="Loogin with facebook"
+            android:text="Login with facebook"
             app:theme="@style/FbButton" />
 
 
