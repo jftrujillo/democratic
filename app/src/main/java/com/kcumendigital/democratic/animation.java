@@ -125,7 +125,8 @@ public class animation extends AppCompatActivity {
                     intent = new Intent(getApplicationContext(), LoginActivity.class);
                 }else{
                     AppUtil.setUser(user);
-                    intent = new Intent(getApplicationContext(), HomeActivity.class);
+                    intent = new Intent(getApplicationContext()
+                             , HomeActivity.class);
                 }
                 startActivity(intent);
 

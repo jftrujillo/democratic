@@ -46,6 +46,7 @@ import java.util.List;
 public class HomeActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener, View.OnClickListener, SurveyListAdapter.OnItemClickListenerSurvey, SearchView.OnQueryTextListener, MenuItemCompat.OnActionExpandListener {
 
 
+
     DiscussionHomeFragment fragment;
     DrawerLayout drawer;
     NavigationView nav;
