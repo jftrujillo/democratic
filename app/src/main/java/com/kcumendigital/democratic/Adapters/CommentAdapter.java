@@ -225,6 +225,7 @@ public class CommentAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
                 break;
             case R.id.share:
                 onItemClick.onItemClick((Integer) view.getTag(),SHARE,view);
+
                 break;
 
             case R.id.report_papu:

@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.media.MediaRecorder;
 import android.net.Uri;
 import android.os.Bundle;
@@ -543,6 +544,7 @@ public class ForumsActivity extends AppCompatActivity implements SunshineParse.S
         }
 
         if (type == CommentAdapter.SHARE){
+            startActivity(new Intent(this,ShareActivity.class).putExtra("pos",position));
             Log.i("BOTONES", "share");
 
         }
