@@ -2,6 +2,7 @@ package com.kcumendigital.democratic;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 
 public class ShareActivity extends AppCompatActivity {
     int pos;
@@ -19,6 +20,8 @@ public class ShareActivity extends AppCompatActivity {
         else {
             pos = savedInstanceState.getInt("pos");
         }
+
+        Log.i("pos_share",""+pos);
 
 
 
