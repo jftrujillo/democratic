@@ -65,9 +65,11 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
     ActionBarDrawerToggle toggle;
     FloatingActionButton new_encuesta, new_forum;
     String filtro;
-
+    int avatar;
+    Transformation transformation;
     DiscussionHomeFragment discussionFragment;
     SurveyHomeFragment surveyFragment;
+    ImageView shadow;
 
     SunshineQuery query;
     boolean alreadyTouchedDogue;
@@ -89,6 +91,7 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         new_encuesta = (FloatingActionButton) findViewById(R.id.new_encuesta);
+        shadow = (ImageView) findViewById(R.id.shadow);
         new_encuesta.setOnClickListener(this);
         new_forum = (FloatingActionButton) findViewById(R.id.new_forum);
         new_forum.setOnClickListener(this);
@@ -102,7 +105,7 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
         imm_nav.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                zoomImageFromThumb(imm_nav,R.drawable.democraticmarca);
+                zoomImageFromThumb(imm_nav,R.drawable.democraticmarca, R.id.expanded_image);
 
                 if (alreadyTouchedDogue == false) {
                     Toast.makeText(getApplicationContext(), "cuidado con dogue", Toast.LENGTH_SHORT).show();
@@ -117,12 +120,14 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
             }
 
         });
-        Transformation transformation = new RoundedTransformationBuilder()
+        mShortAnimationDuration = getResources().getInteger(
+                android.R.integer.config_shortAnimTime);
+         transformation = new RoundedTransformationBuilder()
                 .scaleType(ImageView.ScaleType.CENTER_CROP)
                 .oval(true)
                 .build();
 
-        int avatar = getResources().getDimensionPixelSize(R.dimen.nav_header_avatar);
+        avatar = getResources().getDimensionPixelSize(R.dimen.nav_header_avatar);
         Picasso.with(this).load(AppUtil.getUserStatic().getImg())
                 .resize(avatar, avatar)
                 .centerCrop()
@@ -299,7 +304,7 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
     //endregion
 
 
-    private void zoomImageFromThumb(final View thumbView, int imageResId) {
+    private void zoomImageFromThumb(final View thumbView, int imageResId, int expandedImage) {
         // If there's an animation in progress, cancel it
         // immediately and proceed with this one.
         if (mCurrentAnimator != null) {
@@ -307,9 +312,12 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
         }
 
         // Load the high-resolution "zoomed-in" image.
-        final ImageView expandedImageView = (ImageView) findViewById(
-                R.id.expanded_image);
-        expandedImageView.setImageResource(imageResId);
+        final ImageView expandedImageView = (ImageView) findViewById(expandedImage);
+        Picasso.with(this).load(AppUtil.getUserStatic().getImg())
+                .resize(avatar, avatar)
+                .centerCrop()
+                .transform(transformation).into(expandedImageView);
+
 
         // Calculate the starting and ending bounds for the zoomed-in image.
         // This step involves lots of math. Yay, math.
@@ -379,6 +387,7 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
             @Override
             public void onAnimationEnd(Animator animation) {
                 mCurrentAnimator = null;
+                shadow.setVisibility(View.VISIBLE);
             }
 
             @Override
@@ -422,6 +431,7 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
                         thumbView.setAlpha(1f);
                         expandedImageView.setVisibility(View.GONE);
                         mCurrentAnimator = null;
+                        shadow.setVisibility(View.GONE);
                     }
 
                     @Override
@@ -429,6 +439,7 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
                         thumbView.setAlpha(1f);
                         expandedImageView.setVisibility(View.GONE);
                         mCurrentAnimator = null;
+                        shadow.setVisibility(View.GONE);
                     }
                 });
                 set.start();

@@ -23,11 +23,21 @@
         />
 
     <ImageView
+        android:id="@+id/shadow"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:src="@drawable/shadow"
+        android:visibility="gone"
+        />
+
+    <ImageView
         android:id="@+id/expanded_image"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:visibility="invisible"
         />
+
+
     <TextView
         android:id="@+id/txt_usr"
         android:layout_width="wrap_content"

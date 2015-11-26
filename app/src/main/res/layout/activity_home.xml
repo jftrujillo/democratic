@@ -9,6 +9,8 @@
 
     tools:context="com.kcumendigital.democratic.HomeActivity">
 
+
+
     <android.support.v4.widget.DrawerLayout
         android:id="@+id/drawer"
         android:layout_width="match_parent"
@@ -48,6 +50,8 @@
                     android:id="@+id/pager"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent" />
+
+
 
                 <com.getbase.floatingactionbutton.FloatingActionsMenu
                     android:layout_width="wrap_content"
