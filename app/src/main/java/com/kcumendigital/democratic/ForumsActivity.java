@@ -148,13 +148,13 @@ public class ForumsActivity extends AppCompatActivity implements SunshineParse.S
         categoria.setText(discussion.getCategory());
 
         if (discussion.getCategory().equals(getString(R.string.c_gobierno))) {
-            Picasso.with(this).load(R.drawable.ic_account_balance_white_36dp).into(imgCategory);
+            Picasso.with(this).load(R.drawable.ic_account_balance_24dp).into(imgCategory);
 
         } else if (discussion.getCategory().equals(getString(R.string.c_educacion))) {
-            Picasso.with(this).load(R.drawable.ic_school_white_18dp).into(imgCategory);
+            Picasso.with(this).load(R.drawable.ic_school_24dp).into(imgCategory);
 
         } else if (discussion.getCategory().equals(getString(R.string.c_salud))) {
-            Picasso.with(this).load(R.drawable.ic_local_hospital_white_18dp).into(imgCategory);
+            Picasso.with(this).load(R.drawable.ic_local_hospital_24dp).into(imgCategory);
         } else if (discussion.getCategory().equals(getString(R.string.c_ambiente))) {
             Picasso.with(this).load(R.drawable.ic_nature_white_24dp).into(imgCategory);
         }
@@ -202,9 +202,9 @@ public class ForumsActivity extends AppCompatActivity implements SunshineParse.S
             public void afterTextChanged(Editable editable) {
 
                 if (comentario.getText().toString().equals("")) {
-                    Picasso.with(getApplicationContext()).load(R.drawable.ic_mic_white_24dp).transform(transformation).into(btn_record);
+                    Picasso.with(getApplicationContext()).load(R.drawable.ic_mic_24dp).transform(transformation).into(btn_record);
                 } else {
-                    Picasso.with(getApplicationContext()).load(R.drawable.ic_send_white_24dp).transform(transformation).into(btn_record);
+                    Picasso.with(getApplicationContext()).load(R.drawable.ic_send_24dp).transform(transformation).into(btn_record);
                 }
             }
         });

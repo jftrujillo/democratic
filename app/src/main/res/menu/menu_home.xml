@@ -5,7 +5,7 @@
     <item android:id="@+id/navigate"
         android:title="next"
         android:orderInCategory="200"
-        android:icon="@drawable/ic_search_white_24dp"
+        android:icon="@drawable/ic_search_24dp"
         app:showAsAction = "collapseActionView|ifRoom"
         app:actionViewClass = "android.support.v7.widget.SearchView"
         />

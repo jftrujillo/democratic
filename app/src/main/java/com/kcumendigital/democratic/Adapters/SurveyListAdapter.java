@@ -114,24 +114,24 @@ public class SurveyListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
             spanHolder.categoria.setText(data.get(position).getCategory());
             String categoria = data.get(position).getCategory();
             if (categoria.equals(context.getString(R.string.c_gobierno))) {
-                Picasso.with(context).load(R.drawable.ic_account_balance_white_36dp).into(spanHolder.leftIcon);
+                Picasso.with(context).load(R.drawable.ic_account_balance_24dp).into(spanHolder.leftIcon);
                 spanHolder.leftColor.setBackgroundResource(R.color.gobierno);
                 spanHolder.categoria.setTextColor(context.getResources().getColor(R.color.gobierno));
 
             }
             else if (categoria.equals(context.getString(R.string.c_salud))) {
-                Picasso.with(context).load(R.drawable.ic_local_hospital_white_18dp).into(spanHolder.leftIcon);
+                Picasso.with(context).load(R.drawable.ic_local_hospital_24dp).into(spanHolder.leftIcon);
                 spanHolder.leftColor.setBackgroundResource(R.color.salud);
                 spanHolder.categoria.setTextColor(context.getResources().getColor(R.color.salud));
 
             }
             else if (categoria.equals(context.getString(R.string.c_educacion))) {
-                Picasso.with(context).load(R.drawable.ic_school_white_18dp).into(spanHolder.leftIcon);
+                Picasso.with(context).load(R.drawable.ic_school_24dp).into(spanHolder.leftIcon);
                 spanHolder.leftColor.setBackgroundResource(R.color.educacion);
                 spanHolder.categoria.setTextColor(context.getResources().getColor(R.color.educacion));
 
             }else if (categoria.equals(context.getString(R.string.c_ambiente))) {
-                Picasso.with(context).load(R.drawable.ic_send_white_24dp).into(spanHolder.leftIcon);
+                Picasso.with(context).load(R.drawable.ic_send_24dp).into(spanHolder.leftIcon);
                 spanHolder.leftColor.setBackgroundResource(R.color.medio_ambiente);
                 spanHolder.categoria.setTextColor(context.getResources().getColor(R.color.medio_ambiente));
             }
