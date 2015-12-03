@@ -91,7 +91,6 @@ public class HomeListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
 
-
        if (holder instanceof HomeListspanViewHolder){
            HomeListspanViewHolder spanHolder = (HomeListspanViewHolder) holder;
            if(ColletionsStatics.getHomeDiscusion().size()>0 && pagerEnabled)

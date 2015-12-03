@@ -36,10 +36,6 @@ public class RootActivity extends AwesomeSplash {
         configSplash.setTitleTextSize(30f);
         configSplash.setAnimTitleDuration(1000);
         configSplash.setAnimTitleTechnique(Techniques.FadeIn);
-
-
-
-
     }
 
     @Override
