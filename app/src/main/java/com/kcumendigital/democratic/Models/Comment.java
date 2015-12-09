@@ -15,7 +15,7 @@ public class Comment extends SunshineRecord{
 
     boolean record;
     String description;
-    long likes,dislikes;
+    long likes,dislikes,report;
     @fileUrl
     String file;
     @filePath(contentType = "audio/mp4")
@@ -26,6 +26,16 @@ public class Comment extends SunshineRecord{
     String discussion;
 
 //region Getters and Setters
+
+
+    public long getReport() {
+        return report;
+    }
+
+    public void setReport(long report) {
+        this.report = report;
+    }
+
     public boolean getRecord() {
         return record;
     }
