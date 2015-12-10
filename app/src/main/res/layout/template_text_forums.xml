@@ -12,9 +12,31 @@
         android:background="#f6f6f6"
         android:layout_margin="@dimen/card_margin">
 
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+            <TextView
+                android:id="@+id/mask_report"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:textColor="#000000"
+                android:textSize="@dimen/medium_Letter"
+                android:text="Cotenido Oculto
+Tab para mostrar"
+
+                android:gravity="center"
+                android:visibility="gone"
+                />
+
         <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            >
+
+
+
+
 
             <LinearLayout
                 android:orientation="horizontal"
@@ -24,6 +46,7 @@
                 android:scaleType="center"
                 android:layout_alignParentRight="true"
                 >
+
 
                 <ImageButton
                     android:id="@+id/share"
@@ -133,5 +156,6 @@
                     android:textSize="15dp" />
             </LinearLayout>
         </RelativeLayout>
+        </LinearLayout>
     </android.support.v7.widget.CardView>
 </LinearLayout>

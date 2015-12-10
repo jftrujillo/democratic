@@ -299,6 +299,7 @@ public class ForumsActivity extends AppCompatActivity implements SunshineParse.S
         comment.setDiscussion(ColletionsStatics.getDataDiscusion().get(pos).getObjectId());
         comment.setUser(user);
         comment.setFilePath(absolutePath);
+        comment.setReport(0);
         final SunshineParse parseVoice = new SunshineParse();
         parseVoice.insert(comment, new SunshineParse.SunshineCallback() {
             @Override
@@ -356,6 +357,7 @@ public class ForumsActivity extends AppCompatActivity implements SunshineParse.S
             comment.setUser(user);
             comment.setDiscussion(ColletionsStatics.getDataDiscusion().get(pos).getObjectId());
             comment.setRecord(false);
+            comment.setReport(0);
             final SunshineParse parse = new SunshineParse();
             parse.insert(comment, new SunshineParse.SunshineCallback() {
                 @Override
@@ -575,11 +577,28 @@ public class ForumsActivity extends AppCompatActivity implements SunshineParse.S
                 public void resultListRecords(boolean success, Integer requestCode, List<SunshineRecord> records, ParseException e) {
                    if (success){
                        if (records.size() == 0){
-                           Report report =  new Report();
-                           report.setComent(ColletionsStatics.getDataComments().get(position).getObjectId());
-                           report.setUser(AppUtil.getUserStatic().getObjectId());
-                           parse.insert(report);
-                           parse.incrementField(ColletionsStatics.getDataComments().get(position).getObjectId(),"report",Comment.class);
+                            AlertDialog alertReport = new AlertDialog.Builder(ForumsActivity.this)
+                                   .setMessage("¿Desea denunciar este comentario?")
+                                   .setPositiveButton("Si", new DialogInterface.OnClickListener() {
+                                       @Override
+                                       public void onClick(DialogInterface dialog, int which) {
+                                           Report report =  new Report();
+                                           report.setComent(ColletionsStatics.getDataComments().get(position).getObjectId());
+                                           report.setUser(AppUtil.getUserStatic().getObjectId());
+                                           parse.insert(report);
+                                           parse.incrementField(ColletionsStatics.getDataComments().get(position).getObjectId(), "report", Comment.class);
+                                           Toast.makeText(ForumsActivity.this, "Denuncia hecha con èxito", Toast.LENGTH_SHORT).show();
+                                       }
+                                   })
+                                   .setNegativeButton("No", new DialogInterface.OnClickListener() {
+                                       @Override
+                                       public void onClick(DialogInterface dialog, int which) {
+
+                                       }
+                                   })
+                                   .create();
+                           alertReport.show();
+
                        }
                        
                        else {
