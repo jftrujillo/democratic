@@ -49,41 +49,45 @@ public class NumberFragmetFragment extends android.support.v4.app.Fragment imple
         View v = inflater.inflate(R.layout.fragment_number_fragmet, container, false);
         v.setOnClickListener(this);
         TextView txt = (TextView) v.findViewById(R.id.numberPage);
+        TextView txtTittle = (TextView) v.findViewById(R.id.tituloCategoria);
         ImageView img_bacground = (ImageView) v.findViewById(R.id.bacground_pager);
         if (TYPE_lIST == PagerAdpater.TYPE_DISCUSION) {
             discussion = ColletionsStatics.getHomeDiscusion().get(position);
             txt.setText(discussion.getTitle());
+            txtTittle.setText(discussion.getCategory());
             String categoria = discussion.getCategory();
 
             if (categoria.equals("Salud")){
                 Picasso.with(getActivity()).load(R.drawable.img_sombra).into(img_bacground);
-                Picasso.with(getActivity()).load(R.drawable.bg_salud).into(img_bacground);
+                Picasso.with(getActivity()).load(R.drawable.screensalud).into(img_bacground);
             }
 
             if (categoria.equals("Gobierno")){
                 Picasso.with(getActivity()).load(R.drawable.imagenpager).into(img_bacground);
+                Picasso .with(getActivity()).load(R.drawable.screengobierno).into(img_bacground);
             }
 
             if (categoria.equals("Educación")){
                 Picasso.with(getActivity()).load(R.drawable.ic_democratic_educacion).into(img_bacground);
+                Picasso.with(getActivity()).load(R.drawable.screeneducacion).into(img_bacground);
             }
-
         }
 
         if (TYPE_lIST == PagerAdpater.TYPE_SURVEY){
             survey = ColletionsStatics.getHomeSurvey().get(position);
             txt.setText(survey.getTitle());
+            txtTittle.setText(survey.getCategory());
             String categoria = survey.getCategory();
             if (categoria.equals("Salud")){
-                Picasso.with(getActivity()).load(R.drawable.bg_salud).into(img_bacground);
+                Picasso.with(getActivity()).load(R.drawable.screensalud).into(img_bacground);
             }
 
             if (categoria.equals("Gobierno")){
-                Picasso.with(getActivity()).load(R.drawable.bg_ciudad).into(img_bacground);
+                Picasso.with(getActivity()).load(R.drawable.screengobierno).into(img_bacground);
             }
 
             if (categoria.equals("Educación")){
-                Picasso.with(getActivity()).load(R.drawable.ic_democratic_educacion).into(img_bacground);
+                Picasso.with(getActivity()).load(R.drawable.screeneducacion).into(img_bacground);
             }
 
         }

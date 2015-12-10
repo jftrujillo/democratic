@@ -89,8 +89,5 @@
             android:background="#ffffff"
             app:headerLayout="@layout/header_nav_home"
             app:menu="@menu/manu_nav_home" />
-
     </android.support.v4.widget.DrawerLayout>
-
-
 </RelativeLayout>

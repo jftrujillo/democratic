@@ -20,11 +20,9 @@
 
     <color name="gobierno">#FF5252</color>
     <color name="educacion">#009688</color>
-    <color name="salud">#00BDFF</color>
+    <color name="salud">#69c5ed</color>
     <color name="medio_ambiente">#4DBB5C</color>
     <color name="morado_demo">#512DA8</color>
 
     <color name="pager_bg">#555555</color>
-
-
 </resources>

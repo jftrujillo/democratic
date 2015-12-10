@@ -29,9 +29,7 @@ public class ShareActivity extends AppCompatActivity implements View.OnClickList
 
         Log.i("pos_share",""+pos);
 
-
         share.setOnClickListener(this);
-
 
     }
 

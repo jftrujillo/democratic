@@ -219,7 +219,6 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
                 startActivity(intent);
                 finish();
                 break;
-
         }
 
         surveyFragment.reloadWithQuery(query);

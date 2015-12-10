@@ -17,9 +17,7 @@
         android:orientation="horizontal"
         android:padding="@dimen/small_margin"
         android:gravity="center"
-        android:layout_gravity="bottom"
-
-        >
+        android:layout_gravity="bottom">
 
         <ImageView
             android:id="@+id/img_mark_1"
