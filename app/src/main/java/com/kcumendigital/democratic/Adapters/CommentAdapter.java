@@ -96,12 +96,11 @@ public class CommentAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
         if (holder instanceof TextViewHolder) {
+
             ((TextViewHolder) holder).nombreUsuario.setText(data.get(position).getUser().getName());
             ((TextViewHolder) holder).likes.setText("" + data.get(position).getLikes());
             ((TextViewHolder) holder).dislikes.setText("" + data.get(position).getDislikes());
             ((TextViewHolder) holder).comment.setText(data.get(position).getDescription());
-
-
             ((TextViewHolder) holder).likes.setOnClickListener(this);
             ((TextViewHolder) holder).dislikes.setOnClickListener(this);
             ((TextViewHolder) holder).share.setOnClickListener(this);
@@ -115,37 +114,48 @@ public class CommentAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
                     .transform(transformation).into(((TextViewHolder) holder).imgPerfil);
 
             //  comment,likes,dislikes,titulo;
+            if (data.get(position).getReport() > 100) {
+                ((TextViewHolder) holder).maskReport.setVisibility(View.VISIBLE);
+                ((TextViewHolder) holder).maskReport.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        v.setVisibility(View.GONE);
+                    }
+                });
+            }
         }
 
         if (holder instanceof VoiceViewHolder) {
-            ((VoiceViewHolder) holder).nombreUsuario.setText(data.get(position).getUser().getName());
-                    ((VoiceViewHolder) holder).btn_play.setOnClickListener(this);
-                    ((VoiceViewHolder) holder).share.setOnClickListener(this);
-                    ((VoiceViewHolder) holder).reportPapu.setOnClickListener(this);
-                    ((VoiceViewHolder) holder).share.setTag(position);
-                    ((VoiceViewHolder) holder).btn_play.setTag(position);
-                    ((VoiceViewHolder) holder).reportPapu.setTag(position);
-                    ((VoiceViewHolder) holder).btn_play.setTag(position);
-            if(data.get(position).getState()==STATE_PAUSED){
-                ((VoiceViewHolder) holder).btn_play.setVisibility(ImageView.VISIBLE);
-                ((VoiceViewHolder) holder).downloading.setVisibility(ImageView.GONE);
-                ((VoiceViewHolder) holder).btn_play.setImageResource(R.drawable.ic_play_arrow_black_24dp);
-            }else if(data.get(position).getState()==STATE_PLAYING){
-                ((VoiceViewHolder) holder).btn_play.setVisibility(ImageView.VISIBLE);
-                ((VoiceViewHolder) holder).downloading.setVisibility(ImageView.GONE);
-                ((VoiceViewHolder) holder).btn_play.setImageResource(R.drawable.ic_pause_black_24dp);
-            }else{
-                ((VoiceViewHolder) holder).btn_play.setVisibility(ImageView.GONE);
-                ((VoiceViewHolder) holder).downloading.setVisibility(ImageView.VISIBLE);
+            if (data.get(position).getReport() < 100) {
+                ((VoiceViewHolder) holder).nombreUsuario.setText(data.get(position).getUser().getName());
+                ((VoiceViewHolder) holder).btn_play.setOnClickListener(this);
+                ((VoiceViewHolder) holder).share.setOnClickListener(this);
+                ((VoiceViewHolder) holder).reportPapu.setOnClickListener(this);
+                ((VoiceViewHolder) holder).share.setTag(position);
+                ((VoiceViewHolder) holder).btn_play.setTag(position);
+                ((VoiceViewHolder) holder).reportPapu.setTag(position);
+                ((VoiceViewHolder) holder).btn_play.setTag(position);
+                if (data.get(position).getState() == STATE_PAUSED) {
+                    ((VoiceViewHolder) holder).btn_play.setVisibility(ImageView.VISIBLE);
+                    ((VoiceViewHolder) holder).downloading.setVisibility(ImageView.GONE);
+                    ((VoiceViewHolder) holder).btn_play.setImageResource(R.drawable.ic_play_arrow_black_24dp);
+                } else if (data.get(position).getState() == STATE_PLAYING) {
+                    ((VoiceViewHolder) holder).btn_play.setVisibility(ImageView.VISIBLE);
+                    ((VoiceViewHolder) holder).downloading.setVisibility(ImageView.GONE);
+                    ((VoiceViewHolder) holder).btn_play.setImageResource(R.drawable.ic_pause_black_24dp);
+                } else {
+                    ((VoiceViewHolder) holder).btn_play.setVisibility(ImageView.GONE);
+                    ((VoiceViewHolder) holder).downloading.setVisibility(ImageView.VISIBLE);
+                }
+
+                Picasso.with(context).load(data.get(position).getUser().getImg())
+                        .resize(sizeAvatar, sizeAvatar)
+                        .centerCrop()
+                        .transform(transformation).into(((VoiceViewHolder) holder).imgPerfil);
+
+                bars.put(position, ((VoiceViewHolder) holder).progress);
+
             }
-
-            Picasso.with(context).load(data.get(position).getUser().getImg())
-                    .resize(sizeAvatar, sizeAvatar)
-                    .centerCrop()
-                    .transform(transformation).into(((VoiceViewHolder) holder).imgPerfil);
-
-            bars.put(position, ((VoiceViewHolder) holder).progress);
-
         }
     }
 
@@ -166,12 +176,13 @@ public class CommentAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
 
     class TextViewHolder extends RecyclerView.ViewHolder {
 
-        TextView comment, likes, dislikes, nombreUsuario;
+        TextView comment, likes, dislikes, nombreUsuario,maskReport;
         ImageView imgPerfil, overflow;
         ImageButton share,reportPapu;
 
         public TextViewHolder(View itemView) {
             super(itemView);
+            maskReport = (TextView) itemView.findViewById(R.id.mask_report);
             comment = (TextView) itemView.findViewById(R.id.comment);
             likes = (TextView) itemView.findViewById(R.id.value_like);
             dislikes = (TextView) itemView.findViewById(R.id.value_dislike);
@@ -231,6 +242,7 @@ public class CommentAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
             case R.id.report_papu:
                 onItemClick.onItemClick((Integer) view.getTag(),REPORT,view);
                 break;
+
         }
 
     }

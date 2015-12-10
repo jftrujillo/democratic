@@ -38,6 +38,7 @@ import com.kcumendigital.democratic.LayoutManagers.commentsLayoutManager;
 import com.kcumendigital.democratic.Models.Comment;
 import com.kcumendigital.democratic.Models.Discussion;
 import com.kcumendigital.democratic.Models.DiscussionScore;
+import com.kcumendigital.democratic.Models.Report;
 import com.kcumendigital.democratic.Models.User;
 import com.kcumendigital.democratic.Util.AppUtil;
 import com.kcumendigital.democratic.Util.ColletionsStatics;
@@ -298,6 +299,7 @@ public class ForumsActivity extends AppCompatActivity implements SunshineParse.S
         comment.setDiscussion(ColletionsStatics.getDataDiscusion().get(pos).getObjectId());
         comment.setUser(user);
         comment.setFilePath(absolutePath);
+        comment.setReport(0);
         final SunshineParse parseVoice = new SunshineParse();
         parseVoice.insert(comment, new SunshineParse.SunshineCallback() {
             @Override
@@ -355,6 +357,7 @@ public class ForumsActivity extends AppCompatActivity implements SunshineParse.S
             comment.setUser(user);
             comment.setDiscussion(ColletionsStatics.getDataDiscusion().get(pos).getObjectId());
             comment.setRecord(false);
+            comment.setReport(0);
             final SunshineParse parse = new SunshineParse();
             parse.insert(comment, new SunshineParse.SunshineCallback() {
                 @Override
@@ -507,7 +510,7 @@ public class ForumsActivity extends AppCompatActivity implements SunshineParse.S
 
     //region Votar Comentario
     @Override
-    public void onItemClick(int position, int type, View view) {
+    public void onItemClick(final int position, int type, View view) {
 
         if (type == CommentAdapter.BTN_LIKE) {
             Log.i("BOTONES", "Se presiono el like");
@@ -553,8 +556,58 @@ public class ForumsActivity extends AppCompatActivity implements SunshineParse.S
 
         }
         if (type == CommentAdapter.REPORT){
+            
             Log.i("BOTONES","report");
+            final SunshineParse parse = new SunshineParse();
+            SunshineQuery query = new SunshineQuery();
+            query.addFieldValue("user",AppUtil.getUserStatic().getObjectId());
+            query.addFieldValue("coment", ColletionsStatics.getDataComments().get(position).getObjectId());
+            parse.getAllRecords(query, new SunshineParse.SunshineCallback() {
+                @Override
+                public void done(boolean success, ParseException e) {
+                    
+                }
 
+                @Override
+                public void resultRecord(boolean success, SunshineRecord record, ParseException e) {
+
+                }
+
+                @Override
+                public void resultListRecords(boolean success, Integer requestCode, List<SunshineRecord> records, ParseException e) {
+                   if (success){
+                       if (records.size() == 0){
+                            AlertDialog alertReport = new AlertDialog.Builder(ForumsActivity.this)
+                                   .setMessage("¿Desea denunciar este comentario?")
+                                   .setPositiveButton("Si", new DialogInterface.OnClickListener() {
+                                       @Override
+                                       public void onClick(DialogInterface dialog, int which) {
+                                           Report report =  new Report();
+                                           report.setComent(ColletionsStatics.getDataComments().get(position).getObjectId());
+                                           report.setUser(AppUtil.getUserStatic().getObjectId());
+                                           parse.insert(report);
+                                           parse.incrementField(ColletionsStatics.getDataComments().get(position).getObjectId(), "report", Comment.class);
+                                           Toast.makeText(ForumsActivity.this, "Denuncia hecha con èxito", Toast.LENGTH_SHORT).show();
+                                       }
+                                   })
+                                   .setNegativeButton("No", new DialogInterface.OnClickListener() {
+                                       @Override
+                                       public void onClick(DialogInterface dialog, int which) {
+
+                                       }
+                                   })
+                                   .create();
+                           alertReport.show();
+
+                       }
+                       
+                       else {
+                           Toast.makeText(ForumsActivity.this, "Ya ha reportado este comentario", Toast.LENGTH_SHORT).show();
+                       }
+                       
+                   }
+                }
+            },null, Report.class);
         }
     }
     //endregion

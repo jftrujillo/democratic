@@ -16,6 +16,7 @@ public class User extends SunshineUser {
 
     String name;
 
+
     //region Getters and Setters
     public String getImg() {
         return img;
