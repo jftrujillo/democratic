@@ -69,7 +69,12 @@ public class NumberFragmetFragment extends android.support.v4.app.Fragment imple
 
             if (categoria.equals("Educación")){
                 Picasso.with(getActivity()).load(R.drawable.ic_democratic_educacion).into(img_bacground);
-                Picasso.with(getActivity()).load(R.drawable.screeneducacion).into(img_bacground);
+                Picasso.with(getActivity()).load(R.drawable.screenmedio).into(img_bacground);
+            }
+
+            if (categoria.equals("Medio Ambiente")){
+                Picasso.with(getActivity()).load(R.drawable.ic_nature_white_24dp).into(img_bacground);
+                Picasso.with(getActivity()).load(R.drawable.bg_ciudad).into(img_bacground);
             }
         }
 
@@ -87,7 +92,11 @@ public class NumberFragmetFragment extends android.support.v4.app.Fragment imple
             }
 
             if (categoria.equals("Educación")){
-                Picasso.with(getActivity()).load(R.drawable.screeneducacion).into(img_bacground);
+                Picasso.with(getActivity()).load(R.drawable.screenmedio).into(img_bacground);
+            }
+
+            if (categoria.equals("Medio Ambiente")){
+                Picasso.with(getActivity()).load(R.drawable.bg_ciudad).into(img_bacground);
             }
 
         }
