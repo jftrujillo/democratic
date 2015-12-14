@@ -36,7 +36,6 @@ public class NumberFragmetFragment extends android.support.v4.app.Fragment imple
         this.TYPE_lIST = TYPE_LIST;
     }
 
-
     public NumberFragmetFragment() {
         // Required empty public constructor
     }
@@ -57,17 +56,23 @@ public class NumberFragmetFragment extends android.support.v4.app.Fragment imple
 
             if (categoria.equals("Salud")){
                 Picasso.with(getActivity()).load(R.drawable.img_sombra).into(img_bacground);
-                Picasso.with(getActivity()).load(R.drawable.bg_salud).into(img_bacground);
+                Picasso.with(getActivity()).load(R.drawable.screensalud).into(img_bacground);
             }
 
             if (categoria.equals("Gobierno")){
                 Picasso.with(getActivity()).load(R.drawable.imagenpager).into(img_bacground);
+                Picasso .with(getActivity()).load(R.drawable.screengobierno).into(img_bacground);
             }
 
             if (categoria.equals("Educación")){
                 Picasso.with(getActivity()).load(R.drawable.ic_democratic_educacion).into(img_bacground);
+                Picasso.with(getActivity()).load(R.drawable.screeneducacion).into(img_bacground);
             }
 
+            if (categoria.equals("Medio Ambiente")){
+                Picasso.with(getActivity()).load(R.drawable.ic_nature_white_24dp).into(img_bacground);
+                Picasso.with(getActivity()).load(R.drawable.screenmedio).into(img_bacground);
+            }
         }
 
         if (TYPE_lIST == PagerAdpater.TYPE_SURVEY){
@@ -75,15 +80,19 @@ public class NumberFragmetFragment extends android.support.v4.app.Fragment imple
             txt.setText(survey.getTitle());
             String categoria = survey.getCategory();
             if (categoria.equals("Salud")){
-                Picasso.with(getActivity()).load(R.drawable.bg_salud).into(img_bacground);
+                Picasso.with(getActivity()).load(R.drawable.screensalud).into(img_bacground);
             }
 
             if (categoria.equals("Gobierno")){
-                Picasso.with(getActivity()).load(R.drawable.bg_ciudad).into(img_bacground);
+                Picasso.with(getActivity()).load(R.drawable.screengobierno).into(img_bacground);
             }
 
             if (categoria.equals("Educación")){
-                Picasso.with(getActivity()).load(R.drawable.ic_democratic_educacion).into(img_bacground);
+                Picasso.with(getActivity()).load(R.drawable.screenmedio).into(img_bacground);
+            }
+
+            if (categoria.equals("Medio Ambiente")){
+                Picasso.with(getActivity()).load(R.drawable.bg_ciudad).into(img_bacground);
             }
 
         }

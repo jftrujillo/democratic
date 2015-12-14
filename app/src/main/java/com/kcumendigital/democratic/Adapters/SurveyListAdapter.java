@@ -131,7 +131,7 @@ public class SurveyListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
                 spanHolder.categoria.setTextColor(context.getResources().getColor(R.color.educacion));
 
             }else if (categoria.equals(context.getString(R.string.c_ambiente))) {
-                Picasso.with(context).load(R.drawable.ic_send_24dp).into(spanHolder.leftIcon);
+                Picasso.with(context).load(R.drawable.ic_nature_white_24dp).into(spanHolder.leftIcon);
                 spanHolder.leftColor.setBackgroundResource(R.color.medio_ambiente);
                 spanHolder.categoria.setTextColor(context.getResources().getColor(R.color.medio_ambiente));
             }
