@@ -68,6 +68,7 @@ public class ForumsActivity extends AppCompatActivity implements SunshineParse.S
     static boolean IS_STOP;
 
     private Toolbar mToolbar;
+    ImageView btnDenuncia;
 
     CollapsingToolbarLayout collapsingToolbarLayout;
     Transformation transformation;
@@ -107,6 +108,7 @@ public class ForumsActivity extends AppCompatActivity implements SunshineParse.S
         btn_record.setOnTouchListener(this);
 
         imgCategory = (ImageView) findViewById(R.id.imgCategories);
+        btnDenuncia = (ImageView) findViewById(R.id.denuncia);
 
         Bundle bundle = getIntent().getExtras();
         pos = (int) bundle.get("pos");

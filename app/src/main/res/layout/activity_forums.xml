@@ -20,7 +20,6 @@
                 android:layout_height="wrap_content"
                 android:layout_margin="@dimen/marginRecyclerView"
                 app:layout_behavior="@string/appbar_scrolling_view_behavior"
-
                  />
 
 
@@ -50,7 +49,16 @@
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/abc_action_bar_default_height_material"
                     app:layout_collapseMode="pin"
-                    app:popupTheme="@style/ThemeOverlay.AppCompat.Light" />
+                    app:popupTheme="@style/ThemeOverlay.AppCompat.Light">
+
+                    <ImageButton
+                        android:id="@+id/denuncia"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/ic_error_24dp"
+                        style="@style/Base.Widget.AppCompat.Button.Borderless"
+                        android:layout_gravity="end"/>
+                </android.support.v7.widget.Toolbar>
 
                 <RelativeLayout
                     android:layout_width="match_parent"
