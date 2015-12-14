@@ -36,7 +36,6 @@ public class NumberFragmetFragment extends android.support.v4.app.Fragment imple
         this.TYPE_lIST = TYPE_LIST;
     }
 
-
     public NumberFragmetFragment() {
         // Required empty public constructor
     }
@@ -49,12 +48,10 @@ public class NumberFragmetFragment extends android.support.v4.app.Fragment imple
         View v = inflater.inflate(R.layout.fragment_number_fragmet, container, false);
         v.setOnClickListener(this);
         TextView txt = (TextView) v.findViewById(R.id.numberPage);
-        TextView txtTittle = (TextView) v.findViewById(R.id.tituloCategoria);
         ImageView img_bacground = (ImageView) v.findViewById(R.id.bacground_pager);
         if (TYPE_lIST == PagerAdpater.TYPE_DISCUSION) {
             discussion = ColletionsStatics.getHomeDiscusion().get(position);
             txt.setText(discussion.getTitle());
-            txtTittle.setText(discussion.getCategory());
             String categoria = discussion.getCategory();
 
             if (categoria.equals("Salud")){
@@ -69,19 +66,18 @@ public class NumberFragmetFragment extends android.support.v4.app.Fragment imple
 
             if (categoria.equals("Educación")){
                 Picasso.with(getActivity()).load(R.drawable.ic_democratic_educacion).into(img_bacground);
-                Picasso.with(getActivity()).load(R.drawable.screenmedio).into(img_bacground);
+                Picasso.with(getActivity()).load(R.drawable.screeneducacion).into(img_bacground);
             }
 
             if (categoria.equals("Medio Ambiente")){
                 Picasso.with(getActivity()).load(R.drawable.ic_nature_white_24dp).into(img_bacground);
-                Picasso.with(getActivity()).load(R.drawable.bg_ciudad).into(img_bacground);
+                Picasso.with(getActivity()).load(R.drawable.screenmedio).into(img_bacground);
             }
         }
 
         if (TYPE_lIST == PagerAdpater.TYPE_SURVEY){
             survey = ColletionsStatics.getHomeSurvey().get(position);
             txt.setText(survey.getTitle());
-            txtTittle.setText(survey.getCategory());
             String categoria = survey.getCategory();
             if (categoria.equals("Salud")){
                 Picasso.with(getActivity()).load(R.drawable.screensalud).into(img_bacground);
