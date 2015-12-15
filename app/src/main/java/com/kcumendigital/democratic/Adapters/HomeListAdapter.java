@@ -129,6 +129,16 @@ public class HomeListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
                spanHolder.categoria.setTextColor(context.getResources().getColor(R.color.medio_ambiente));
            }
 
+           if (data.get(position).getReport() > 100){
+               ((HomeListspanViewHolder) holder).maskReport.setVisibility(View.VISIBLE);
+               ((HomeListspanViewHolder) holder).maskReport.setOnClickListener(new View.OnClickListener() {
+                   @Override
+                   public void onClick(View v) {
+                       v.setVisibility(View.GONE);
+                   }
+               });
+           }
+
        }
 
         else if (holder instanceof HomeListNoSpanViewHolder){
@@ -175,7 +185,7 @@ public class HomeListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
     }
 //region ViewHolders
     public class HomeListspanViewHolder extends RecyclerView.ViewHolder{
-        TextView title_forum_list,count_cometns_forums,user_name,likes,dislikes,categoria;
+        TextView title_forum_list,count_cometns_forums,user_name,likes,dislikes,categoria,maskReport;
         ImageView img,leftColor,leftIcon;
 
         public HomeListspanViewHolder(View itemView) {
@@ -189,6 +199,7 @@ public class HomeListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
             img =   (ImageView) itemView.findViewById(R.id.user_img);
             leftColor = (ImageView) itemView.findViewById(R.id.left_color_category);
             leftIcon = (ImageView) itemView.findViewById(R.id.left_image_categori);
+            maskReport = (TextView) itemView.findViewById(R.id.mask_report);
         }
     }
 

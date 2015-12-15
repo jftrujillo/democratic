@@ -9,7 +9,7 @@ import com.kcumendigital.democratic.parse.SunshineRecord;
 public class Discussion extends SunshineRecord {
 
     String title, description, category,tags;
-    long likes, dislikes,comments;
+    long likes, dislikes,comments,report;
 
 
     @user
@@ -18,6 +18,14 @@ public class Discussion extends SunshineRecord {
 
     //region Getters and Setters
 
+
+    public long getReport() {
+        return report;
+    }
+
+    public void setReport(long report) {
+        this.report = report;
+    }
 
     public String getTags() {
         return tags;
