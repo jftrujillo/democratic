@@ -11,6 +11,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -110,6 +111,11 @@ public class CommentAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
             ((TextViewHolder) holder).share.setTag(position);
             ((TextViewHolder) holder).reportPapu.setTag(position);
 
+            ((TextViewHolder) holder).btnLike.setOnClickListener(this);
+            ((TextViewHolder) holder).btnLike.setTag(position);
+            ((TextViewHolder) holder).btnDislike.setOnClickListener(this);
+            ((TextViewHolder) holder).btnDislike.setTag(position);
+
             Picasso.with(context).load(data.get(position).getUser().getImg())
                     .resize(sizeAvatar, sizeAvatar)
                     .centerCrop()
@@ -130,7 +136,12 @@ public class CommentAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
         if (holder instanceof VoiceViewHolder) {
 
                 ((VoiceViewHolder) holder).nombreUsuario.setText(data.get(position).getUser().getName());
-                ((VoiceViewHolder) holder).btn_play.setOnClickListener(this);
+            ((VoiceViewHolder) holder).btn_play.setOnClickListener(this);
+            ((VoiceViewHolder) holder).btn_play.setOnClickListener(this);
+            ((VoiceViewHolder) holder).btnLike.setOnClickListener(this);
+                ((VoiceViewHolder) holder).btnLike.setTag(position);
+                ((VoiceViewHolder) holder).btnDislike.setOnClickListener(this);
+                ((VoiceViewHolder) holder).btnDislike.setTag(position);
                 ((VoiceViewHolder) holder).share.setOnClickListener(this);
                 ((VoiceViewHolder) holder).reportPapu.setOnClickListener(this);
                 ((VoiceViewHolder) holder).share.setTag(position);
@@ -190,6 +201,7 @@ public class CommentAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
         TextView comment, likes, dislikes, nombreUsuario,maskReport;
         ImageView imgPerfil, overflow;
         ImageButton share,reportPapu;
+        LinearLayout btnLike, btnDislike;
 
         public TextViewHolder(View itemView) {
             super(itemView);
@@ -201,6 +213,8 @@ public class CommentAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
             imgPerfil = (ImageView) itemView.findViewById(R.id.imgPerfil);
             share = (ImageButton) itemView.findViewById(R.id.share);
             reportPapu = (ImageButton) itemView.findViewById(R.id.report_papu);
+            btnLike = (LinearLayout) itemView.findViewById(R.id.btn_like_text);
+            btnDislike = (LinearLayout) itemView.findViewById(R.id.btn_dislike_text);
         }
     }
 
@@ -213,6 +227,8 @@ public class CommentAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
         ImageButton share,reportPapu;
         TextView nombreUsuario;
         TextView maskReport;
+        LinearLayout btnLike;
+        LinearLayout btnDislike;
 
         public VoiceViewHolder(View itemView) {
             super(itemView);
@@ -225,6 +241,8 @@ public class CommentAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
             reportPapu = (ImageButton) itemView.findViewById(R.id.report_papu);
             nombreUsuario = (TextView) itemView.findViewById(R.id.nombre_usuario);
             maskReport = (TextView) itemView.findViewById(R.id.mask_report);
+            btnLike = (LinearLayout) itemView.findViewById(R.id.btn_like);
+            btnDislike = (LinearLayout) itemView.findViewById(R.id.btn_dislike);
         }
 
     }
@@ -238,10 +256,17 @@ public class CommentAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
                 handlePlayer(data.get(posC).getFile(), posC);
                 break;
             case R.id.btn_like_text:
-                onItemClick.onItemClick(0, BTN_LIKE, view);
+                onItemClick.onItemClick((Integer) view.getTag(), BTN_LIKE, view);
                 break;
             case R.id.btn_dislike_text:
-                onItemClick.onItemClick(0, BTN_DISLIKE,view);
+                onItemClick.onItemClick((Integer) view.getTag(), BTN_DISLIKE, view);
+                break;
+
+            case R.id.btn_like:
+                onItemClick.onItemClick((Integer) view.getTag(), BTN_LIKE, view);
+                break;
+            case R.id.btn_dislike:
+                onItemClick.onItemClick((Integer) view.getTag(), BTN_DISLIKE,view);
                 break;
 
             case R.id.overflowVoice:

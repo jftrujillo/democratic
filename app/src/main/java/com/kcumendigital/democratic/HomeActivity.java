@@ -100,8 +100,10 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
         nav = (NavigationView) findViewById(R.id.nav);
         nav.getMenu().setGroupVisible(R.id.persona_menu_nav, false);
         nav.getMenu().setGroupVisible(R.id.secciones_menu_nav, true);
+        View header = nav.inflateHeaderView(R.layout.header_nav_home);
 
-        final ImageView imm_nav = (ImageView) nav.findViewById(R.id.img_user_nav);
+
+        final ImageView imm_nav = (ImageView) header.findViewById(R.id.img_user_nav);
         imm_nav.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -132,7 +134,7 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
                 .resize(avatar, avatar)
                 .centerCrop()
                 .transform(transformation).into(imm_nav);
-        TextView userName = (TextView) nav.findViewById(R.id.txt_usr);
+        TextView userName = (TextView) header.findViewById(R.id.txt_usr);
         userName.setText(AppUtil.getUserStatic().getName());
 
         toggle = new ActionBarDrawerToggle(this, drawer, R.string.drawer_open, R.string.drawer_close);
