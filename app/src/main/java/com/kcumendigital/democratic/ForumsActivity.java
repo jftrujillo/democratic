@@ -36,12 +36,14 @@ import android.widget.Toast;
 import com.kcumendigital.democratic.Adapters.CommentAdapter;
 import com.kcumendigital.democratic.LayoutManagers.commentsLayoutManager;
 import com.kcumendigital.democratic.Models.Comment;
+import com.kcumendigital.democratic.Models.CommentScore;
 import com.kcumendigital.democratic.Models.Discussion;
 import com.kcumendigital.democratic.Models.DiscussionScore;
 import com.kcumendigital.democratic.Models.Report;
 import com.kcumendigital.democratic.Models.User;
 import com.kcumendigital.democratic.Util.AppUtil;
 import com.kcumendigital.democratic.Util.ColletionsStatics;
+import com.kcumendigital.democratic.Util.CommentVote;
 import com.kcumendigital.democratic.library.Techniques;
 import com.kcumendigital.democratic.library.YoYo;
 import com.kcumendigital.democratic.parse.SunshinePageControl;
@@ -59,11 +61,10 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-public class ForumsActivity extends AppCompatActivity implements SunshineParse.SunshineCallback, View.OnClickListener, DialogInterface.OnClickListener, View.OnTouchListener, CommentAdapter.OnItemClickListener {
+public class ForumsActivity extends AppCompatActivity implements SunshineParse.SunshineCallback, View.OnClickListener, DialogInterface.OnClickListener, View.OnTouchListener, CommentAdapter.OnItemClickListener, CommentVote.OnCommentVote {
 
     static final int REQUEST_DISCUSION_SCORE_LIKE = 2;
     static final int REQUEST_DISCUSION_SCORE_DISLIKE = 1;
-    static final int REQUEST_COMMENT_SCORE = 4;
 
     static boolean IS_STOP;
 
@@ -481,12 +482,14 @@ public class ForumsActivity extends AppCompatActivity implements SunshineParse.S
     public void likeDiscussion(String id) {
         SunshineQuery queryVotes = new SunshineQuery();
         queryVotes.addUser("user", id);
+        queryVotes.addPointerValue("discussion", discussion.getObjectId());
         parse.getAllRecords(queryVotes, this, REQUEST_DISCUSION_SCORE_LIKE, DiscussionScore.class);
     }
 
     public void dislikeDiscussion(String id) {
         SunshineQuery queryVotes = new SunshineQuery();
         queryVotes.addUser("user", id);
+        queryVotes.addPointerValue("discussion", discussion.getObjectId());
         parse.getAllRecords(queryVotes, this, REQUEST_DISCUSION_SCORE_DISLIKE, DiscussionScore.class);
     }
 
@@ -567,17 +570,21 @@ public class ForumsActivity extends AppCompatActivity implements SunshineParse.S
             processDiscussionScore(records, DiscussionScore.DISLIKE);
         }
     }
+
     //endregion
 
     //region Votar Comentario
     @Override
     public void onItemClick(final int position, int type, View view) {
 
+
         if (type == CommentAdapter.BTN_LIKE) {
-            Log.i("BOTONES", "Se presiono el like");
+            new CommentVote(ColletionsStatics.getDataComments().get(pos).getObjectId()
+                    ,user.getObjectId(), position, CommentVote.REQUEST_COMMENT_SCORE_LIKE, parse, this);
         }
         if (type == CommentAdapter.BTN_DISLIKE) {
-            Log.i("BOTONES", "Se presiono el dislike");
+            new CommentVote(ColletionsStatics.getDataComments().get(pos).getObjectId()
+                    ,user.getObjectId(), position, CommentVote.REQUEST_COMMENT_SCORE_DISLIKE, parse, this);
         }
 
         if (type == CommentAdapter.BTN_OVERFLOW) {
@@ -612,7 +619,11 @@ public class ForumsActivity extends AppCompatActivity implements SunshineParse.S
         }
 
         if (type == CommentAdapter.SHARE){
-            startActivity(new Intent(this,ShareActivity.class).putExtra("pos",position));
+            Intent intent =  new Intent(this, ShareActivity.class);
+            intent.putExtra(ShareActivity.EXTRA_POS_DISCUSSION, pos);
+            intent.putExtra(ShareActivity.EXTRA_POS_COMMENT, position);
+
+            startActivity(intent);
             Log.i("BOTONES", "share");
 
         }
@@ -671,6 +682,12 @@ public class ForumsActivity extends AppCompatActivity implements SunshineParse.S
             },null, Report.class);
         }
     }
+
+    @Override
+    public void onCommentVote() {
+        adapter.notifyDataSetChanged();
+    }
+
     //endregion
 
 }

@@ -35,4 +35,8 @@
     </style>
     <style name="ToolBarPopUpTheme" parent="@style/ThemeOverlay.AppCompat.Light"/>
 
+    <style name="SpinnerWhite" parent="@style/Widget.AppCompat.Spinner">
+        <item name="android:background">#ffffff</item>
+    </style>
+
 </resources>
