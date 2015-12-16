@@ -113,6 +113,7 @@ public class CreateBoardDiscussion_activity extends AppCompatActivity implements
         } else {
             discussion.setTitle(title.getEditText().getText().toString());
             discussion.setUser(user);
+            discussion.setReport(0);
             SunshineParse parse = new SunshineParse();
             parse.insert(discussion, new SunshineParse.SunshineCallback() {
                 @Override

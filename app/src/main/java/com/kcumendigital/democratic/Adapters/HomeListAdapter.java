@@ -108,25 +108,39 @@ public class HomeListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
                    .transform(transformation).into(spanHolder.img);
 
            if (categoria.equals(context.getString(R.string.c_gobierno))) {
-               Picasso.with(context).load(R.drawable.ic_account_balance_24dp).into(spanHolder.leftIcon);
+               spanHolder.leftIcon.setImageResource(R.drawable.ic_account_balance_24dp);
+               //Picasso.with(context).load(R.drawable.ic_account_balance_24dp).into(spanHolder.leftIcon);
                spanHolder.leftColor.setBackgroundResource(R.color.gobierno);
                spanHolder.categoria.setTextColor(context.getResources().getColor(R.color.gobierno));
            }
            else if (categoria.equals(context.getString(R.string.c_salud))) {
-               Picasso.with(context).load(R.drawable.ic_local_hospital_24dp).into(spanHolder.leftIcon);
+               spanHolder.leftIcon.setImageResource(R.drawable.ic_local_hospital_24dp);
+               //Picasso.with(context).load(R.drawable.ic_local_hospital_24dp).into(spanHolder.leftIcon);
                spanHolder.leftColor.setBackgroundResource(R.color.salud);
                spanHolder.categoria.setTextColor(context.getResources().getColor(R.color.salud));
 
            }
            else if (categoria.equals(context.getString(R.string.c_educacion))) {
-               Picasso.with(context).load(R.drawable.ic_school_24dp).into(spanHolder.leftIcon);
+               spanHolder.leftIcon.setImageResource(R.drawable.ic_school_24dp);
+               //Picasso.with(context).load(R.drawable.ic_school_24dp).into(spanHolder.leftIcon);
                spanHolder.leftColor.setBackgroundResource(R.color.educacion);
                spanHolder.categoria.setTextColor(context.getResources().getColor(R.color.educacion));
 
            }else if (categoria.equals(context.getString(R.string.c_ambiente))) {
-               Picasso.with(context).load(R.drawable.ic_nature_white_24dp).into(spanHolder.leftIcon);
+               spanHolder.leftIcon.setImageResource(R.drawable.ic_nature_white_24dp);
+               //Picasso.with(context).load(R.drawable.ic_nature_white_24dp).into(spanHolder.leftIcon);
                spanHolder.leftColor.setBackgroundResource(R.color.medio_ambiente);
                spanHolder.categoria.setTextColor(context.getResources().getColor(R.color.medio_ambiente));
+           }
+
+           if (data.get(position).getReport() > 100){
+               ((HomeListspanViewHolder) holder).maskReport.setVisibility(View.VISIBLE);
+               ((HomeListspanViewHolder) holder).maskReport.setOnClickListener(new View.OnClickListener() {
+                   @Override
+                   public void onClick(View v) {
+                       v.setVisibility(View.GONE);
+                   }
+               });
            }
 
        }
@@ -175,7 +189,7 @@ public class HomeListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
     }
 //region ViewHolders
     public class HomeListspanViewHolder extends RecyclerView.ViewHolder{
-        TextView title_forum_list,count_cometns_forums,user_name,likes,dislikes,categoria;
+        TextView title_forum_list,count_cometns_forums,user_name,likes,dislikes,categoria,maskReport;
         ImageView img,leftColor,leftIcon;
 
         public HomeListspanViewHolder(View itemView) {
@@ -189,6 +203,7 @@ public class HomeListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
             img =   (ImageView) itemView.findViewById(R.id.user_img);
             leftColor = (ImageView) itemView.findViewById(R.id.left_color_category);
             leftIcon = (ImageView) itemView.findViewById(R.id.left_image_categori);
+            maskReport = (TextView) itemView.findViewById(R.id.mask_report);
         }
     }
 

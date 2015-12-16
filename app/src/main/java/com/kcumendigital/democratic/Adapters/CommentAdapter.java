@@ -21,6 +21,8 @@ import com.makeramen.roundedimageview.RoundedTransformationBuilder;
 import com.squareup.picasso.Picasso;
 import com.squareup.picasso.Transformation;
 
+import org.w3c.dom.Text;
+
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.List;
@@ -126,7 +128,7 @@ public class CommentAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
         }
 
         if (holder instanceof VoiceViewHolder) {
-            if (data.get(position).getReport() < 100) {
+
                 ((VoiceViewHolder) holder).nombreUsuario.setText(data.get(position).getUser().getName());
                 ((VoiceViewHolder) holder).btn_play.setOnClickListener(this);
                 ((VoiceViewHolder) holder).share.setOnClickListener(this);
@@ -154,6 +156,15 @@ public class CommentAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
                         .transform(transformation).into(((VoiceViewHolder) holder).imgPerfil);
 
                 bars.put(position, ((VoiceViewHolder) holder).progress);
+
+            if (data.get(position).getReport() > 100) {
+                ((VoiceViewHolder) holder).maskReport.setVisibility(View.VISIBLE);
+                ((VoiceViewHolder) holder).maskReport.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        v.setVisibility(View.GONE);
+                    }
+                });
 
             }
         }
@@ -201,6 +212,7 @@ public class CommentAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
         ImageView overflowVoice;
         ImageButton share,reportPapu;
         TextView nombreUsuario;
+        TextView maskReport;
 
         public VoiceViewHolder(View itemView) {
             super(itemView);
@@ -212,6 +224,7 @@ public class CommentAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
             share = (ImageButton) itemView.findViewById(R.id.share);
             reportPapu = (ImageButton) itemView.findViewById(R.id.report_papu);
             nombreUsuario = (TextView) itemView.findViewById(R.id.nombre_usuario);
+            maskReport = (TextView) itemView.findViewById(R.id.mask_report);
         }
 
     }

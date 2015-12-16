@@ -109,6 +109,7 @@ public class ForumsActivity extends AppCompatActivity implements SunshineParse.S
 
         imgCategory = (ImageView) findViewById(R.id.imgCategories);
         btnDenuncia = (ImageView) findViewById(R.id.denuncia);
+        btnDenuncia.setOnClickListener(this);
 
         Bundle bundle = getIntent().getExtras();
         pos = (int) bundle.get("pos");
@@ -415,6 +416,64 @@ public class ForumsActivity extends AppCompatActivity implements SunshineParse.S
             case R.id.btn_dislike:
                 YoYo.with(Techniques.Pulse).duration(700).playOn(findViewById(R.id.btn_dislike));
                 dislikeDiscussion(user.getObjectId());
+                break;
+
+            case R.id.denuncia:
+
+
+                Log.i("BOTONES","report");
+                final SunshineParse parse = new SunshineParse();
+                SunshineQuery query = new SunshineQuery();
+                query.addFieldValue("user",AppUtil.getUserStatic().getObjectId());
+                query.addFieldValue("foro", discussion.getObjectId());
+                parse.getAllRecords(query, new SunshineParse.SunshineCallback() {
+                    @Override
+                    public void done(boolean success, ParseException e) {
+
+                    }
+
+                    @Override
+                    public void resultRecord(boolean success, SunshineRecord record, ParseException e) {
+
+                    }
+
+                    @Override
+                    public void resultListRecords(boolean success, Integer requestCode, List<SunshineRecord> records, ParseException e) {
+                        if (success){
+                            if (records.size() == 0){
+                                AlertDialog alertReport = new AlertDialog.Builder(ForumsActivity.this)
+                                        .setMessage("¿Desea denunciar esta discusion?")
+                                        .setPositiveButton("Si", new DialogInterface.OnClickListener() {
+                                            @Override
+                                            public void onClick(DialogInterface dialog, int which) {
+                                                Report report =  new Report();
+                                                report.setForo(discussion.getObjectId());
+                                                report.setUser(AppUtil.getUserStatic().getObjectId());
+                                                parse.insert(report);
+                                                parse.incrementField(discussion.getObjectId(), "report", Discussion.class);
+                                                Toast.makeText(ForumsActivity.this, "Denuncia hecha con èxito", Toast.LENGTH_SHORT).show();
+                                            }
+                                        })
+                                        .setNegativeButton("No", new DialogInterface.OnClickListener() {
+                                            @Override
+                                            public void onClick(DialogInterface dialog, int which) {
+
+                                            }
+                                        })
+                                        .create();
+                                alertReport.show();
+
+                            }
+
+                            else {
+                                Toast.makeText(ForumsActivity.this, "Ya ha reportado este comentario", Toast.LENGTH_SHORT).show();
+                            }
+
+                        }
+                    }
+                },null, Report.class);
+
+
                 break;
         }
     }
