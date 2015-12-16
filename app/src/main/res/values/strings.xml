@@ -24,7 +24,9 @@
     <string name="c_gobierno">Gobierno</string>
     <string name="c_salud">Salud</string>
     <string name="c_educacion">Educación</string>
-    <string name="c_ambiente">Medio Ambiente</string>
+    <string name="c_ambiente">
+
+    </string>
     <string name="nav_item_home">Inicio</string>
     <string name="nav_group_section">Secciones</string>
     <string name="nav_group_my">personal</string>

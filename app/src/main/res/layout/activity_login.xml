@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:background="@color/statusBarColor"
     android:padding="@dimen/small_padding"
-    tools:context="com.kcumendigital.democratic.LoginActivity">
+    tools:context="com.kcumendigital.democraticcauca.LoginActivity">
 
     <ImageView
         android:layout_width="match_parent"

@@ -5,7 +5,7 @@
     android:layout_height="match_parent"
     android:background="#ffffff"
     android:orientation="vertical"
-    tools:context="com.kcumendigital.democratic.Fragments.WelcomeFragment">
+    tools:context="com.kcumendigital.democraticcauca.Fragments.WelcomeFragment">
 
     <ImageView
         android:layout_width="match_parent"

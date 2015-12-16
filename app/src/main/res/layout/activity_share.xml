@@ -4,11 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:paddingLeft="@dimen/activity_horizontal_margin"
-    android:paddingRight="@dimen/activity_horizontal_margin"
-    android:paddingTop="@dimen/activity_vertical_margin"
-    android:paddingBottom="@dimen/activity_vertical_margin"
-    tools:context="com.kcumendigital.democratic.ShareActivity">
+    tools:context="com.kcumendigital.democraticcauca.ShareActivity">
 
     <FrameLayout
         android:id="@+id/imgCategory"
@@ -21,7 +17,7 @@
         <ImageView
             android:id="@+id/category"
             android:src="#33b5e5"
-            android:scaleType="centerCrop"
+            android:scaleType="center"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             />
