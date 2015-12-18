@@ -3,13 +3,18 @@ package com.kcumendigital.democraticcauca.Adapters;
 import android.content.Context;
 import android.media.MediaPlayer;
 import android.os.AsyncTask;
+import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
+import android.util.DisplayMetrics;
+import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.FrameLayout;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.kcumendigital.democraticcauca.Models.Comment;
@@ -57,7 +62,6 @@ public class CommentAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
         void onItemClick(int position, int button, View v);
     }
 
-    ImageButton imgPlay;
 
 
     public CommentAdapter(OnItemClickListener onItemClick, Context context, List<Comment> data, RecyclerView recyclerView) {
@@ -91,7 +95,7 @@ public class CommentAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
 
 
     @Override
-    public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
+    public void onBindViewHolder(final RecyclerView.ViewHolder holder, int position) {
         if (holder instanceof TextViewHolder) {
 
             ((TextViewHolder) holder).nombreUsuario.setText(data.get(position).getUser().getName());
@@ -118,10 +122,13 @@ public class CommentAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
             //  comment,likes,dislikes,titulo;
             if (data.get(position).getReport() > 100) {
                 ((TextViewHolder) holder).maskReport.setVisibility(View.VISIBLE);
-                ((TextViewHolder) holder).maskReport.setOnClickListener(new View.OnClickListener() {
+               FrameLayout.LayoutParams lp = (FrameLayout.LayoutParams) ((TextViewHolder) holder).linearParent.getLayoutParams();
+                lp.height = 130;
+                       ((TextViewHolder) holder).maskReport.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
                         v.setVisibility(View.GONE);
+                        ((TextViewHolder) holder).linearParent.setLayoutParams(new FrameLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
                     }
                 });
             }
@@ -164,10 +171,15 @@ public class CommentAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
 
             if (data.get(position).getReport() > 100) {
                 ((VoiceViewHolder) holder).maskReport.setVisibility(View.VISIBLE);
-                ((VoiceViewHolder) holder).maskReport.setOnClickListener(new View.OnClickListener() {
+                LinearLayout.LayoutParams lp = (LinearLayout.LayoutParams) ((VoiceViewHolder) holder).cardParent.getLayoutParams();
+                lp.height = 130;
+                        ((VoiceViewHolder) holder).maskReport.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
                         v.setVisibility(View.GONE);
+                        LinearLayout.LayoutParams lp = (LinearLayout.LayoutParams) ((VoiceViewHolder) holder).cardParent.getLayoutParams();
+                        lp.height = dpToPx(125);
+
                     }
                 });
 
@@ -196,9 +208,13 @@ public class CommentAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
         ImageView imgPerfil, overflow;
         ImageButton share,reportPapu;
         LinearLayout btnLike, btnDislike;
+        CardView cardParent;
+        LinearLayout linearParent;
 
         public TextViewHolder(View itemView) {
             super(itemView);
+            linearParent = (LinearLayout) itemView.findViewById(R.id.parent_id);
+            cardParent = (CardView) itemView.findViewById(R.id.card_parent);
             maskReport = (TextView) itemView.findViewById(R.id.mask_report);
             comment = (TextView) itemView.findViewById(R.id.comment);
             likes = (TextView) itemView.findViewById(R.id.value_like);
@@ -223,10 +239,11 @@ public class CommentAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
         TextView maskReport;
         LinearLayout btnLike;
         LinearLayout btnDislike;
+        CardView cardParent;
 
         public VoiceViewHolder(View itemView) {
             super(itemView);
-
+            cardParent = (CardView) itemView.findViewById(R.id.card_parent);
             imgPerfil = (ImageView) itemView.findViewById(R.id.imgPerfilvoice);
             btn_play = (ImageButton) itemView.findViewById(R.id.playVoice);
             downloading = (ProgressBar) itemView.findViewById(R.id.downloadingVoice);
@@ -406,6 +423,12 @@ public class CommentAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
         public void setPaused(boolean paused){
             pausedProgress = paused;
         }
+    }
+
+    public int dpToPx(int dp) {
+        DisplayMetrics displayMetrics = context.getResources().getDisplayMetrics();
+        int px = Math.round(dp * (displayMetrics.xdpi / DisplayMetrics.DENSITY_DEFAULT));
+        return px;
     }
 
 }

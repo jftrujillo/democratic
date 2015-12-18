@@ -88,7 +88,7 @@ public class HomeListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
     }
 
     @Override
-    public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
+    public void onBindViewHolder(final RecyclerView.ViewHolder holder, int position) {
 
        if (holder instanceof HomeListspanViewHolder){
            HomeListspanViewHolder spanHolder = (HomeListspanViewHolder) holder;
@@ -134,10 +134,14 @@ public class HomeListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
 
            if (data.get(position).getReport() > 100){
                ((HomeListspanViewHolder) holder).maskReport.setVisibility(View.VISIBLE);
-               ((HomeListspanViewHolder) holder).maskReport.setOnClickListener(new View.OnClickListener() {
+               LinearLayout.LayoutParams lp = (LinearLayout.LayoutParams) ((HomeListspanViewHolder) holder).linearParent.getLayoutParams();
+               lp.height = 100;
+                       ((HomeListspanViewHolder) holder).maskReport.setOnClickListener(new View.OnClickListener() {
                    @Override
                    public void onClick(View v) {
                        v.setVisibility(View.GONE);
+                       ((HomeListspanViewHolder) holder).linearParent.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT));
+
                    }
                });
            }
@@ -149,8 +153,10 @@ public class HomeListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
        }
 
         else if (holder instanceof  HomeListPagerHolder){
+
            HomeListPagerHolder pagerHolder = (HomeListPagerHolder) holder;
            pagerAdapter = new PagerAdpater(fm,pagerHolder.pager,pagerHolder.marksLayout,PagerAdpater.TYPE_DISCUSION);
+
            pagerHolder.pager.setAdapter(pagerAdapter);
         }
     }
@@ -190,6 +196,7 @@ public class HomeListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
     public class HomeListspanViewHolder extends RecyclerView.ViewHolder{
         TextView title_forum_list,count_cometns_forums,user_name,likes,dislikes,categoria,maskReport;
         ImageView img,leftColor,leftIcon;
+        LinearLayout linearParent;
 
         public HomeListspanViewHolder(View itemView) {
             super(itemView);
@@ -203,6 +210,7 @@ public class HomeListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
             leftColor = (ImageView) itemView.findViewById(R.id.left_color_category);
             leftIcon = (ImageView) itemView.findViewById(R.id.left_image_categori);
             maskReport = (TextView) itemView.findViewById(R.id.mask_report);
+            linearParent = (LinearLayout) itemView.findViewById(R.id.parent_linear);
         }
     }
 

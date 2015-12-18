@@ -28,7 +28,7 @@ public class AppIntroActivity extends AppIntro {
 
 
         showSkipButton(false);
-        setDoneText("Entrar");c
+        setDoneText("Entrar");
     }
 
     @Override

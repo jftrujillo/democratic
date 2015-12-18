@@ -6,6 +6,7 @@
     android:orientation="horizontal">
 
     <LinearLayout
+        android:id="@+id/parent_linear"
         android:orientation="horizontal"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
@@ -13,13 +14,13 @@
         <TextView
             android:id="@+id/mask_report"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="40dp"
             android:textSize="@dimen/medium_Letter"
             android:text="Foro bloqueado por denuncias, Tab para mostrar"
-            android:textColor="#ffffff"
+            android:textColor="#B2B2B2"
             android:gravity="center"
             android:visibility="gone"
-            android:background="@color/shadow"
+            android:background="#D1D1D1"
             />
 
     <RelativeLayout
