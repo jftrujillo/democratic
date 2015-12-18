@@ -17,14 +17,18 @@ public class AppIntroActivity extends AppIntro {
         fragment.init(0);
         IntroFragment fragment1 = new IntroFragment();
         fragment1.init(1);
+        IntroFragment fragment3 = new IntroFragment();
+        fragment3.init(3);
+        IntroFragment fragment4 = new IntroFragment();
+        fragment4.init(4);
         WelcomeFragment fragment2 = new WelcomeFragment();
         addSlide(fragment2);
+        addSlide(fragment4);
+        addSlide(fragment3);
         addSlide(fragment1);
         addSlide(fragment);
 
         showSkipButton(false);
-        setBarColor(Color.parseColor("#512DA8"));
-        setSeparatorColor(Color.parseColor("#FFC107"));
         setDoneText("Entrar");
 
 

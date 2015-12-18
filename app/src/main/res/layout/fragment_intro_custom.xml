@@ -2,12 +2,7 @@
     xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context="com.kcumendigital.democratic.Fragments.IntroFragment">
-<ImageView
-    android:layout_width="match_parent"
-    android:layout_height="30dp"
-    android:background="@color/morado_demo"
 
-    />
     <ImageView
         android:id="@+id/bacground_intro"
         android:layout_width="match_parent"
@@ -15,16 +10,29 @@
         android:scaleType="centerCrop"
         />
 
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="130dp"
+        android:layout_marginLeft="40dp">
+
     <TextView
         android:id="@+id/text_intro"
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textSize="@dimen/medium_Letter"
+        android:textSize="@dimen/big_size_letter"
         android:text="Contenido"
-        android:textColor="#000000"
-        android:gravity="center"
-        android:layout_marginTop="180dp"
-
+        android:textColor="#FFFFFF"
         />
-
+    <TextView
+        android:id="@+id/text_intro2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="contenido de prueba"
+        android:textColor="#FFFFFF"
+        android:layout_marginRight="30dp"
+        />
+    </LinearLayout>
 </RelativeLayout>

@@ -33,4 +33,5 @@
     <dimen name="forum_avatar">50dp</dimen>
     <dimen name="margin_medium_image">20dp</dimen>
     <dimen name="margin_medium">20dp</dimen>
+    <dimen name="big_size_letter">30dp</dimen>
 </resources>
