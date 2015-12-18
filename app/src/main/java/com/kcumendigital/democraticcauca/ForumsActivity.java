@@ -574,11 +574,11 @@ public class ForumsActivity extends AppCompatActivity implements SunshineParse.S
 
 
         if (type == CommentAdapter.BTN_LIKE) {
-            new CommentVote(ColletionsStatics.getDataComments().get(pos).getObjectId()
+            new CommentVote(ColletionsStatics.getDataComments().get(position).getObjectId()
                     ,user.getObjectId(), position, CommentVote.REQUEST_COMMENT_SCORE_LIKE, parse, this);
         }
         if (type == CommentAdapter.BTN_DISLIKE) {
-            new CommentVote(ColletionsStatics.getDataComments().get(pos).getObjectId()
+            new CommentVote(ColletionsStatics.getDataComments().get(position).getObjectId()
                     ,user.getObjectId(), position, CommentVote.REQUEST_COMMENT_SCORE_DISLIKE, parse, this);
         }
 
