@@ -5,6 +5,7 @@ import android.net.Uri;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.view.ViewPager;
 import android.support.v7.widget.RecyclerView;
+import android.util.DisplayMetrics;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
@@ -135,7 +136,7 @@ public class HomeListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
            if (data.get(position).getReport() > 100){
                ((HomeListspanViewHolder) holder).maskReport.setVisibility(View.VISIBLE);
                LinearLayout.LayoutParams lp = (LinearLayout.LayoutParams) ((HomeListspanViewHolder) holder).linearParent.getLayoutParams();
-               lp.height = 100;
+               lp.height = dpToPx(60);
                        ((HomeListspanViewHolder) holder).maskReport.setOnClickListener(new View.OnClickListener() {
                    @Override
                    public void onClick(View v) {
@@ -243,5 +244,12 @@ public class HomeListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
 
     public void setPagerEnabled(boolean pagerEnabled) {
         this.pagerEnabled = pagerEnabled;
+    }
+
+
+    public int dpToPx(int dp) {
+        DisplayMetrics displayMetrics = context.getResources().getDisplayMetrics();
+        int px = Math.round(dp * (displayMetrics.xdpi / DisplayMetrics.DENSITY_DEFAULT));
+        return px;
     }
 }
