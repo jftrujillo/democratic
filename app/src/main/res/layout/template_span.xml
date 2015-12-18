@@ -15,10 +15,11 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:textSize="@dimen/medium_Letter"
-            android:text="contenido oculto Tab para mostar"
-            android:textColor="#000000"
+            android:text="Foro bloqueado por denuncias, Tab para mostrar"
+            android:textColor="#ffffff"
             android:gravity="center"
             android:visibility="gone"
+            android:background="@color/shadow"
             />
 
     <RelativeLayout
