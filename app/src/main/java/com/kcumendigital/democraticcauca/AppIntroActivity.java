@@ -20,19 +20,15 @@ public class AppIntroActivity extends AppIntro {
         fragment3.init(3);
         IntroFragment fragment4 = new IntroFragment();
         fragment4.init(4);
-        WelcomeFragment fragment2 = new WelcomeFragment();
-        addSlide(fragment2);
-        addSlide(fragment4);
+
         addSlide(fragment3);
         addSlide(fragment1);
         addSlide(fragment);
+        addSlide(fragment4);
+
 
         showSkipButton(false);
-        setDoneText("Entrar");
-
-
-
-
+        setDoneText("Entrar");c
     }
 
     @Override
