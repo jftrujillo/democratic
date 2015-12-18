@@ -1,38 +1,38 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.kcumendigital.democratic.Fragments.IntroFragment">
+    tools:context="com.kcumendigital.democraticcauca.Fragments.IntroFragment">
+
 
     <ImageView
         android:id="@+id/bacground_intro"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:scaleType="centerCrop"
-        />
+        android:scaleType="centerCrop" />
 
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
         android:layout_alignParentBottom="true"
         android:layout_marginBottom="130dp"
-        android:layout_marginLeft="40dp">
+        android:layout_marginLeft="40dp"
+        android:orientation="vertical">
 
-    <TextView
-        android:id="@+id/text_intro"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textSize="@dimen/big_size_letter"
-        android:text="Contenido"
-        android:textColor="#FFFFFF"
-        />
-    <TextView
-        android:id="@+id/text_intro2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="contenido de prueba"
-        android:textColor="#FFFFFF"
-        android:layout_marginRight="30dp"
-        />
+        <TextView
+            android:id="@+id/text_intro"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Contenido"
+            android:textColor="#FFFFFF"
+            android:textSize="@dimen/big_size_letter" />
+
+        <TextView
+            android:id="@+id/text_intro2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="30dp"
+            android:text="contenido de prueba"
+            android:textColor="#FFFFFF" />
     </LinearLayout>
 </RelativeLayout>
