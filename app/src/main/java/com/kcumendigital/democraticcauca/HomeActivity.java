@@ -129,6 +129,8 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
                 .centerCrop()
                 .transform(transformation).into(imm_nav);
         TextView userName = (TextView) header.findViewById(R.id.txt_usr);
+        TextView userEmail = (TextView) header.findViewById(R.id.txt_mail);
+        userEmail.setText(AppUtil.getUserStatic().getEmail());
         userName.setText(AppUtil.getUserStatic().getName());
 
         toggle = new ActionBarDrawerToggle(this, drawer, R.string.drawer_open, R.string.drawer_close);

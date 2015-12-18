@@ -18,11 +18,7 @@
             android:value="@string/facebook_app_id" />
 
         <activity
-<<<<<<< HEAD
-            android:name=".AppIntroActivity"
-=======
-            android:name="com.kcumendigital.democraticcauca.animation"
->>>>>>> 5aa57bdda80011ea9beb9952de81a1f02c283482
+            android:name=".animation"
             android:label="@string/app_name"
             android:noHistory="true"
             android:screenOrientation="portrait">
@@ -50,11 +46,7 @@
             android:name="com.kcumendigital.democraticcauca.SignInAcitivity"
             android:screenOrientation="portrait" />
         <activity
-<<<<<<< HEAD
-            android:name=".animation"
-=======
-            android:name="com.kcumendigital.democraticcauca.AppIntroActivity"
->>>>>>> 5aa57bdda80011ea9beb9952de81a1f02c283482
+            android:name=".AppIntroActivity"
             android:noHistory="true"
             android:screenOrientation="portrait" />
         <activity

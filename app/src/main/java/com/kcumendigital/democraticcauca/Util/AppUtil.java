@@ -11,6 +11,7 @@ import com.kcumendigital.democraticcauca.Models.User;
  */
 public class AppUtil {
     private static User userStatic;
+
     public static User getUserStatic(){
 
         if (userStatic == null){
