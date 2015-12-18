@@ -108,8 +108,8 @@ public class animation extends AppCompatActivity {
     }
 
     private void startTextAnimation() {
-        texto.setText("Democratic");
-        YoYo.with(Techniques.FadeIn).duration(1400).withListener(new Animator.AnimatorListener() {
+        texto.setText("");
+        YoYo.with(Techniques.FadeIn).duration(10).withListener(new Animator.AnimatorListener() {
             @Override
             public void onAnimationStart(Animator animation) {
 

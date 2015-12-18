@@ -102,7 +102,6 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
         imm_nav.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                zoomImageFromThumb(imm_nav,R.drawable.democraticmarca, R.id.expanded_image);
 
                 if (alreadyTouchedDogue == false) {
                     Toast.makeText(getApplicationContext(), "cuidado con dogue", Toast.LENGTH_SHORT).show();
