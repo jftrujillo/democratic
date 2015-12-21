@@ -136,7 +136,7 @@ public class HomeListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
            if (data.get(position).getReport() > 100){
                ((HomeListspanViewHolder) holder).maskReport.setVisibility(View.VISIBLE);
                LinearLayout.LayoutParams lp = (LinearLayout.LayoutParams) ((HomeListspanViewHolder) holder).linearParent.getLayoutParams();
-               lp.height = dpToPx(60);
+               lp.height = dpToPx(45);
                        ((HomeListspanViewHolder) holder).maskReport.setOnClickListener(new View.OnClickListener() {
                    @Override
                    public void onClick(View v) {

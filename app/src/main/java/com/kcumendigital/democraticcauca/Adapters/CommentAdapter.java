@@ -123,7 +123,7 @@ public class CommentAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
             if (data.get(position).getReport() > 100) {
                 ((TextViewHolder) holder).maskReport.setVisibility(View.VISIBLE);
                FrameLayout.LayoutParams lp = (FrameLayout.LayoutParams) ((TextViewHolder) holder).linearParent.getLayoutParams();
-                lp.height = 130;
+                lp.height = dpToPx(60);
                        ((TextViewHolder) holder).maskReport.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
@@ -172,7 +172,7 @@ public class CommentAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
             if (data.get(position).getReport() > 100) {
                 ((VoiceViewHolder) holder).maskReport.setVisibility(View.VISIBLE);
                 LinearLayout.LayoutParams lp = (LinearLayout.LayoutParams) ((VoiceViewHolder) holder).cardParent.getLayoutParams();
-                lp.height = 130;
+                lp.height = dpToPx(70);
                         ((VoiceViewHolder) holder).maskReport.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
