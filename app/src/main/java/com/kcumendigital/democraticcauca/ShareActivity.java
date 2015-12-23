@@ -58,21 +58,21 @@ public class ShareActivity extends AppCompatActivity{
         String categori = discussion.getCategory();
 
         if (categori.equals("Gobierno")){
-            imgCategory.setImageResource(R.drawable.screengobierno);
+            imgCategory.setBackgroundColor(getResources().getColor(R.color.gobierno));
 
         }
 
         if (categori.equals("Salud")){
-            imgCategory.setImageResource(R.drawable.screensalud);
+            imgCategory.setBackgroundColor(getResources().getColor(R.color.salud));
         }
 
         if (categori.equals("Educación")){
-            imgCategory.setImageResource(R.drawable.screeneducacion);
+            imgCategory.setBackgroundColor(getResources().getColor(R.color.educacion));
 
         }
 
         if (categori.equals("Medio Ambiente")){
-            imgCategory.setImageResource(R.drawable.screenmedio);
+            imgCategory.setBackgroundColor(getResources().getColor(R.color.medio_ambiente));
 
         }
 

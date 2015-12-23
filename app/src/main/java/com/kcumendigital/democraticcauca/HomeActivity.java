@@ -104,7 +104,6 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
             public void onClick(View v) {
 
                 if (alreadyTouchedDogue == false) {
-                    Toast.makeText(getApplicationContext(), "cuidado con dogue", Toast.LENGTH_SHORT).show();
                     nav.getMenu().setGroupVisible(R.id.persona_menu_nav, true);
                     nav.getMenu().setGroupVisible(R.id.secciones_menu_nav, false);
                     alreadyTouchedDogue = true;
