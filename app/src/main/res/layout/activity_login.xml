@@ -78,14 +78,12 @@
         </LinearLayout>
 
 
-        <Button
+        <com.facebook.login.widget.LoginButton
             android:id="@+id/login_facebook_btn"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="@dimen/small_margin"
-            android:layout_marginTop="@dimen/small_margin"
-            android:text="Login with facebook"
-            app:theme="@style/FbButton" />
+            android:layout_gravity="center_horizontal"
+             />
 
 
     </LinearLayout>

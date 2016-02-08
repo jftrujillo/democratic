@@ -14,7 +14,7 @@ public class Application extends android.app.Application {
         super.onCreate();
         FacebookSdk.sdkInitialize(getApplicationContext());
         Parse.initialize(this, "JHZauoc6yak5TrHY83jGHGr6jIIJDlYbMMfqmUoO", "1lQV62yxqmCVLHMu6HKZp9ayVOiMtTrQozVMDsCW");
-        ParseFacebookUtils.initialize(this);
+
 
     }
 

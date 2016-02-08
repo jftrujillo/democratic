@@ -6,11 +6,20 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.TextInputLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.Toast;
 
+import com.facebook.CallbackManager;
+import com.facebook.FacebookCallback;
+import com.facebook.FacebookException;
+import com.facebook.GraphRequest;
+import com.facebook.GraphResponse;
+import com.facebook.Profile;
+import com.facebook.login.LoginResult;
+import com.facebook.login.widget.LoginButton;
 import com.kcumendigital.democraticcauca.Models.User;
 import com.kcumendigital.democraticcauca.Util.AppUtil;
 import com.kcumendigital.democraticcauca.library.Techniques;
@@ -19,7 +28,9 @@ import com.kcumendigital.democraticcauca.parse.SunshineLogin;
 import com.parse.ParseException;
 import com.parse.ParseFacebookUtils;
 
-public class LoginActivity extends AppCompatActivity implements View.OnClickListener, SunshineLogin.SunshineLoginCallback, SunshineLogin.SunshineFacebookLoginCallback {
+import org.json.JSONObject;
+
+public class LoginActivity extends AppCompatActivity implements View.OnClickListener, SunshineLogin.SunshineLoginCallback,  FacebookCallback<LoginResult> {
 
     static final int REQUEST_SIGIN=102;
 
@@ -27,11 +38,13 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     static final String SAVED_PASS="pass";
 
     TextInputLayout email, pass;
-    Button btnRegistro, btnFacebook;
+    Button btnRegistro;
+    LoginButton btnFacebook;
     FloatingActionButton ingresar;
     ProgressDialog dialog;
     SunshineLogin login;
-    LinearLayout cordinator;
+    
+    CallbackManager callbackManager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,14 +52,14 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         setContentView(R.layout.activity_login);
 
         login = new SunshineLogin();
+        callbackManager = CallbackManager.Factory.create();
 
         email = (TextInputLayout) findViewById(R.id.email_login);
         pass = (TextInputLayout) findViewById(R.id.password);
         btnRegistro= (Button) findViewById(R.id.register);
         ingresar = (FloatingActionButton) findViewById(R.id.ingresar);
-        btnFacebook = (Button) findViewById(R.id.login_facebook_btn);
+        btnFacebook = (LoginButton) findViewById(R.id.login_facebook_btn);
 
-        btnFacebook.setOnClickListener(this);
         btnRegistro.setOnClickListener(this);
         ingresar.setOnClickListener(this);
 
@@ -57,6 +70,9 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
             email.getEditText().setText(savedInstanceState.getString(SAVED_EMAIL));
             pass.getEditText().setText(savedInstanceState.getString(SAVED_PASS));
         }
+
+        btnFacebook.setReadPermissions("public_profile","email");
+        btnFacebook.registerCallback(callbackManager, this);
 
     }
 
@@ -88,9 +104,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                     Toast.makeText(getApplicationContext(), R.string.sigin_fail, Toast.LENGTH_SHORT).show();
                 }
                 break;
-            case R.id.login_facebook_btn:
-                login.loginByFacebook(this,null,this);
-            break;
+
         }
     }
 
@@ -133,11 +147,36 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         finish();
     }
 
+    //region Facebook Callback
     @Override
-    public void done(int type, ParseException e) {
-        if(type == LOGIN || type == SIGINUP)
-            inApp();
-        else
-            Toast.makeText(this,"Error al ingresar con Facebook",Toast.LENGTH_SHORT).show();
+    public void onSuccess(LoginResult loginResult) {
+        final Profile profile = Profile.getCurrentProfile();
+
+
+        GraphRequest request = GraphRequest.newMeRequest(
+                loginResult.getAccessToken(),
+                new GraphRequest.GraphJSONObjectCallback() {
+                    @Override
+                    public void onCompleted(JSONObject object, GraphResponse response) {
+                        User user = new User();
+                        user.setName(profile.getName());
+
+                                            }
+
+
+                });
+        Bundle parameters = new Bundle();
+        parameters.putString("fields", "id,name,email");
+        request.setParameters(parameters);
+        request.executeAsync();
     }
+
+    @Override
+    public void onCancel() {}
+
+    @Override
+    public void onError(FacebookException error) {
+        Toast.makeText(LoginActivity.this, "Error al ingresar con Facebook", Toast.LENGTH_SHORT).show();
+    }
+    //endregion
 }
