@@ -1,8 +1,12 @@
 package com.kcumendigital.democraticcauca;
 
 import android.graphics.Bitmap;
+import android.os.AsyncTask;
 import android.os.Bundle;
+import android.os.PersistableBundle;
 import android.support.v7.app.AppCompatActivity;
+import android.view.View;
+import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -19,6 +23,7 @@ public class ShareActivity extends AppCompatActivity{
 
     public static final String EXTRA_POS_COMMENT = "pos_comment";
     public static final String EXTRA_POS_DISCUSSION= "pos_discussion";
+    static final long TIME_WAIT = 1000;
 
     int posC, posD;
     FrameLayout imgC;
@@ -27,6 +32,8 @@ public class ShareActivity extends AppCompatActivity{
     TextView title, comment;
 
     ShareButton sb;
+
+    SharePhotoContent content;
 
 
     @Override
@@ -82,7 +89,12 @@ public class ShareActivity extends AppCompatActivity{
         title.setText(discussion.getTitle());
         comment.setText(commentD.getDescription());
 
-        prepareShare();
+
+
+
+        TimeWait wait =  new TimeWait();
+        wait.execute();
+
 
     }
 
@@ -95,7 +107,8 @@ public class ShareActivity extends AppCompatActivity{
                 .setCaption("Democratic")
                 .build();
 
-        SharePhotoContent content = new SharePhotoContent.Builder()
+
+        content = new SharePhotoContent.Builder()
                 .addPhoto(photo)
                 .build();
 
@@ -111,5 +124,25 @@ public class ShareActivity extends AppCompatActivity{
     }
 
 
+
+
+
+    private class TimeWait extends AsyncTask<Integer, Integer, Integer>{
+
+        @Override
+        protected Integer doInBackground(Integer... params) {
+            try {
+                Thread.sleep(TIME_WAIT);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(Integer integer) {
+            prepareShare();
+        }
+    }
 }
 
