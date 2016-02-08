@@ -11,6 +11,9 @@ import com.parse.ParseUser;
 import com.parse.SaveCallback;
 import com.parse.SignUpCallback;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.io.File;
 import java.util.Collection;
 import java.util.HashMap;
@@ -34,11 +37,7 @@ public class SunshineLogin implements SignUpCallback, LogInCallback {
 
     public interface SunshineFacebookLoginCallback{
 
-        int CANCELED=0;
-        int SIGINUP=1;
-        int LOGIN=2;
-
-        void done(int type, ParseException e);
+        void doneLoginFacebook(boolean success);
     }
 
     SunshineLoginCallback callback;
@@ -72,6 +71,31 @@ public class SunshineLogin implements SignUpCallback, LogInCallback {
         }
     }
 
+    public void siginUpFB(User user,String data, SunshineFacebookLoginCallback callback){
+
+        this.facebookLoginCallback = callback;
+
+        parseUser =  new ParseUser();
+        parseUser.setEmail(user.getEmail());
+        parseUser.setUsername(user.getUserName());
+        parseUser.setPassword(user.getPassword());
+        //prepareParseUser(parseUser, user);
+        parseUser.put("name", user.getName());
+
+        parseUser.put("facebookData", data);
+
+        parseUser.signUpInBackground(new SignUpCallback() {
+            @Override
+            public void done(ParseException e) {
+                if(e == null)
+                    facebookLoginCallback.doneLoginFacebook(true);
+                else
+                    facebookLoginCallback.doneLoginFacebook(false);
+            }
+        });
+
+    }
+
     public void login(String username, String password, SunshineLoginCallback callback){
         this.callback = callback;
         ParseUser.logInInBackground(username, password, this);
@@ -84,13 +108,18 @@ public class SunshineLogin implements SignUpCallback, LogInCallback {
             if(user == null)
                 user =  new User();
 
-            if(currentUser.get("authData")==null){
+            if(currentUser.get("facebookData")==null){
                 user.setImg(currentUser.getParseFile("img").getUrl());
             }else{
-                HashMap<String, HashMap<String, String>> data = (HashMap<String, HashMap<String, String>>) currentUser.get("authData");
-                HashMap<String, String> fb = data.get("facebook");
-                String id = fb.get("id");
-                user.setImg("https://graph.facebook.com/"+id+"/picture?type=large");
+
+                try {
+                    JSONObject fb = new JSONObject(currentUser.getString("facebookData"));
+                    String id = fb.getString("id");
+                    user.setImg("https://graph.facebook.com/"+id+"/picture?type=large");
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+
             }
             user.setEmail(currentUser.getEmail());
             user.setName(currentUser.getString("name"));
@@ -111,23 +140,6 @@ public class SunshineLogin implements SignUpCallback, LogInCallback {
         }
     }
 
-    public void loginByFacebook(Activity activity,Collection<String> permissions, final SunshineFacebookLoginCallback facebookLoginCallback){
-        this.facebookLoginCallback = facebookLoginCallback;
-        ParseFacebookUtils.logInWithReadPermissionsInBackground(activity, permissions, new LogInCallback() {
-            @Override
-            public void done(ParseUser user, ParseException e) {
-
-                if (user == null) {
-                    facebookLoginCallback.done(SunshineFacebookLoginCallback.CANCELED, e);
-                } else if (user.isNew()) {
-                    facebookLoginCallback.done(SunshineFacebookLoginCallback.SIGINUP, e);
-
-                } else {
-                    facebookLoginCallback.done(SunshineFacebookLoginCallback.LOGIN, e);
-                }
-            }
-        });
-    }
 
 
     //region Callbacks

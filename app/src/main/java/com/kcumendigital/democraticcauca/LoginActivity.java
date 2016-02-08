@@ -28,9 +28,10 @@ import com.kcumendigital.democraticcauca.parse.SunshineLogin;
 import com.parse.ParseException;
 import com.parse.ParseFacebookUtils;
 
+import org.json.JSONException;
 import org.json.JSONObject;
 
-public class LoginActivity extends AppCompatActivity implements View.OnClickListener, SunshineLogin.SunshineLoginCallback,  FacebookCallback<LoginResult> {
+public class LoginActivity extends AppCompatActivity implements View.OnClickListener, SunshineLogin.SunshineLoginCallback,  FacebookCallback<LoginResult>,SunshineLogin.SunshineFacebookLoginCallback {
 
     static final int REQUEST_SIGIN=102;
 
@@ -43,7 +44,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     FloatingActionButton ingresar;
     ProgressDialog dialog;
     SunshineLogin login;
-    
+
     CallbackManager callbackManager;
 
     @Override
@@ -134,7 +135,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                 inApp();
             }
         }else{
-            ParseFacebookUtils.onActivityResult(requestCode, resultCode, data);
+            callbackManager.onActivityResult(requestCode, resultCode, data);
         }
     }
 
@@ -149,7 +150,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
     //region Facebook Callback
     @Override
-    public void onSuccess(LoginResult loginResult) {
+    public void onSuccess(final LoginResult loginResult) {
         final Profile profile = Profile.getCurrentProfile();
 
 
@@ -160,8 +161,16 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                     public void onCompleted(JSONObject object, GraphResponse response) {
                         User user = new User();
                         user.setName(profile.getName());
+                        user.setPassword(profile.getId());
+                        user.setUserName(profile.getId());
+                        try {
+                            user.setEmail(object.getString("email"));
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
 
-                                            }
+                        login.siginUpFB(user, object.toString(), LoginActivity.this);
+                    }
 
 
                 });
@@ -177,6 +186,11 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     @Override
     public void onError(FacebookException error) {
         Toast.makeText(LoginActivity.this, "Error al ingresar con Facebook", Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void doneLoginFacebook(boolean success) {
+        inApp();
     }
     //endregion
 }
