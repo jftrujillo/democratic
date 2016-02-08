@@ -18,6 +18,7 @@ import com.facebook.FacebookException;
 import com.facebook.GraphRequest;
 import com.facebook.GraphResponse;
 import com.facebook.Profile;
+import com.facebook.login.LoginManager;
 import com.facebook.login.LoginResult;
 import com.facebook.login.widget.LoginButton;
 import com.kcumendigital.democraticcauca.Models.User;
@@ -72,8 +73,9 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
             pass.getEditText().setText(savedInstanceState.getString(SAVED_PASS));
         }
 
-        btnFacebook.setReadPermissions("public_profile","email");
+        btnFacebook.setReadPermissions("public_profile", "email");
         btnFacebook.registerCallback(callbackManager, this);
+
 
     }
 
@@ -152,7 +154,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     @Override
     public void onSuccess(final LoginResult loginResult) {
         final Profile profile = Profile.getCurrentProfile();
-
+        dialog.show();
 
         GraphRequest request = GraphRequest.newMeRequest(
                 loginResult.getAccessToken(),
@@ -190,7 +192,13 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
     @Override
     public void doneLoginFacebook(boolean success) {
-        inApp();
+        if(success) {
+            dialog.hide();
+            inApp();
+        }else{
+            LoginManager.getInstance().logOut();
+            Toast.makeText(this,"Error al realizar al iniciar sesion", Toast.LENGTH_SHORT).show();
+        }
     }
     //endregion
 }

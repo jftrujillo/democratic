@@ -1,7 +1,9 @@
 package com.kcumendigital.democraticcauca.parse;
 
 import android.app.Activity;
+import android.media.session.MediaSessionManager;
 
+import com.facebook.login.LoginManager;
 import com.kcumendigital.democraticcauca.Models.User;
 import com.parse.LogInCallback;
 import com.parse.ParseException;
@@ -137,6 +139,9 @@ public class SunshineLogin implements SignUpCallback, LogInCallback {
         ParseUser currentUser = ParseUser.getCurrentUser();
         if(currentUser!=null){
             currentUser.logOut();
+            if(currentUser.get("facebookData")!=null){
+                LoginManager.getInstance().logOut();
+            }
         }
     }
 
