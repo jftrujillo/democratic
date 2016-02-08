@@ -192,8 +192,8 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
     @Override
     public void doneLoginFacebook(boolean success) {
+        dialog.hide();
         if(success) {
-            dialog.hide();
             inApp();
         }else{
             LoginManager.getInstance().logOut();

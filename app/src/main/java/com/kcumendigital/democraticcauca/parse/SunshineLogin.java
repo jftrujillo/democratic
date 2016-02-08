@@ -86,15 +86,26 @@ public class SunshineLogin implements SignUpCallback, LogInCallback {
 
         parseUser.put("facebookData", data);
 
-        parseUser.signUpInBackground(new SignUpCallback() {
+        ParseUser.logInInBackground(user.getUserName(), user.getPassword(), new LogInCallback() {
             @Override
-            public void done(ParseException e) {
-                if(e == null)
+            public void done(ParseUser user, ParseException e) {
+                if (user != null)
                     facebookLoginCallback.doneLoginFacebook(true);
                 else
-                    facebookLoginCallback.doneLoginFacebook(false);
+                    parseUser.signUpInBackground(new SignUpCallback() {
+                        @Override
+                        public void done(ParseException e) {
+                            if (e == null)
+                                facebookLoginCallback.doneLoginFacebook(true);
+                            else
+                                facebookLoginCallback.doneLoginFacebook(false);
+                        }
+                    });
+
             }
         });
+
+
 
     }
 

@@ -57,7 +57,7 @@
         <activity android:name="com.kcumendigital.democraticcauca.RootActivity" />
         <activity android:name="com.kcumendigital.democraticcauca.ShareActivity"></activity>
         <provider
-            android:authorities="com.facebook.app.FacebookContentProvider867572283358216"
+            android:authorities="com.facebook.app.FacebookContentProvider427388980791722"
             android:name="com.facebook.FacebookContentProvider"
             android:exported="true"/>
     </application>
